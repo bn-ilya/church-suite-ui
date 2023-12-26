@@ -1,31 +1,42 @@
 import {  Navbar,   NavbarBrand,   NavbarContent,   NavbarItem, Button,   NavbarMenuToggle,  NavbarMenu,  NavbarMenuItem} from "@nextui-org/react";
 import Link from "next/link";
 import { FC } from 'react';
+import NavBarLinks from "./NavBarLinks/NavBarLinks";
+
+export interface INavLink {
+  path: string,
+  title: string,
+}
+
+const linksList: Array<INavLink> = [
+  {
+    path: '/',
+    title: 'Главная',
+  },
+  {
+    path: '/blog',
+    title: 'Блог',
+  },
+  {
+    path: '/events',
+    title: 'События',
+  },
+  {
+    path: '/contacts',
+    title: 'Контакты',
+  },
+]
 
 const Header: FC = () => {
   return (
     <header>
-          <Navbar position="static">
+    <Navbar position="static">
       <NavbarBrand>
         <div>logo</div>
         <p className="font-bold text-inherit">ACME</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="/">
-            Главная
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="/blog/" aria-current="page">
-            Блог
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="/events/">
-            События
-          </Link>
-        </NavbarItem>
+        <NavBarLinks linksList={linksList} />
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
