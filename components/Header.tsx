@@ -6,8 +6,8 @@ import { ThemeSwitcherBtn } from './ThemeSwitcherBtn/ThemeSwitcherBtn';
 
 const Header: FC = () => {
   return (
-    <header>
-      <Navbar position="static">
+    <header className="container m-auto">
+      <Navbar maxWidth="full" isBordered>
         <NavbarBrand>
           <div>logo</div>
           <p className="font-bold text-inherit">ACME</p>
