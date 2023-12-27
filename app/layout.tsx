@@ -23,7 +23,7 @@ export default function RootLayout({
         <Providers>
           <div className='min-h-screen flex flex-col justify-between'>
             <Header/>
-              <div className='flex-grow w-full flex justify-center'>
+              <div className='flex-grow w-full flex flex-col align-center'>
                 {children}
               </div>
             <Footer/>

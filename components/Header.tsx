@@ -3,11 +3,11 @@ import { FC } from 'react';
 import NavBarLinks from "./NavBarLinks/NavBarLinks";
 import { linksList } from "@/static-data/linksList/linksList";
 import { ThemeSwitcherBtn } from './ThemeSwitcherBtn/ThemeSwitcherBtn';
+import { headerHight } from "@/utils/constants";
 
 const Header: FC = () => {
   return (
-    <header className="container m-auto">
-      <Navbar maxWidth="full" isBordered>
+      <Navbar maxWidth="full" height={`${headerHight}px`} isBordered className="container m-auto">
         <NavbarBrand>
           <div>logo</div>
           <p className="font-bold text-inherit">ACME</p>
@@ -21,7 +21,6 @@ const Header: FC = () => {
           </NavbarItem>
         </NavbarContent>
       </Navbar>
-    </header>
   )
 };
 
