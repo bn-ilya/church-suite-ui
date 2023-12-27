@@ -1,5 +1,4 @@
 import {  Navbar,   NavbarBrand,   NavbarContent,   NavbarItem, Button,   NavbarMenuToggle,  NavbarMenu,  NavbarMenuItem} from "@nextui-org/react";
-import Link from "next/link";
 import { FC } from 'react';
 import NavBarLinks from "./NavBarLinks/NavBarLinks";
 import { linksList } from "@/static-data/linksList/linksList";
