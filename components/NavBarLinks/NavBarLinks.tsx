@@ -3,11 +3,7 @@ import { NavbarItem } from '@nextui-org/react';
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import { FC } from 'react';
-import { INavLink } from '../Header';
-
-interface INavBarLinksProps {
-  linksList: Array<INavLink>;
-}
+import { INavBarLinksProps } from './NavBarLinks.props';
 
 const NavBarLinks: FC<INavBarLinksProps> = ({linksList}) => {
   const pathname = usePathname();

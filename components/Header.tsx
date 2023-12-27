@@ -2,30 +2,7 @@ import {  Navbar,   NavbarBrand,   NavbarContent,   NavbarItem, Button,   Navbar
 import Link from "next/link";
 import { FC } from 'react';
 import NavBarLinks from "./NavBarLinks/NavBarLinks";
-
-export interface INavLink {
-  path: string,
-  title: string,
-}
-
-const linksList: Array<INavLink> = [
-  {
-    path: '/',
-    title: 'Главная',
-  },
-  {
-    path: '/blog',
-    title: 'Блог',
-  },
-  {
-    path: '/events',
-    title: 'События',
-  },
-  {
-    path: '/contacts',
-    title: 'Контакты',
-  },
-]
+import { linksList } from "@/static-data/linksList/linksList";
 
 const Header: FC = () => {
   return (
