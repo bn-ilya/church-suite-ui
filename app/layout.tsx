@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import './globals.css';
 import { Providers } from './providers';
 
-const inter = Inter({ subsets: ['latin'] })
+const montserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Церковь Кропоткина',
@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true} className={`${inter.className} min-h-screen`}>
+      <body suppressHydrationWarning={true} className={`${montserrat.className} min-h-screen`}>
         <Providers>
           <div className='min-h-screen flex flex-col justify-between'>
             <Header/>
