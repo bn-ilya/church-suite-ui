@@ -7,7 +7,7 @@ import { headerHight } from "@/utils/constants";
 
 const Header: FC = () => {
   return (
-      <Navbar maxWidth="full" height={`${headerHight}px`} isBordered className="container m-auto">
+      <Navbar maxWidth="full" height={`${headerHight}px`} isBordered className="container m-auto fixed">
         <NavbarBrand>
           <div>logo</div>
           <p className="font-bold text-inherit">ACME</p>
