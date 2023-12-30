@@ -9,7 +9,7 @@ export const IntroFull = () => {
       <div className="max-w-7xl mx-auto h-full flex  flex-col gap-4 justify-center items-center">
         <div className='flex gap-8'>
           <LogoChurch className='w-[80px] h-auto text-white' />
-          <h1 className={`${unbounded.className} text-[54px] font-bold leading-[2]`}>Церковь Кропоткина</h1>
+          <h1 className={`${unbounded.className} text-[54px] font-bold leading-[2] text-white`}>Церковь Кропоткина</h1>
         </div>
         <p className='max-w-[800px] text-white text-center text-lg'>Мы рады, что вы посетили наш сайт. Это удобный способ познакомиться с нашей церковью, во что мы верим и чем занимаемся. Будьте как дома</p>
       </div>
