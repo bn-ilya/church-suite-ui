@@ -1,4 +1,4 @@
-import {  Navbar,   NavbarBrand,   NavbarContent, NavbarItem } from "@nextui-org/react";
+import {  Link, Navbar,   NavbarBrand,   NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react";
 import { FC } from 'react';
 import Image from 'next/image';
 import LogoChurch from '../public/logoChurch/logoChurch.svg';
@@ -6,6 +6,7 @@ import NavBarLinks from "./NavBarLinks/NavBarLinks";
 import { linksList } from "@/static-data/linksList/linksList";
 import { ThemeSwitcherBtn } from './ThemeSwitcherBtn/ThemeSwitcherBtn';
 import { headerHight } from "@/utils/constants";
+import { NavBarMobileMenu } from "./NavBarMobileMenu/NavBarMobileMenu";
 
 const Header: FC = () => {
   return (
@@ -25,7 +26,12 @@ const Header: FC = () => {
           <NavbarItem>
             <ThemeSwitcherBtn />
           </NavbarItem>
+          <NavbarMenuToggle
+            className="sm:hidden"
+          />
         </NavbarContent>
+
+        <NavBarMobileMenu linksList={linksList} />
       </Navbar>
   )
 };
