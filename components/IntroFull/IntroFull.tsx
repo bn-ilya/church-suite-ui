@@ -1,5 +1,4 @@
-import Image from 'next/image';
-import LogoChurch from '../../public/logoChurch/logoChurch.svg';
+import { LogoChurch } from '../LogoChurch/LogoChurch';
 import { Unbounded } from 'next/font/google';
 
 const unbounded = Unbounded({ subsets: ['cyrillic'] });
@@ -9,13 +8,8 @@ export const IntroFull = () => {
     <div className={`h-screen w-full relative`}>
       <div className="max-w-7xl mx-auto h-full flex  flex-col gap-4 justify-center items-center">
         <div className='flex gap-8'>
-          <Image
-            priority
-            src={LogoChurch}
-            className='w-[80px] h-auto text-gradient from-[#FAFAFA] to-[#E4E4E7]'
-            alt="Логотип церкви"
-          />
-          <h1 className={`${unbounded.className} text-[54px] font-bold leading-[2] from-[#FAFAFA] to-[#E4E4E7] text-gradient`}>Церковь Кропоткина</h1>
+          <LogoChurch className='w-[80px] h-auto text-white' />
+          <h1 className={`${unbounded.className} text-[54px] font-bold leading-[2]`}>Церковь Кропоткина</h1>
         </div>
         <p className='max-w-[800px] text-white text-center text-lg'>Мы рады, что вы посетили наш сайт. Это удобный способ познакомиться с нашей церковью, во что мы верим и чем занимаемся. Будьте как дома</p>
       </div>
