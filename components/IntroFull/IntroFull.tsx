@@ -7,7 +7,7 @@ export const IntroFull = () => {
   return (
     <div className={`h-dvh sm:h-screen w-full relative`}>
       <div className="max-w-7xl mx-auto h-full flex  flex-col gap-4 justify-center items-center">
-        <div className='flex gap-4 sm:gap-8 px-6 items-center'>
+        <div className='flex gap-4 sm:gap-8 items-center'>
           <LogoChurch className='w-[55px] lg:w-[80px] h-auto text-white' />
           <h1 className={`${unbounded.className} text-[26px] sm:text-[36px] lg:text-[54px] font-bold w-min sm:w-auto leading-[1] text-white`}>Церковь Кропоткина</h1>
         </div>

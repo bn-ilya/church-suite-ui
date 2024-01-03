@@ -5,19 +5,19 @@ const unbounded = Unbounded({ subsets: ['cyrillic'] });
 
 export const About = () => {
   return (
-      <div className="max-w-7xl w-full mx-auto grid grid-cols-12 gap-4 dark:bg-black light:bg-white py-36">
-        <div className='col-span-5 flex flex-col gap-2 justify-center'>
-          <div className='flex flex-col w-full text-5xl font-bold'>
+      <div className="max-w-7xl w-full mx-auto grid grid-cols-12 gap-y-7 gap-4 dark:bg-black light:bg-white py-16 md:py-36 px-6">
+        <div className='col-span-12 lg:col-span-5 flex flex-col gap-2 justify-center'>
+          <div className='flex flex-col w-full text-[2.1rem] md:text-5xl font-bold leading-none'>
             <h2>Разберемся</h2>
             <div>
               <h2 className='inline'>во что мы </h2>
               <h2 className='inline to-[#006FEE] from-[#99C7FB] text-gradient'>верим</h2>
             </div>
           </div>
-          <p className='w-100 text-default-500 text-lg w-3/4'>Самый лучший способ в этом разобраться - прочитать наши статьи</p>
+          <p className='w-100 text-default-500 text-base md:text-lg w-full md:w-3/4'>Самый лучший способ в этом разобраться - прочитать наши статьи</p>
         </div>
 
-        <div className="col-span-7 gap-2 grid grid-cols-3">
+        <div className="col-span-12 lg:col-span-7 gap-2 grid grid-cols-3">
           <Card isFooterBlurred className="w-full h-[300px] col-span-3 sm:col-span-1">
             <CardHeader className="absolute z-10 top-1 flex-col items-start">
               <p className="text-tiny text-white/60 uppercase font-bold">Доктрины</p>
