@@ -5,9 +5,9 @@ const unbounded = Unbounded({ subsets: ['cyrillic'] });
 
 export const About = () => {
   return (
-      <div className="max-w-7xl w-full mx-auto grid grid-cols-12 gap-y-7 gap-4 dark:bg-black light:bg-white py-16 md:py-36 px-6">
+      <div className="max-w-7xl w-full mx-auto px-6 grid grid-cols-12 gap-y-7 gap-4 dark:bg-black light:bg-white py-16 md:py-36">
         <div className='col-span-12 lg:col-span-5 flex flex-col gap-2 justify-center'>
-          <div className='flex flex-col w-full text-[2.1rem] md:text-5xl font-bold leading-none'>
+          <div className='flex flex-col w-full subhead'>
             <h2>Разберемся</h2>
             <div>
               <h2 className='inline'>во что мы </h2>

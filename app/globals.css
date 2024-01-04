@@ -5,3 +5,7 @@
 .text-gradient {
   @apply bg-clip-text text-transparent bg-gradient-to-b;
 }
+
+.subhead {
+  @apply text-[2.1rem] md:text-5xl font-bold leading-none;
+}

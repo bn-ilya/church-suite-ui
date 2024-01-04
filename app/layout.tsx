@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body suppressHydrationWarning={true} className={`${montserrat.className} min-h-screen`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${montserrat.className} min-h-screen`}>
         <Providers>
           <div className='min-h-screen flex flex-col justify-between'>
             <Header/>
