@@ -1,7 +1,5 @@
+import { unbounded } from '@/utils/fonts';
 import { LogoChurch } from '../LogoChurch/LogoChurch';
-import { Unbounded } from 'next/font/google';
-
-const unbounded = Unbounded({ subsets: ['cyrillic'] });
 
 export const IntroFull = () => {
   return (

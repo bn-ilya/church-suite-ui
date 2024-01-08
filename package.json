@@ -12,6 +12,7 @@
     "@heroicons/react": "^2.1.1",
     "@nextui-org/react": "^2.2.9",
     "@reduxjs/toolkit": "^2.0.1",
+    "@uidotdev/usehooks": "^2.4.1",
     "antd": "^5.12.7",
     "framer-motion": "^10.16.16",
     "next": "14.0.1",
