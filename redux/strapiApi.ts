@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IEvent, IEvents } from "./strapiApi.interface";
+import { IEvent, IEvents, TFiles } from "./strapiApi.interface";
 
 export const strapiApi = createApi({
   reducerPath: 'strapiApi',
@@ -12,8 +12,28 @@ export const strapiApi = createApi({
         url: 'events'
       }),
       transformResponse: (response: IEvents) => response.data,
+    }),
+    uploadImage: build.mutation<TFiles, File>({
+      query: (file) => {
+        let bodyFormData = new FormData();
+        bodyFormData.append('files', file);
+        return {
+          url: 'upload',
+          method: 'POST',
+          body: bodyFormData,
+          formData: true
+        }
+      }
+    }),
+    addFormResult: build.mutation({
+      query: (body) => ({
+        url: 'form-live-chats',
+        method: 'POST',
+        body: body,    
+      })
     })
+
   }),
 })
 
-export const { useGetEventsQuery } = strapiApi; 
+export const { useGetEventsQuery, useAddFormResultMutation, useUploadImageMutation } = strapiApi; 
