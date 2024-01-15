@@ -3,8 +3,9 @@
 import { ILiveChatClient } from "@/redux/interfaces/strapiApi/liveChatClient";
 import { IFile } from "@/redux/interfaces/strapiApi/upload.interface";
 import { useAddLiveChatClientMutation, useUploadImageMutation } from "@/redux/strapiApi";
-import { Button, Input } from "@nextui-org/react";
-import { useEffect } from "react";
+import { CheckCircleIcon, CheckIcon } from "@heroicons/react/16/solid";
+import { Button, Chip, Input } from "@nextui-org/react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IFormData {
@@ -18,6 +19,8 @@ interface IFormData {
 }
 
 export const LiveChatRegister = () => {
+  const filePicker = useRef<HTMLInputElement | null>(null)
+  const [filesNames, setFilesNames] = useState<Array<string>>([]);
   const [addLiveChatClient, {isLoading}] = useAddLiveChatClientMutation();
   const [uploadImage, {isLoading: isLoadingImage, isError, error}] = useUploadImageMutation();
   const {register, handleSubmit, formState: {errors}} = useForm<IFormData>();
@@ -37,6 +40,18 @@ export const LiveChatRegister = () => {
     const data: ILiveChatClient = formData;
     await addLiveChatClient(data).unwrap();
   };
+
+  const handleChangeFiles = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      let names: Array<string> = []; 
+      for(let i = 0; i < e.target.files.length; i++) {
+        names.push(e.target.files[i].name);
+      }
+      setFilesNames(names)
+    }
+  }
+
+  const inputFiles = register("files");
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
@@ -94,15 +109,39 @@ export const LiveChatRegister = () => {
         className="col-span-2"
       />
       <div className="col-span-2">
-        <div className="mb-1">
+        <div className="mb-2">
           <span className="text-sm">Чек(и) об оплате</span>
           <p className="text-xs">Обязательно в случае онлайн оплаты!</p>
         </div>
+        <Button variant="flat" fullWidth onClick={() => filePicker.current?.click()}>
+          Прикрепить чек(и)
+        </Button> 
         <input
-          {...register("files")}
+          className="hidden-accessibility"
+          {...inputFiles}
+          onChange={(e) => {
+            inputFiles.onChange(e);
+            handleChangeFiles(e);
+          }}
+          ref={(e) => {
+            inputFiles.ref(e);
+            filePicker.current = e;
+          }}
           type="file"
           multiple
         />
+        {!!filesNames.length && (
+          <div className="p-3 border-2 rounded-xl border-zinc-700 mt-2">
+            <div className="text-sm mb-2">Прикрепленные файлы:</div>
+            <div className="flex gap-2 flex-wrap">
+              {filesNames.map((fileName, index) => (
+                <Chip key={index} startContent={<CheckCircleIcon width={16} />} variant="faded" color="success" className="overflow-hidden [&>span]:text-nowrap [&>span]:text-ellipsis [&>span]:overflow-hidden">
+                  {fileName}
+                </Chip>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <Button type="submit" color="primary" className="col-span-2">
         Отправить

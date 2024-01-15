@@ -9,3 +9,13 @@
 .subhead {
   @apply text-[2.1rem] md:text-5xl font-bold leading-none;
 }
+
+.hidden-accessibility {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  line-height: 0;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
