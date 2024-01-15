@@ -1,8 +1,10 @@
 "use client";
 
-import { useAddFormResultMutation, useUploadImageMutation } from "@/redux/strapiApi";
-import { IFile } from "@/redux/strapiApi.interface";
+import { ILiveChatClient } from "@/redux/interfaces/strapiApi/liveChatClient";
+import { IFile } from "@/redux/interfaces/strapiApi/upload.interface";
+import { useAddLiveChatClientMutation, useUploadImageMutation } from "@/redux/strapiApi";
 import { Button, Input } from "@nextui-org/react";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IFormData {
@@ -11,23 +13,30 @@ interface IFormData {
   tel: number,
   count: number,
   comment?: string,
-  file?: FileList,
-  cheque?: IFile['id']
+  files?: FileList,
+  cheque?: Array<IFile['id']>
 }
 
 export const LiveChatRegister = () => {
-  const [addFormResult, {isLoading}] = useAddFormResultMutation();
-  const [uploadImage, {isLoading: isLoadingImage}] = useUploadImageMutation();
+  const [addLiveChatClient, {isLoading}] = useAddLiveChatClientMutation();
+  const [uploadImage, {isLoading: isLoadingImage, isError, error}] = useUploadImageMutation();
   const {register, handleSubmit, formState: {errors}} = useForm<IFormData>();
-  const onSubmit: SubmitHandler<IFormData> = async (data) => {
-    const body = data;
-    if (data.file) {
-      const files = await uploadImage(data.file[0]).unwrap();
-      body.cheque = files[0].id;
+  
+  useEffect(()=>{
+    if (!isError) return;
+      alert(JSON.stringify(error));
+  }, [isError])
+
+  const onSubmit: SubmitHandler<IFormData> = async (formData) => { 
+
+    if (formData.files?.length) {
+      const files = await uploadImage(formData.files).unwrap();
+      formData.cheque = files.map(file => file.id);
+      delete formData.files;
     }
-    await addFormResult({
-      data: body,
-    }).unwrap();
+    
+    const data: ILiveChatClient = formData;
+    await addLiveChatClient(data).unwrap();
   };
 
   return (
@@ -91,16 +100,23 @@ export const LiveChatRegister = () => {
           <p className="text-xs">Обязательно в случае онлайн оплаты!</p>
         </div>
         <Input
-          {...register("file")}
+          {...register("files")}
           isInvalid={!!errors?.cheque}
           errorMessage={errors?.cheque?.message}
           type="file"
           accept="image/png, image/jpeg"
+          multiple
         />
       </div>
       <Button type="submit" color="primary" className="col-span-2">
         Отправить
       </Button> 
     </form>
+
+    // {isError && (
+    //   <div>
+    //     {error.message}
+    //   </div>
+    // )}
   )
 }
