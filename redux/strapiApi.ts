@@ -29,7 +29,7 @@ export const strapiApi = createApi({
         }
       }
     }),
-    addLiveChatClient: build.mutation<IAddLiveChatClientReq, ILiveChatClient>({
+    addLiveChatClient: build.mutation<IAddLiveChatClientRes, ILiveChatClient>({
       query: (data) => ({
         url: 'live-chat-clients',
         method: 'POST',

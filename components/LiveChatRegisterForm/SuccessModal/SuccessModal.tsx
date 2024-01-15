@@ -2,8 +2,8 @@ import { FC, useEffect } from 'react';
 import { ISuccessModalProps } from './SuccessModal.interface';
 import { Button, Divider, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Snippet, useDisclosure } from '@nextui-org/react';
 
-export const SuccessModal: FC<ISuccessModalProps> = ({isSuccess}) => {
-  const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
+export const SuccessModal: FC<ISuccessModalProps> = ({isSuccess, id}) => {
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   
   useEffect(()=>{
     if (!isSuccess) return;
@@ -24,7 +24,7 @@ export const SuccessModal: FC<ISuccessModalProps> = ({isSuccess}) => {
             <Divider/>
               <div className="flex flex-col items-center p-3 gap-2">
                   <div className="text-base">Ваш код:</div>
-                  <Snippet symbol="" size="lg" className="text-4xl font-bold">23</Snippet>
+                  <Snippet symbol="" size="lg" className="text-4xl font-bold">{id}</Snippet>
               </div>
             <Divider/>
             <p> 

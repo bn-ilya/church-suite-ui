@@ -18,7 +18,8 @@ interface IAttributesRes extends ILiveChatClient, IAttributesCommonsRes {}
 
 export interface IAddLiveChatClientRes {
   data: {
-    attributes: IAttributesRes
+    attributes: IAttributesRes,
+    id: number
   },
   meta: {},
 }

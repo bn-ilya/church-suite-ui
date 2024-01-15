@@ -9,7 +9,7 @@ import { LiveChatFormData } from "@/utils/types/LiveChatFormData.interface";
 import { SuccessModal } from "./SuccessModal/SuccessModal";
 
 export const LiveChatRegisterForm = () => {
-  const [addLiveChatClient, {isLoading: isAddingClient, isSuccess}] = useAddLiveChatClientMutation();
+  const [addLiveChatClient, {isLoading: isAddingClient, isSuccess, data}] = useAddLiveChatClientMutation();
   const [uploadImage, {isLoading: isUploadedImage, isError, error}] = useUploadImageMutation();
   
   const {register, handleSubmit, formState: {errors}} = useForm<LiveChatFormData>();
@@ -94,7 +94,7 @@ export const LiveChatRegisterForm = () => {
         </Button>
       </form>
 
-      <SuccessModal isSuccess={isSuccess} />
+      <SuccessModal id={data?.data.id} isSuccess={isSuccess}  />
     </>
   )
 }
