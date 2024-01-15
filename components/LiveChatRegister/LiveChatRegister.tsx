@@ -28,7 +28,6 @@ export const LiveChatRegister = () => {
   }, [isError])
 
   const onSubmit: SubmitHandler<IFormData> = async (formData) => { 
-
     if (formData.files?.length) {
       const files = await uploadImage(formData.files).unwrap();
       formData.cheque = files.map(file => file.id);
@@ -99,12 +98,9 @@ export const LiveChatRegister = () => {
           <span className="text-sm">Чек(и) об оплате</span>
           <p className="text-xs">Обязательно в случае онлайн оплаты!</p>
         </div>
-        <Input
+        <input
           {...register("files")}
-          isInvalid={!!errors?.cheque}
-          errorMessage={errors?.cheque?.message}
           type="file"
-          accept="image/png, image/jpeg"
           multiple
         />
       </div>
@@ -112,11 +108,5 @@ export const LiveChatRegister = () => {
         Отправить
       </Button> 
     </form>
-
-    // {isError && (
-    //   <div>
-    //     {error.message}
-    //   </div>
-    // )}
   )
 }
