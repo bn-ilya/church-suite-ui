@@ -38,11 +38,12 @@ export const FormUploadInput: FC<IFormUploadInputProps> = ({register}) => {
           inputFiles.ref(e);
           filePicker.current = e;
         }}
+        accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*"
         type="file"
         multiple
       />
       {!!filesNames.length && (
-        <div className="p-3 border-2 rounded-xl border-zinc-700 mt-2">
+        <div className="p-3 border-2 rounded-xl light:border-zinc-300 dark:border-zinc-700 mt-2">
           <div className="text-sm mb-2">Прикрепленные файлы:</div>
           <div className="flex gap-2 flex-wrap">
             {filesNames.map((fileName, index) => (
