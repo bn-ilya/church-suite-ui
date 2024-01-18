@@ -4,14 +4,16 @@ import { ILiveChatClient } from "@/redux/interfaces/strapiApi/liveChatClient";
 import { useAddLiveChatClientMutation, useUploadImageMutation } from "@/redux/strapiApi";
 import { Button, Input } from "@nextui-org/react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { FormUploadInput } from "../FormUploadInput/FormUploadInput";
 import { LiveChatFormData } from "@/utils/types/LiveChatFormData.interface";
-import { SuccessModal } from "./SuccessModal/SuccessModal";
+import {useRouter}  from 'next/navigation';
+import { useEffect } from "react";
+import { FormUploadInput } from "@/components/FormUploadInput/FormUploadInput";
 
-export const LiveChatRegisterForm = () => {
+export const Form = () => {
   const [addLiveChatClient, {isLoading: isAddingClient, isSuccess, data}] = useAddLiveChatClientMutation();
   const [uploadImage, {isLoading: isUploadedImage, isError, error}] = useUploadImageMutation();
-  
+  const router = useRouter();
+
   const {register, handleSubmit, formState: {errors}} = useForm<LiveChatFormData>();
 
   const onSubmit: SubmitHandler<LiveChatFormData> = async (formData) => { 
@@ -24,6 +26,11 @@ export const LiveChatRegisterForm = () => {
     const data: ILiveChatClient = formData;
     await addLiveChatClient(data).unwrap();
   };
+
+  useEffect(()=>{
+    if (!isSuccess) return;
+    router.push(`/livechat/register/success?id=${data?.data.id}`,); 
+  }, [isSuccess])
 
   return (
     <>
@@ -93,8 +100,6 @@ export const LiveChatRegisterForm = () => {
           Отправить
         </Button>
       </form>
-
-      <SuccessModal id={data?.data.id} isSuccess={isSuccess}  />
     </>
   )
 }
