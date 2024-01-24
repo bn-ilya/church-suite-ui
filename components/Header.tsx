@@ -2,7 +2,7 @@ import {  Navbar,   NavbarBrand,   NavbarContent, NavbarItem, NavbarMenu, Navbar
 import { FC } from 'react';
 import NavBarLinks from "./NavBarLinks/NavBarLinks";
 import { linksList } from "@/static-data/linksList/linksList";
-import { ThemeSwitcherBtn } from './ThemeSwitcherBtn/ThemeSwitcherBtn';
+import { ThemeSwitcher } from '@/src/features/theme-switcher';
 import { headerHight } from "@/utils/constants";
 import { NavBarMobileMenu } from "./NavBarMobileMenu/NavBarMobileMenu";
 import { LogoChurch } from "@/src/shared";
@@ -18,7 +18,7 @@ const Header: FC = () => {
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
-            <ThemeSwitcherBtn />
+            <ThemeSwitcher />
           </NavbarItem>
           <NavbarMenuToggle
             className="sm:hidden"
