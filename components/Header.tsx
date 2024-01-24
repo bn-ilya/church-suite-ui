@@ -5,7 +5,7 @@ import { linksList } from "@/static-data/linksList/linksList";
 import { ThemeSwitcherBtn } from './ThemeSwitcherBtn/ThemeSwitcherBtn';
 import { headerHight } from "@/utils/constants";
 import { NavBarMobileMenu } from "./NavBarMobileMenu/NavBarMobileMenu";
-import { LogoChurch } from "./LogoChurch/LogoChurch";
+import { LogoChurch } from "@/src/shared";
 
 const Header: FC = () => {
   return (

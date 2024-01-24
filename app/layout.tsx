@@ -1,16 +1,10 @@
-import type { Metadata } from 'next';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import './globals.css';
 import { Providers } from './providers';
 import { montserrat } from '@/utils/fonts';
 
-export const metadata: Metadata = {
-  title: 'Церковь Кропоткина',
-  description: '',
-}
-
-export default function RootLayout({
+export default function Layout({
   children,
 }: {
   children: React.ReactNode

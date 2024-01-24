@@ -1,11 +1,5 @@
-import { About } from "@/components/About/About";
-import {IntroFull} from "@/components/IntroFull/IntroFull";
+import { Main } from "@/src/views/main";
 
-export default function Home() {
-  return (
-    <>
-    <IntroFull/>
-    <About/>
-    </>
-  )
+export default function MainPage() {
+  return <Main />
 }

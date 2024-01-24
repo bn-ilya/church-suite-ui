@@ -3,7 +3,7 @@ import { Unbounded } from 'next/font/google';
 
 const unbounded = Unbounded({ subsets: ['cyrillic'] });
 
-export const About = () => {
+export const MainAbout = () => {
   return (
       <div className="max-w-7xl w-full mx-auto px-6 grid grid-cols-12 gap-y-7 gap-4 dark:bg-black light:bg-white py-16 md:py-36">
         <div className='col-span-12 lg:col-span-5 flex flex-col gap-2 justify-center'>

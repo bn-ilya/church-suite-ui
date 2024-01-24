@@ -1,7 +1,7 @@
+import { LogoChurch } from '@/src/shared';
 import { unbounded } from '@/utils/fonts';
-import { LogoChurch } from '../LogoChurch/LogoChurch';
 
-export const IntroFull = () => {
+export const MainIntro = () => {
   return (
     <div className={`h-dvh sm:h-screen w-full relative`}>
       <div className="max-w-7xl mx-auto h-full flex  flex-col gap-4 justify-center items-center">
