@@ -3,7 +3,7 @@ import { IFormUploadInputProps } from './FormUploadInput.interface';
 import { Button, Chip } from '@nextui-org/react';
 import { CheckCircleIcon } from '@heroicons/react/16/solid';
 
-export const FormUploadInput: FC<IFormUploadInputProps> = ({register}) => {
+export const FormUploadInput: FC<IFormUploadInputProps> = (props) => {
   const filePicker = useRef<HTMLInputElement | null>(null)
   const [filesNames, setFilesNames] = useState<Array<string>>([]);
   
@@ -21,7 +21,6 @@ export const FormUploadInput: FC<IFormUploadInputProps> = ({register}) => {
     filePicker.current?.click();
   }
 
-  const inputFiles = register("files");
   return (
     <>
       <Button variant="flat" fullWidth onClick={handleClickButton}>
@@ -29,14 +28,14 @@ export const FormUploadInput: FC<IFormUploadInputProps> = ({register}) => {
       </Button> 
       <input
         className="hidden-accessibility"
-        {...inputFiles}
+        {...props}
         onChange={(e) => {
-          inputFiles.onChange(e);
+          props.onChange?.(e);
           handleChangeFiles(e);
         }}
-        ref={(e) => {
-          inputFiles.ref(e);
-          filePicker.current = e;
+        ref={(element) => {
+          props.ref?.(element);
+          filePicker.current = element;
         }}
         accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*"
         type="file"

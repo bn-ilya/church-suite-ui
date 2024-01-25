@@ -32,6 +32,8 @@ export const Form = () => {
     router.push(`/livechat/register/success?id=${data?.data.id}`,); 
   }, [isSuccess])
 
+  const inputFiles = register("files");
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
@@ -93,7 +95,7 @@ export const Form = () => {
             <span className="text-sm">Чек(и) об оплате</span>
             <p className="text-xs">Обязательно в случае онлайн оплаты!</p>
           </div>
-          <FormUploadInput register={register} />
+          <FormUploadInput {...inputFiles} />
         </div>
 
         <Button isLoading={isAddingClient || isUploadedImage} type="submit" color="primary" className="col-span-2">
