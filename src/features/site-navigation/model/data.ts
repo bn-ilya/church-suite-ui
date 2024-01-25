@@ -1,6 +1,6 @@
-import { INavLink } from "./linksList.types";
+import { ILink } from "./data.types";
 
-export const linksList: Array<INavLink> = [
+export const data: Array<ILink> = [
   {
     path: '/',
     title: 'Главная',

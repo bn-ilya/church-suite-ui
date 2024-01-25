@@ -1,5 +1,5 @@
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { Header } from '@/src/widgets/header';
+import { Footer } from '@/src/widgets/footer';
 import './globals.css';
 import { Providers } from './providers';
 import { montserrat } from '@/utils/fonts';

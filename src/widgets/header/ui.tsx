@@ -1,20 +1,18 @@
 import {  Navbar,   NavbarBrand,   NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react";
 import { FC } from 'react';
-import NavBarLinks from "./NavBarLinks/NavBarLinks";
-import { linksList } from "@/static-data/linksList/linksList";
+import { NavbarRow, NavbarMobile } from "@/src/features/site-navigation";
 import { ThemeSwitcher } from '@/src/features/theme-switcher';
-import { headerHight } from "@/utils/constants";
-import { NavBarMobileMenu } from "./NavBarMobileMenu/NavBarMobileMenu";
+import { headerHeight } from "./lib/constants";
 import { LogoChurch } from "@/src/shared";
 
-const Header: FC = () => {
+export const Header: FC = () => {
   return (
-      <Navbar maxWidth="full" height={`${headerHight}px`} isBordered className="fixed">
+      <Navbar maxWidth="full" height={`${headerHeight}px`} isBordered className="fixed">
         <NavbarBrand>
           <LogoChurch className='w-[20px] h-auto text-foreground' />
         </NavbarBrand>
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavBarLinks linksList={linksList} />
+          <NavbarRow />
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
@@ -25,9 +23,7 @@ const Header: FC = () => {
           />
         </NavbarContent>
 
-        <NavBarMobileMenu linksList={linksList} />
+        <NavbarMobile />
       </Navbar>
   )
 };
-
-export default Header;

@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { INavBarMobileMenuProps } from './NavBarMobileMenu.props';
 import { NavbarMenu, NavbarMenuItem, Link } from '@nextui-org/react';
+import { data } from '../../model';
 
-export const NavBarMobileMenu: FC<INavBarMobileMenuProps> = ({linksList}) => {
+export const NavbarMobile: FC = () => {
   return (
     <NavbarMenu>
-    {linksList.map((item, index) => (
+    {data.map((item, index) => (
       <NavbarMenuItem key={`${item}-${index}`}>
         <Link
           color="foreground"
