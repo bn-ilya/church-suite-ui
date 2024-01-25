@@ -2,7 +2,7 @@ import { Header } from '@/src/widgets/header';
 import { Footer } from '@/src/widgets/footer';
 import './globals.css';
 import { Providers } from './providers';
-import { montserrat } from '@/utils/fonts';
+import { montserrat } from '@/src/shared/fonts';
 
 export default function Layout({
   children,

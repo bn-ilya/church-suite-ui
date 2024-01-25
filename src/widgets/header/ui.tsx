@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { NavbarRow, NavbarMobile } from "@/src/features/site-navigation";
 import { ThemeSwitcher } from '@/src/features/theme-switcher';
 import { headerHeight } from "./lib/constants";
-import { LogoChurch } from "@/src/shared";
+import { LogoChurch } from "@/src/shared/ui";
 
 export const Header: FC = () => {
   return (

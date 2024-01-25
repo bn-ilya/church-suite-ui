@@ -1,5 +1,5 @@
-import { LogoChurch } from '@/src/shared';
-import { unbounded } from '@/utils/fonts';
+import { LogoChurch } from '@/src/shared/ui';
+import { unbounded } from '@/src/shared/fonts';
 
 export const MainIntro = () => {
   return (
