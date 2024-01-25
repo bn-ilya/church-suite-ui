@@ -3,20 +3,13 @@ import { FC, useEffect, useState } from 'react';
 import type { Dayjs } from 'dayjs';
 import { Calendar as CalendarAnt } from 'antd';
 import type { CalendarProps } from 'antd';
-import { useEventsCalendar } from '@/hooks/useEventsCalendar';
-import { CalendarSkeleton } from '../CalendarSkeleton/CalendarSkeleton';
+import { useEventsCalendar } from '../model/hooks/useEventsCalendar';
+import { Skeleton } from './skeleton';
 import { Chip } from '@nextui-org/react';
-import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config';
-import { cssValueToNumber } from '@/utils/helpers/cssValueToNumber';
+import { getBreakpoints } from '@/src/shared/lib';
 import { useWindowSize } from '@uidotdev/usehooks';
 
-const fullConfig = resolveConfig(tailwindConfig)
-
-let breakpoints: {[key in string]: number} = {};
-for(const [key, value] of Object.entries(fullConfig.theme.screens)) {
-  breakpoints[key] = cssValueToNumber(value);
-}
+const breakpoints = getBreakpoints();
 
 export const Calendar: FC = () => {
   const [isMobileScreen, setMobileScreen] = useState(false);
@@ -34,7 +27,7 @@ export const Calendar: FC = () => {
     }
   }, [width])
 
-  if (isLoading) return <CalendarSkeleton />;
+  if (isLoading) return <Skeleton />;
 
   const dateCellRender = (value: Dayjs) => {
     for (let event of events) {
