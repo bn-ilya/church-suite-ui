@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetEventsQuery } from "@/redux/strapiApi";
+import { useGetEventsQuery } from "@/src/shared/api";
 import { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 

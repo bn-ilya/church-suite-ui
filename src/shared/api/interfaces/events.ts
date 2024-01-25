@@ -1,4 +1,4 @@
-import { IAttributesCommonsRes } from "./commons.interface"
+import { IAttributesCommonsRes } from "./commons";
 
 export interface IEvent extends IAttributesCommonsRes {
   id: number,

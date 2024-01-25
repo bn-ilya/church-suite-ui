@@ -1,4 +1,4 @@
-import { IFile } from "@/redux/interfaces/strapiApi/upload.interface";
+import { IFile } from "@/src/app/providers/store-provider/interfaces/strapiApi/upload.interface";
 
 export interface LiveChatFormData {
   name: string,

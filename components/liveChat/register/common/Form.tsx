@@ -1,13 +1,13 @@
 "use client";
 
-import { ILiveChatClient } from "@/redux/interfaces/strapiApi/liveChatClient";
-import { useAddLiveChatClientMutation, useUploadImageMutation } from "@/redux/strapiApi";
 import { Button, Input } from "@nextui-org/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { LiveChatFormData } from "@/utils/types/LiveChatFormData.interface";
 import {useRouter}  from 'next/navigation';
 import { useEffect } from "react";
 import { FormUploadInput } from "@/components/FormUploadInput/FormUploadInput";
+import { useAddLiveChatClientMutation, useUploadImageMutation } from "@/src/shared/api";
+import { ILiveChatClient } from "@/src/shared/api";
 
 export const Form = () => {
   const [addLiveChatClient, {isLoading: isAddingClient, isSuccess, data}] = useAddLiveChatClientMutation();
