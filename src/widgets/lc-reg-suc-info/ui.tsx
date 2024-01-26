@@ -12,9 +12,6 @@ export const LcRegSucInfo: FC = () => {
           </p>
         </div>
         <div className='w-full flex flex-col gap-2'>
-          <Button fullWidth color="primary" >
-            Изменить данные
-          </Button>
           <Button fullWidth color="danger" variant="light">
             Отменить регистрацию
           </Button>

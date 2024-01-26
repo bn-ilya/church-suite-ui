@@ -6,6 +6,7 @@ import { FC } from 'react';
 
 export const LcRegSucIntro: FC = () => {
   const params = useSearchParams();
+  
   return (
     <div className="bg-gradient-to-b from-success-400 to-success-200">
       <div className={`mt-[64px] px-6 max-w-7xl mx-auto h-full`}>
