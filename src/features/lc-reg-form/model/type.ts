@@ -1,6 +1,6 @@
-import { IFile } from "@/src/app/providers/store-provider/interfaces/strapiApi/upload.interface";
+import { IFile } from "@/src/shared/api/interfaces";
 
-export interface LiveChatFormData {
+export interface FormData {
   name: string,
   city: string,
   tel: number,

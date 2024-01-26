@@ -1,10 +1,10 @@
 "use client";
 import { CheckCircleIcon } from '@heroicons/react/16/solid';
-import { Divider, Snippet } from '@nextui-org/react';
+import { Snippet } from '@nextui-org/react';
 import { useSearchParams } from 'next/navigation';
 import { FC } from 'react';
 
-export const SuccessIntro: FC = () => {
+export const LcRegSucIntro: FC = () => {
   const params = useSearchParams();
   return (
     <div className="bg-gradient-to-b from-success-400 to-success-200">

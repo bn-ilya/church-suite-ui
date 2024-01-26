@@ -2,7 +2,7 @@
 
 import { Button, Input } from "@nextui-org/react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { LiveChatFormData } from "@/utils/types/LiveChatFormData.interface";
+import { FormData } from "../model/type";
 import { useRouter }  from 'next/navigation';
 import { useEffect } from "react";
 import { UploadInput } from "@/src/shared/ui";
@@ -14,9 +14,9 @@ export const LcRegForm = () => {
   const [uploadImage, {isLoading: isUploadedImage, isError, error}] = useUploadImageMutation();
   const router = useRouter();
 
-  const {register, handleSubmit, formState: {errors}} = useForm<LiveChatFormData>();
+  const {register, handleSubmit, formState: {errors}} = useForm<FormData>();
 
-  const onSubmit: SubmitHandler<LiveChatFormData> = async (formData) => { 
+  const onSubmit: SubmitHandler<FormData> = async (formData) => { 
     if (formData.files?.length) {
       const files = await uploadImage(formData.files).unwrap();
       formData.cheque = files.map(file => file.id);
@@ -35,7 +35,7 @@ export const LcRegForm = () => {
   const {ref, ...inputFiles} = register("files");
 
   return (
-    <>
+    <div className="max-w-7xl w-full mx-auto px-6">
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
         <Input
           isRequired
@@ -102,6 +102,6 @@ export const LcRegForm = () => {
           Отправить
         </Button>
       </form>
-    </>
+    </div>
   )
 }

@@ -1,11 +1,11 @@
-import { LcForm } from "@/src/widgets/lc-form";
-import { LcIntro } from "@/src/widgets/lc-intro";
+import { LcRegForm } from "@/src/features/lc-reg-form";
+import { LcRegIntro } from "@/src/widgets/lc-reg-intro";
 
 export const LcReg = () => {
   return (
     <div className={`mt-[64px]`}>
-      <LcIntro />
-      <LcForm />
+      <LcRegIntro />
+      <LcRegForm />
     </div> 
   )
 }

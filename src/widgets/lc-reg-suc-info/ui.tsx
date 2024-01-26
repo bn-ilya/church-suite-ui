@@ -2,7 +2,7 @@
 import { Button } from '@nextui-org/react';
 import { FC } from 'react';
 
-export const SuccessInfo: FC = () => {
+export const LcRegSucInfo: FC = () => {
   return (
     <div className={`px-6 max-w-7xl mx-auto w-full h-full`}>
       <div className='w-full py-6 flex flex-col gap-4'>
