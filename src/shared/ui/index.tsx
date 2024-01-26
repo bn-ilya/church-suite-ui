@@ -1,1 +1,2 @@
-export { LogoChurch } from './logo-church';
+export * from './logo-church';
+export * from './upload-input/ui';
