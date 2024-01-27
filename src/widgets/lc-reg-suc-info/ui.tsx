@@ -1,4 +1,5 @@
 "use client";
+import { LcChangeData } from '@/src/features/lc-change-data';
 import { Button } from '@nextui-org/react';
 import { FC } from 'react';
 
@@ -12,6 +13,7 @@ export const LcRegSucInfo: FC = () => {
           </p>
         </div>
         <div className='w-full flex flex-col gap-2'>
+          <LcChangeData />
           <Button fullWidth color="danger" variant="light">
             Отменить регистрацию
           </Button>
