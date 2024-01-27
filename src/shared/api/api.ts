@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEvent, IEvents } from "./interfaces/events";
 import { TFiles } from "./interfaces/upload";
-import { IAddLiveChatClientRes, ILiveChatClient } from "./interfaces/liveChatClient";
+import { IAddLiveChatClientRes, IGetLiveChatClientRes, ILiveChatClient } from "./interfaces/liveChatClient";
 
 export const api = createApi({
   reducerPath: 'strapiApi',
@@ -37,9 +37,19 @@ export const api = createApi({
           data
         },    
       })
+    }),
+    getLiveChatClient: build.query<IGetLiveChatClientRes, number>({
+      query: (id) => ({
+        url: `live-chat-clients/${id}`,
+      })
     })
-
   }),
 })
 
-export const { useGetEventsQuery, useAddLiveChatClientMutation, useUploadImageMutation } = api; 
+export const 
+{ 
+  useGetEventsQuery,
+  useAddLiveChatClientMutation,
+  useUploadImageMutation,
+  useGetLiveChatClientQuery
+} = api; 

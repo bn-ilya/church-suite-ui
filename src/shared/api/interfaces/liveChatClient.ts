@@ -1,5 +1,5 @@
-import { IAttributesCommonsRes } from "./commons.interface";
-import { IFile } from "./upload.interface";
+import { IAttributesCommonsRes } from "./commons";
+import { IFile } from "./upload";
 
 export interface ILiveChatClient {
   name: string,
@@ -17,6 +17,14 @@ export interface IAddLiveChatClientReq {
 interface IAttributesRes extends ILiveChatClient, IAttributesCommonsRes {}
 
 export interface IAddLiveChatClientRes {
+  data: {
+    attributes: IAttributesRes,
+    id: number
+  },
+  meta: {},
+}
+
+export interface IGetLiveChatClientRes {
   data: {
     attributes: IAttributesRes,
     id: number
