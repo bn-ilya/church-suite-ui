@@ -19,7 +19,7 @@ export const LcRegForm = () => {
   const onSubmit: SubmitHandler<FormData> = async (formData) => { 
     if (formData.files?.length) {
       const files = await uploadImage(formData.files).unwrap();
-      formData.cheque = files.map(file => file.id);
+      formData.cheques = files.map(file => file.id);
       delete formData.files;
     }
     

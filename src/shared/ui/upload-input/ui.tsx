@@ -5,9 +5,9 @@ import { IUploadInputProps } from './ui.props';
 import { Button, Chip } from '@nextui-org/react';
 import { CheckCircleIcon } from '@heroicons/react/16/solid';
 
-export const UploadInput: FC<IUploadInputProps> = (props) => {
+export const UploadInput: FC<IUploadInputProps> = ({refCallback, defaultNames, ...props}) => {
   const filePicker = useRef<HTMLInputElement | null>(null)
-  const [filesNames, setFilesNames] = useState<Array<string>>([]);
+  const [filesNames, setFilesNames] = useState<Array<string>>(defaultNames || []);
   
   const handleChangeFiles = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -36,7 +36,7 @@ export const UploadInput: FC<IUploadInputProps> = (props) => {
           handleChangeFiles(e);
         }}
         ref={(element) => {
-          props.refCallback?.(element);
+          refCallback?.(element);
           filePicker.current = element;
         }}
         accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf, image/*"

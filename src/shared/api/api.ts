@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEvent, IEvents } from "./interfaces/events";
-import { TFiles } from "./interfaces/upload";
-import { IAddLiveChatClientRes, IGetLiveChatClientRes, ILiveChatClient } from "./interfaces/liveChatClient";
+import { IAddLiveChatClientRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
+import { IUploadFile } from "./interfaces/upload";
 
 export const api = createApi({
   reducerPath: 'strapiApi',
@@ -15,7 +15,7 @@ export const api = createApi({
       }),
       transformResponse: (response: IEvents) => response.data,
     }),
-    uploadImage: build.mutation<TFiles, FileList>({
+    uploadImage: build.mutation<Array<IUploadFile>, FileList>({
       query: (files) => {
         let bodyFormData = new FormData();
         for(let i = 0; i < files.length; i++) {
@@ -38,10 +38,20 @@ export const api = createApi({
         },    
       })
     }),
-    getLiveChatClient: build.query<IGetLiveChatClientRes, number>({
-      query: (id) => ({
-        url: `live-chat-clients/${id}`,
+    updateLiveChatClient: build.mutation<IUpdateLiveChatClientRes, IUpdateClientReq>({
+      query: (data) => ({
+        url: `live-chat-clients/${data.id}`,
+        method: 'PUT',
+        body: {
+          data: data.body
+        },    
       })
+    }),
+    getLiveChatClient: build.query<IGetLiveChatClientRes['data'], number>({
+      query: (id) => ({
+        url: `live-chat-clients/${id}?populate[0]=cheques`,
+      }),
+      transformResponse: (response: IGetLiveChatClientRes) => response.data,
     })
   }),
 })
@@ -49,7 +59,8 @@ export const api = createApi({
 export const 
 { 
   useGetEventsQuery,
-  useAddLiveChatClientMutation,
+  useAddLiveChatClientMutation, 
   useUploadImageMutation,
-  useGetLiveChatClientQuery
+  useGetLiveChatClientQuery,
+  useUpdateLiveChatClientMutation
 } = api; 

@@ -7,5 +7,5 @@ export interface FormData {
   count: number,
   comment?: string,
   files?: FileList,
-  cheque?: Array<IFile['id']>
+  cheques?: Array<IFile['id']>
 }

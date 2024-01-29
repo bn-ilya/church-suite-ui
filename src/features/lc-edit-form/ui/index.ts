@@ -1,1 +1,1 @@
-export * from './ui'
+export {Controller as LcEditForm } from './controller/ui';
