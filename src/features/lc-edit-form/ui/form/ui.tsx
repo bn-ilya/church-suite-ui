@@ -35,7 +35,7 @@ export const Form: FC<IFormProps> = (props) => {
 
   useEffect(()=>{
     if (!isSuccess) return;
-    router.push(`/livechat/register/success?id=${data?.data.id}`); 
+    router.push(`/livechat/edit/success?id=${data?.data.id}`); 
   }, [isSuccess])
 
   const {ref, ...inputFiles} = register("files");
