@@ -1,6 +1,6 @@
 "use client";
 import { LcChangeData } from '@/src/features/lc-change-data';
-import { Button } from '@nextui-org/react';
+import { LcDeleteData } from '@/src/features/lc-delete-data';
 import { FC } from 'react';
 
 export const LcEditSucInfo: FC = () => {
@@ -9,9 +9,7 @@ export const LcEditSucInfo: FC = () => {
       <div className='w-full py-6 flex flex-col gap-4'>
         <div className='w-full flex flex-col gap-2'>
           <LcChangeData />
-          <Button fullWidth color="danger" variant="light">
-            Отменить регистрацию
-          </Button>
+          <LcDeleteData />
         </div>
       </div>
     </div>

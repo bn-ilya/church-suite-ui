@@ -49,6 +49,14 @@ export interface IUpdateLiveChatClientRes {
   meta: {},
 }
 
+export interface IDeleteLiveChatClientRes {
+  data: {
+    attributes: IAttributesRes,
+    id: number
+  },
+  meta: {},
+}
+
 export interface IGetLiveChatClientRes {
   data: {
     attributes: IAttributesPopulateRes,

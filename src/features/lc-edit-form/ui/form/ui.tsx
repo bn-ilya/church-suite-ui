@@ -42,18 +42,18 @@ export const Form: FC<IFormProps> = (props) => {
   return (
     <div className="max-w-7xl w-full mx-auto px-6">
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
-        <Input
-          isRequired
-          isInvalid={!!errors?.name}
-          errorMessage={errors?.name?.message}
-          type="text"
-          label="Имя Фамилия"
-          placeholder="Петр Петров"
-          labelPlacement="outside"
-          className="col-span-2"
-          defaultValue={name}
-          {...register("name", {required: 'Заполните имя'})}
-        />
+          <Input
+            isRequired
+            isInvalid={!!errors?.name}
+            errorMessage={errors?.name?.message}
+            type="text"
+            label="Имя Фамилия"
+            placeholder="Петр Петров"
+            labelPlacement="outside"
+            className="col-span-2"
+            defaultValue={name}
+            {...register("name", {required: 'Заполните имя'})}
+          />
         <Input
           isRequired
           {...register("city", {required: 'Заполните город'})}

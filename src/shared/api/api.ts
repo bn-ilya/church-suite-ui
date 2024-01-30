@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEvent, IEvents } from "./interfaces/events";
-import { IAddLiveChatClientRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
+import { IAddLiveChatClientRes, IDeleteLiveChatClientRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
 import { IUploadFile } from "./interfaces/upload";
 
 export const api = createApi({
@@ -47,6 +47,12 @@ export const api = createApi({
         },    
       })
     }),
+    deleteLiveChatClient: build.mutation<IDeleteLiveChatClientRes, number>({
+      query: (id) => ({
+        url: `live-chat-clients/${id}`,
+        method: 'DELETE'  
+      })
+    }),
     getLiveChatClient: build.query<IGetLiveChatClientRes['data'], number>({
       query: (id) => ({
         url: `live-chat-clients/${id}?populate[0]=cheques`,
@@ -62,5 +68,6 @@ export const
   useAddLiveChatClientMutation, 
   useUploadImageMutation,
   useGetLiveChatClientQuery,
-  useUpdateLiveChatClientMutation
+  useUpdateLiveChatClientMutation,
+  useDeleteLiveChatClientMutation
 } = api; 

@@ -5,9 +5,9 @@ import { Form } from '../form/ui';
 import { prepareFormData } from '../../lib/helpers/prepare-form-data';
 
 export const Controller: FC<IControllerProps> = ({id}) => {
-  const {data, isLoading} = useGetLiveChatClientQuery(id, {refetchOnMountOrArgChange: true});
+  const {data, isFetching } = useGetLiveChatClientQuery(id, {refetchOnMountOrArgChange: true});
   
-  if (isLoading && !data) return <div>Загрузка</div>
+  if (isFetching) return <div>Загрузка</div>
 
   if (data) {
     const formData = prepareFormData(data);
