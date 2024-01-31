@@ -29,7 +29,7 @@ export const LcRegForm = () => {
 
   useEffect(()=>{
     if (!isSuccess) return;
-    router.push(`/livechat/register/success?id=${data?.data.id}`); 
+    router.push(`/livechat/register/success?id=${data?.data.id}&code=${data?.data.attributes.code}`); 
   }, [isSuccess])
 
   const {ref, ...inputFiles} = register("files");

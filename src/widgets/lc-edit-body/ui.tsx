@@ -8,10 +8,10 @@ import { FC } from 'react';
 export const LcEditBody: FC = () => {
   const params = useSearchParams();
   const id = Number(params.get('id'));
+  const code = Number(params.get('code'));
 
-  // TODO
-  if (!id) return <LcSearchForm />
+  if (!id && !code) return <LcSearchForm />
 
-  return <LcEditForm id={id} />
+  return <LcEditForm id={id} code={code} />
 };
 

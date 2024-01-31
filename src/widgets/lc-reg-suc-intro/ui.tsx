@@ -17,7 +17,7 @@ export const LcRegSucIntro: FC = () => {
           </div>
           <div className="flex items-center flex-col md:flex-row p-5 gap-2 md:gap-4">
               <div className="text-base md:text-2xl">Ваш код:</div>
-              <Snippet symbol="" size="lg" className="text-4xl font-bold">{params.get('id')}</Snippet>
+              <Snippet symbol="" size="lg" className="text-4xl font-bold">{params.get('code')}</Snippet>
           </div>
         </div>
       </div>

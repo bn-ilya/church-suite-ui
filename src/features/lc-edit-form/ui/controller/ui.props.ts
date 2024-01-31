@@ -1,3 +1,4 @@
 export interface IControllerProps {
-  id: number;
+  id?: number;
+  code?: number;
 }

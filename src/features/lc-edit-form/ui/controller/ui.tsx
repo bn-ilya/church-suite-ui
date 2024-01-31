@@ -1,17 +1,32 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { IControllerProps } from './ui.props';
-import { useGetLiveChatClientQuery } from '@/src/shared/api';
+import { IGetLiveChatClientDataRes, useLazyGetLiveChatClientByCodeQuery, useLazyGetLiveChatClientQuery } from '@/src/shared/api';
 import { Form } from '../form/ui';
 import { prepareFormData } from '../../lib/helpers/prepare-form-data';
 
-export const Controller: FC<IControllerProps> = ({id}) => {
-  const {data, isFetching } = useGetLiveChatClientQuery(id, {refetchOnMountOrArgChange: true});
-  
-  if (isFetching) return <div>Загрузка</div>
+const renderForm = (data: IGetLiveChatClientDataRes) => {
+  const formData = prepareFormData(data);
+  return <Form {...formData} id={data.id} />
+}
 
-  if (data) {
-    const formData = prepareFormData(data);
-    return <Form {...formData} id={id} />
+export const Controller: FC<IControllerProps> = ({id, code}) => {
+  const [getById, {data: dataById, isFetching: idFetchingById}] = useLazyGetLiveChatClientQuery();
+  const [getByCode, {data: dataByCode, isFetching: idFetchingByCode}] = useLazyGetLiveChatClientByCodeQuery();
+  
+  useEffect(()=>{
+    if (id) {
+      getById(id);
+    } else if (code) {
+      getByCode(code);
+    }
+  }, [])
+
+  if (idFetchingById || idFetchingByCode) return <div>Загрузка</div>
+
+  if (dataById) {
+    return renderForm(dataById);
+  } else if (dataByCode) {
+    return renderForm(dataByCode);
   }
 };
 

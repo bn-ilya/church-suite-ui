@@ -9,8 +9,8 @@ export const LcSearchForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const id = refInput.current?.value;
-    router.push(`/livechat/edit/?id=${id}`);
+    const code = refInput.current?.value;
+    router.push(`/livechat/edit/?code=${code}`);
   }
 
   return (

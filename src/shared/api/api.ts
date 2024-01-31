@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEvent, IEvents } from "./interfaces/events";
-import { IAddLiveChatClientRes, IDeleteLiveChatClientRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
+import { IAddLiveChatClientRes, IDeleteLiveChatClientRes, IGetLiveChatClientByCodeRes, IGetLiveChatClientDataRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
 import { IUploadFile } from "./interfaces/upload";
 
 export const api = createApi({
@@ -53,11 +53,17 @@ export const api = createApi({
         method: 'DELETE'  
       })
     }),
-    getLiveChatClient: build.query<IGetLiveChatClientRes['data'], number>({
+    getLiveChatClient: build.query<IGetLiveChatClientDataRes, number>({
       query: (id) => ({
         url: `live-chat-clients/${id}?populate[0]=cheques`,
       }),
       transformResponse: (response: IGetLiveChatClientRes) => response.data,
+    }),
+    getLiveChatClientByCode: build.query<IGetLiveChatClientDataRes, number>({
+      query: (code) => ({
+        url: `live-chat-clients/?filters[code][$eq]=${code}&populate[0]=cheques`,
+      }),
+      transformResponse: (response: IGetLiveChatClientByCodeRes) => response.data?.[0],
     })
   }),
 })
@@ -68,6 +74,8 @@ export const
   useAddLiveChatClientMutation, 
   useUploadImageMutation,
   useGetLiveChatClientQuery,
+  useLazyGetLiveChatClientQuery,
+  useLazyGetLiveChatClientByCodeQuery,
   useUpdateLiveChatClientMutation,
   useDeleteLiveChatClientMutation
 } = api; 
