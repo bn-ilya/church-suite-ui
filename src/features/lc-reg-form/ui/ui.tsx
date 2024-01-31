@@ -80,6 +80,7 @@ export const LcRegForm = () => {
           placeholder="Введите количество "
           labelPlacement="outside"
           className="col-span-2"
+          defaultValue="1"
         />
         <Input
           {...register("comment")}
