@@ -1,1 +1,1 @@
-export * from './ui'
+export {ButtonDelete as LcDeleteData} from './button/ui'

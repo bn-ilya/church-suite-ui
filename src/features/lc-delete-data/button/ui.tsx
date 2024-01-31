@@ -1,13 +1,16 @@
 "use client";
 
 import { useDeleteLiveChatClientMutation } from "@/src/shared/api";
-import { Button } from "@nextui-org/react";
+import { Button, useDisclosure } from "@nextui-org/react";
 import { useSearchParams } from "next/navigation";
-import { FC, MouseEvent } from "react";
+import { FC } from "react";
+import { ModalDelete } from "../modal/ui";
 
-export const LcDeleteData: FC = () => {
+export const ButtonDelete: FC = () => {
   const params = useSearchParams();
   const id = params.get('id');
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+
   const [deleteData, {isLoading}] = useDeleteLiveChatClientMutation()
 
   const handleClick = () => {
@@ -17,8 +20,12 @@ export const LcDeleteData: FC = () => {
   }
 
   return (
-    <Button fullWidth color="danger" variant="light" onClick={handleClick} isLoading={isLoading}>
+    <>
+    <Button fullWidth color="danger" variant="light" onPress={onOpen}>
       Отменить регистрацию
     </Button>
+    <ModalDelete isOpen={isOpen} onOpenChange={onOpenChange} />
+    </>
+    
   )
 }
