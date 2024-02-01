@@ -2,7 +2,7 @@
 
 import { Button, Input } from "@nextui-org/react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { FormDataToSend } from "../../model/type";
+import { FormDataToSend } from "../../../model/type";
 import { useRouter }  from 'next/navigation';
 import { FC, useEffect } from "react";
 import { UploadInput } from "@/src/shared/ui";

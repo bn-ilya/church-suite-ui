@@ -1,6 +1,6 @@
 "use client";
 
-import { LcEditForm } from '@/src/features/lc-edit-form';
+import { LcEditForm } from '@/src/features/lc-forms';
 import { LcSearchForm } from '@/src/features/lc-search-form';
 import { useSearchParams } from 'next/navigation';
 import { FC } from 'react';

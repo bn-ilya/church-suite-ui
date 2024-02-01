@@ -1,5 +1,5 @@
 import { IGetLiveChatClientRes } from "@/src/shared/api";
-import { FormDataReceived } from "../../model/type";
+import { FormDataReceived } from "../../../lc-edit-form/model/type";
 
 export function prepareFormData(data: IGetLiveChatClientRes['data']): FormDataReceived {
   

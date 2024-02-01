@@ -1,8 +1,10 @@
+"use client";
+
 import { FC, useEffect } from 'react';
 import { IControllerProps } from './ui.props';
 import { IGetLiveChatClientDataRes, useLazyGetLiveChatClientByCodeQuery, useLazyGetLiveChatClientQuery } from '@/src/shared/api';
 import { Form } from '../form/ui';
-import { prepareFormData } from '../../lib/helpers/prepare-form-data';
+import { prepareFormData } from '../../../lib/helpers/prepare-form-data';
 import { Skeleton } from '../skeleton/ui';
 
 const renderForm = (data: IGetLiveChatClientDataRes) => {

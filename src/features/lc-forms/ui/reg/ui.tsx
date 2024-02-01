@@ -2,12 +2,12 @@
 
 import { Accordion, AccordionItem, Button, Divider, Input, Snippet, Switch } from "@nextui-org/react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { FormData } from "../model/type";
 import { useRouter }  from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from "react";
 import { UploadInput } from "@/src/shared/ui";
 import { useAddLiveChatClientMutation, useUploadImageMutation } from "@/src/shared/api";
 import { ILiveChatClient } from "@/src/shared/api";
+import { FormDataToSend } from "../../model/type";
 
 const cost = 400;
 
@@ -18,7 +18,7 @@ export const LcRegForm = () => {
   const [sum, setSum] = useState(cost)
   const router = useRouter();
 
-  const {register, watch, handleSubmit, formState: {errors, }} = useForm<FormData>();
+  const {register, watch, handleSubmit, formState: {errors, }} = useForm<FormDataToSend>();
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
@@ -30,7 +30,7 @@ export const LcRegForm = () => {
     return () => subscription.unsubscribe()
   }, [watch])
 
-  const onSubmit: SubmitHandler<FormData> = async (formData) => { 
+  const onSubmit: SubmitHandler<FormDataToSend> = async (formData) => { 
     if (formData.files?.length) {
       const files = await uploadImage(formData.files).unwrap();
       formData.cheques = files.map(file => file.id);
