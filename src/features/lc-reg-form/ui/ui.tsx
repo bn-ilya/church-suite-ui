@@ -1,20 +1,34 @@
 "use client";
 
-import { Button, Input } from "@nextui-org/react";
+import { Accordion, AccordionItem, Button, Divider, Input, Snippet, Switch } from "@nextui-org/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FormData } from "../model/type";
 import { useRouter }  from 'next/navigation';
-import { useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { UploadInput } from "@/src/shared/ui";
 import { useAddLiveChatClientMutation, useUploadImageMutation } from "@/src/shared/api";
 import { ILiveChatClient } from "@/src/shared/api";
 
+const cost = 400;
+
 export const LcRegForm = () => {
+  const [isShowCount, setIsShowCount] = useState(false);
   const [addLiveChatClient, {isLoading: isAddingClient, isSuccess, data}] = useAddLiveChatClientMutation();
   const [uploadImage, {isLoading: isUploadedImage, isError, error}] = useUploadImageMutation();
+  const [sum, setSum] = useState(cost)
   const router = useRouter();
 
-  const {register, handleSubmit, formState: {errors}} = useForm<FormData>();
+  const {register, watch, handleSubmit, formState: {errors, }} = useForm<FormData>();
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (name === "count") {
+          setSum(Number(value.count) * cost);
+        }
+      }
+    )
+    return () => subscription.unsubscribe()
+  }, [watch])
 
   const onSubmit: SubmitHandler<FormData> = async (formData) => { 
     if (formData.files?.length) {
@@ -22,10 +36,19 @@ export const LcRegForm = () => {
       formData.cheques = files.map(file => file.id);
       delete formData.files;
     }
-    
+
+    if (!formData.count) {
+      formData.count = 1;
+    } 
+  
+
     const data: ILiveChatClient = formData;
     await addLiveChatClient(data).unwrap();
   };
+
+  const handleSwitchCount = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsShowCount(e.target.checked);
+  }
 
   useEffect(()=>{
     if (!isSuccess) return;
@@ -70,18 +93,23 @@ export const LcRegForm = () => {
           labelPlacement="outside"
           className="col-span-2"
         />
-        <Input
-          isRequired
-          {...register("count", {required: 'Заполните количество'})}
-          isInvalid={!!errors?.count}
-          errorMessage={errors?.count?.message}
-          type="number"
-          label="Количество человек (с учетом вас)"
-          placeholder="Введите количество "
-          labelPlacement="outside"
-          className="col-span-2"
-          defaultValue="1"
-        />
+        <div className="col-span-2 flex gap-2 items-center">
+          <Switch onChange={handleSwitchCount}/>
+          <div className="text-sm">Я регистрирую не только себя</div>
+        </div>
+        {isShowCount && (
+          <Input
+            {...register("count", {required: 'Заполните количество'})}
+            isInvalid={!!errors?.count}
+            errorMessage={errors?.count?.message}
+            type="number"
+            label="Количество человек (с учетом вас)"
+            placeholder="Введите количество "
+            labelPlacement="outside"
+            className="col-span-2"
+            defaultValue="1"
+          />
+        )}
         <Input
           {...register("comment")}
           isInvalid={!!errors?.comment}
@@ -91,6 +119,24 @@ export const LcRegForm = () => {
           labelPlacement="outside"
           className="col-span-2"
         />
+        <Divider className="col-span-2 my-2" />
+        <div className="col-span-2 flex flex-col items-center">
+          <div className="w-full flex justify-center">
+            <span className="text-base font-bold text-success me-2">К оплате:</span>
+            <span className="text-base font-bold text-success">{sum}₽</span>
+          </div>
+          <span className="text-sm text-zinc-500">Стоимость за человека - {cost}₽</span>
+        </div>
+        <Accordion isCompact variant="splitted" className="col-span-2 px-0">
+          <AccordionItem key="1" aria-label="Как оплатить?" title={<div className="text-sm">Как оплатить?</div>}>
+            <Divider /> 
+            <div className="flex flex-col items-center py-6 gap-2">
+              <div className="text-sm text-center max-w-[250px]">Необходимо осуществить перевод на номер или карту:</div>
+              <Snippet symbol="" size="md" className="font-bold">+7 (928) 41-31-458</Snippet>
+              <Snippet symbol="" size="md" className="font-bold">2200 7010 0446 0801</Snippet>
+            </div>
+          </AccordionItem>
+        </Accordion>
         <div className="col-span-2">
           <div className="mb-2">
             <span className="text-sm">Чек(и) об оплате</span>
