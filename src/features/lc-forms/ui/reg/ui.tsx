@@ -1,60 +1,23 @@
 "use client";
 
 import { Accordion, AccordionItem, Button, Divider, Input, Snippet, Switch } from "@nextui-org/react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useRouter }  from 'next/navigation';
-import { ChangeEvent, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { UploadInput } from "@/src/shared/ui";
-import { useAddLiveChatClientMutation, useUploadImageMutation } from "@/src/shared/api";
-import { ILiveChatClient } from "@/src/shared/api";
 import { FormDataToSend } from "../../model/type";
-
-const cost = 400;
+import { costRegister } from "../../model/data";
+import { SwitchCountClients } from "../components/switch-count-client/ui";
+import { useWatchForm } from "../../model/hooks/useWatchForm";
+import { useOnSubmit } from "../../model/hooks/useOnSubmit";
+import { useRedirectSuccess } from "../../model/hooks/useRedirectSuccess";
 
 export const LcRegForm = () => {
   const [isShowCount, setIsShowCount] = useState(false);
-  const [addLiveChatClient, {isLoading: isAddingClient, isSuccess, data}] = useAddLiveChatClientMutation();
-  const [uploadImage, {isLoading: isUploadedImage, isError, error}] = useUploadImageMutation();
-  const [sum, setSum] = useState(cost)
-  const router = useRouter();
-
-  const {register, watch, handleSubmit, formState: {errors, }} = useForm<FormDataToSend>();
-
-  useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      if (name === "count") {
-          setSum(Number(value.count) * cost);
-        }
-      }
-    )
-    return () => subscription.unsubscribe()
-  }, [watch])
-
-  const onSubmit: SubmitHandler<FormDataToSend> = async (formData) => { 
-    if (formData.files?.length) {
-      const files = await uploadImage(formData.files).unwrap();
-      formData.cheques = files.map(file => file.id);
-      delete formData.files;
-    }
-
-    if (!formData.count) {
-      formData.count = 1;
-    } 
-  
-
-    const data: ILiveChatClient = formData;
-    await addLiveChatClient(data).unwrap();
-  };
-
-  const handleSwitchCount = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsShowCount(e.target.checked);
-  }
-
-  useEffect(()=>{
-    if (!isSuccess) return;
-    router.push(`/livechat/register/success?id=${data?.data.id}&code=${data?.data.attributes.code}`); 
-  }, [isSuccess])
-
+  const [sumRegister, setSumRegister] = useState(costRegister)
+  const {register, watch, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
+  useWatchForm(watch, setSumRegister, costRegister);
+  const {onSubmit, isSuccess, isAddingClient, isUploadedImage, data} = useOnSubmit();
+  useRedirectSuccess(isSuccess, data, 'register');
   const {ref, ...inputFiles} = register("files");
 
   return (
@@ -93,10 +56,7 @@ export const LcRegForm = () => {
           labelPlacement="outside"
           className="col-span-2"
         />
-        <div className="col-span-2 flex gap-2 items-center">
-          <Switch onChange={handleSwitchCount}/>
-          <div className="text-sm">Я регистрирую не только себя</div>
-        </div>
+        <SwitchCountClients setIsShowCount={setIsShowCount} />
         {isShowCount && (
           <Input
             {...register("count", {required: 'Заполните количество'})}
@@ -123,9 +83,9 @@ export const LcRegForm = () => {
         <div className="col-span-2 flex flex-col items-center">
           <div className="w-full flex justify-center">
             <span className="text-base font-bold text-success me-2">К оплате:</span>
-            <span className="text-base font-bold text-success">{sum}₽</span>
+            <span className="text-base font-bold text-success">{sumRegister}₽</span>
           </div>
-          <span className="text-sm text-zinc-500">Стоимость за человека - {cost}₽</span>
+          <span className="text-sm text-zinc-500">Стоимость за человека - {costRegister}₽</span>
         </div>
         <Accordion isCompact variant="splitted" className="col-span-2 px-0">
           <AccordionItem key="1" aria-label="Как оплатить?" title={<div className="text-sm">Как оплатить?</div>}>
