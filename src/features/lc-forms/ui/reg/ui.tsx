@@ -1,6 +1,6 @@
 "use client";
 
-import { Accordion, AccordionItem, Button, Divider, Snippet, Switch } from "@nextui-org/react";
+import { Button, Divider } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { UploadInput } from "@/src/shared/ui";
@@ -12,6 +12,7 @@ import { useOnSubmit } from "../../model/hooks/useOnSubmit";
 import { useRedirectSuccess } from "../../model/hooks/useRedirectSuccess";
 import { Input } from "../components/input/ui";
 import { PayInfo } from "../components/pay-info/ui";
+import { ChecksInfo } from "../components/checks-info/ui";
 
 export const LcRegForm = () => {
   const [isShowCount, setIsShowCount] = useState(false);
@@ -73,14 +74,7 @@ export const LcRegForm = () => {
         />
         <Divider className="col-span-2 my-2" />
         <PayInfo sumRegister={sumRegister} />
-        <div className="col-span-2">
-          <div className="mb-2">
-            <span className="text-sm">Чек(и) об оплате</span>
-            <p className="text-xs">Обязательно в случае онлайн оплаты!</p>
-          </div>
-          <UploadInput refCallback={ref} {...inputFiles} />
-        </div>
-
+        <ChecksInfo refCallback={ref} {...inputFiles}/>
         <Button isLoading={isAddingClient || isUploadedImage} type="submit" color="primary" className="col-span-2">
           Отправить
         </Button>
