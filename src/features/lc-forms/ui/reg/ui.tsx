@@ -11,6 +11,7 @@ import { useWatchForm } from "../../model/hooks/useWatchForm";
 import { useOnSubmit } from "../../model/hooks/useOnSubmit";
 import { useRedirectSuccess } from "../../model/hooks/useRedirectSuccess";
 import { Input } from "../components/input/ui";
+import { PayInfo } from "../components/pay-info/ui";
 
 export const LcRegForm = () => {
   const [isShowCount, setIsShowCount] = useState(false);
@@ -71,23 +72,7 @@ export const LcRegForm = () => {
           placeholder="Необязательно"
         />
         <Divider className="col-span-2 my-2" />
-        <div className="col-span-2 flex flex-col items-center">
-          <div className="w-full flex justify-center">
-            <span className="text-base font-bold text-success me-2">К оплате:</span>
-            <span className="text-base font-bold text-success">{sumRegister}₽</span>
-          </div>
-          <span className="text-sm text-zinc-500">Стоимость за человека - {costRegister}₽</span>
-        </div>
-        <Accordion isCompact variant="splitted" className="col-span-2 px-0">
-          <AccordionItem key="1" aria-label="Как оплатить?" title={<div className="text-sm">Как оплатить?</div>}>
-            <Divider /> 
-            <div className="flex flex-col items-center py-6 gap-2">
-              <div className="text-sm text-center max-w-[250px]">Необходимо осуществить перевод на номер или карту:</div>
-              <Snippet symbol="" size="md" className="font-bold">+7 (928) 41-31-458</Snippet>
-              <Snippet symbol="" size="md" className="font-bold">2200 7010 0446 0801</Snippet>
-            </div>
-          </AccordionItem>
-        </Accordion>
+        <PayInfo sumRegister={sumRegister} />
         <div className="col-span-2">
           <div className="mb-2">
             <span className="text-sm">Чек(и) об оплате</span>
