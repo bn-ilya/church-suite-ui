@@ -3,12 +3,11 @@
 import { Button, Divider } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { UploadInput } from "@/src/shared/ui";
 import { FormDataToSend } from "../../model/type";
 import { costRegister } from "../../model/data";
 import { SwitchCountClients } from "../components/switch-count-client/ui";
 import { useWatchForm } from "../../model/hooks/useWatchForm";
-import { useOnSubmit } from "../../model/hooks/useOnSubmit";
+import { useRegOnSubmit } from "../../model/hooks/useRegOnSubmit";
 import { useRedirectSuccess } from "../../model/hooks/useRedirectSuccess";
 import { Input } from "../components/input/ui";
 import { PayInfo } from "../components/pay-info/ui";
@@ -19,7 +18,7 @@ export const LcRegForm = () => {
   const [sumRegister, setSumRegister] = useState(costRegister)
   const {register, watch, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
   useWatchForm(watch, setSumRegister, costRegister);
-  const {onSubmit, isSuccess, isAddingClient, isUploadedImage, data} = useOnSubmit();
+  const {onSubmit, isSuccess, isAddingClient, isUploadedImage, data} = useRegOnSubmit();
   useRedirectSuccess(isSuccess, data, 'register');
   const {ref, ...inputFiles} = register("files");
 
@@ -46,14 +45,14 @@ export const LcRegForm = () => {
         />
         <Input
           isRequired
-          {...register("tel", {required: 'Заполните телефон'})}
+          {...register("tel", {required: 'Заполните телефон', pattern: /^[\d\+][\d\(\)\ -]{4,14}\d$/})}
           isInvalid={!!errors?.tel}
           errorMessage={errors?.tel?.message}
           type="tel"
           label="Номер телефона"
           placeholder="+7 (xxx) xxx-xx-xx"
         />
-        <SwitchCountClients setIsShowCount={setIsShowCount} />
+        <SwitchCountClients defaultSelected={false} setIsShowCount={setIsShowCount}/>
         {isShowCount && (
           <Input
             {...register("count", {required: 'Заполните количество'})}

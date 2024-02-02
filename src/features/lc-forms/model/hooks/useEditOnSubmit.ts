@@ -1,10 +1,10 @@
 import { SubmitHandler } from "react-hook-form";
 import { FormDataToSend } from "../type";
-import { ILiveChatClient, useAddLiveChatClientMutation, useUploadImageMutation } from "@/src/shared/api";
+import { useUpdateLiveChatClientMutation, useUploadImageMutation } from "@/src/shared/api";
 
-export const useOnSubmit = () => {
+export const useEditOnSubmit = (id: number) => {
   const [uploadImage, {isLoading: isUploadedImage}] = useUploadImageMutation();
-  const [addLiveChatClient, {isLoading: isAddingClient, isSuccess, data}] = useAddLiveChatClientMutation();
+  const [updateLiveChatClient, {isLoading: isAddingClient, isSuccess, data}] = useUpdateLiveChatClientMutation();
 
   const onSubmit: SubmitHandler<FormDataToSend> = async (formData) => { 
     if (formData.files?.length) {
@@ -13,13 +13,12 @@ export const useOnSubmit = () => {
       delete formData.files;
     }
 
-    if (!formData.count) {
-      formData.count = 1;
-    } 
-  
+    const data = {
+      body: formData,
+      id
+    }
 
-    const data: ILiveChatClient = formData;
-    await addLiveChatClient(data).unwrap();
+    await updateLiveChatClient(data).unwrap();
   };
 
   return {onSubmit, isSuccess, isAddingClient, isUploadedImage, data};

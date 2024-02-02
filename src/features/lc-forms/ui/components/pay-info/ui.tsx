@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { IPayInfoProps } from "./ui.props";
-import { Accordion, AccordionItem, Snippet } from "@nextui-org/react";
-import { Divider } from "antd";
+import { Accordion, AccordionItem, Divider, Snippet } from "@nextui-org/react";
 import { costRegister } from "../../../model/data";
 
 export const PayInfo: FC<IPayInfoProps> = ({sumRegister}) => {
