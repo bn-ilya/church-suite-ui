@@ -1,6 +1,6 @@
 "use client";
 
-import { Accordion, AccordionItem, Button, Divider, Input, Snippet, Switch } from "@nextui-org/react";
+import { Accordion, AccordionItem, Button, Divider, Snippet, Switch } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { UploadInput } from "@/src/shared/ui";
@@ -10,6 +10,7 @@ import { SwitchCountClients } from "../components/switch-count-client/ui";
 import { useWatchForm } from "../../model/hooks/useWatchForm";
 import { useOnSubmit } from "../../model/hooks/useOnSubmit";
 import { useRedirectSuccess } from "../../model/hooks/useRedirectSuccess";
+import { Input } from "../components/input/ui";
 
 export const LcRegForm = () => {
   const [isShowCount, setIsShowCount] = useState(false);
@@ -31,8 +32,6 @@ export const LcRegForm = () => {
           type="text"
           label="Имя Фамилия"
           placeholder="Петр Петров"
-          labelPlacement="outside"
-          className="col-span-2"
         />
         <Input
           isRequired
@@ -42,8 +41,6 @@ export const LcRegForm = () => {
           type="text"
           label="Город"
           placeholder="г. Кропоткин"
-          labelPlacement="outside"
-          className="col-span-2"
         />
         <Input
           isRequired
@@ -53,8 +50,6 @@ export const LcRegForm = () => {
           type="tel"
           label="Номер телефона"
           placeholder="+7 (xxx) xxx-xx-xx"
-          labelPlacement="outside"
-          className="col-span-2"
         />
         <SwitchCountClients setIsShowCount={setIsShowCount} />
         {isShowCount && (
@@ -65,8 +60,6 @@ export const LcRegForm = () => {
             type="number"
             label="Количество человек (с учетом вас)"
             placeholder="Введите количество "
-            labelPlacement="outside"
-            className="col-span-2"
             defaultValue="1"
           />
         )}
@@ -76,8 +69,6 @@ export const LcRegForm = () => {
           errorMessage={errors?.comment?.message}
           label="Комментарий"
           placeholder="Необязательно"
-          labelPlacement="outside"
-          className="col-span-2"
         />
         <Divider className="col-span-2 my-2" />
         <div className="col-span-2 flex flex-col items-center">
