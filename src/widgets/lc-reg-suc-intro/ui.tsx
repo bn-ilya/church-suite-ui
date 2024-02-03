@@ -2,10 +2,11 @@
 import { CheckCircleIcon } from '@heroicons/react/16/solid';
 import { Snippet } from '@nextui-org/react';
 import { useSearchParams } from 'next/navigation';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 export const LcRegSucIntro: FC = () => {
   const params = useSearchParams();
+  const [code] = useState(params.get("code"));
   
   return (
     <div className="bg-gradient-to-b dark:from-success-400 dark:to-success-200 from-zinc-200 to-zinc-100">
@@ -17,7 +18,7 @@ export const LcRegSucIntro: FC = () => {
           </div>
           <div className="flex items-center flex-col md:flex-row p-5 gap-2 md:gap-4">
               <div className="text-base md:text-2xl dark:text-white text-zinc-900">Ваш код:</div>
-              <Snippet symbol="" size="lg" className="text-4xl font-bold">{params.get('code')}</Snippet>
+              <Snippet symbol="" size="lg" className="text-4xl font-bold">{code}</Snippet>
           </div>
         </div>
       </div>
