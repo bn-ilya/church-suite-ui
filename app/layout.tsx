@@ -4,6 +4,7 @@ import './globals.css';
 import { Providers } from './providers';
 import { montserrat } from '@/src/shared/fonts';
 import { Transition } from './transition';
+import { LcAppBar } from '@/src/features/lc-app-bar';
 
 export default function Layout({
   children,
@@ -21,6 +22,7 @@ export default function Layout({
                     {children}
                   </Transition>
                 </div>
+                <LcAppBar />
               <Footer/>
             </div>
           </Providers>
