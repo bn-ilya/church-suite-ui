@@ -3,6 +3,7 @@ import { Footer } from '@/src/widgets/footer';
 import './globals.css';
 import { Providers } from './providers';
 import { montserrat } from '@/src/shared/fonts';
+import { Transition } from './transition';
 
 export default function Layout({
   children,
@@ -11,17 +12,19 @@ export default function Layout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${montserrat.className} min-h-screen`}>
-        <Providers>
-          <div className='min-h-screen flex flex-col justify-between'>
-            <Header/>
-              <div className='flex-grow w-full flex flex-col align-center'>
-                {children}
-              </div>
-            <Footer/>
-          </div>
-        </Providers>
-      </body>
-    </html>
+        <body className={`${montserrat.className} min-h-screen`}>
+          <Providers>
+            <div className='min-h-screen flex flex-col justify-between'>
+              <Header/>
+                <div className='flex-grow w-full flex flex-col align-center'>
+                  <Transition>
+                    {children}
+                  </Transition>
+                </div>
+              <Footer/>
+            </div>
+          </Providers>
+        </body>
+      </html>
   )
 }

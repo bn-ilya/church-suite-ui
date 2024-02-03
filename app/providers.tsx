@@ -6,11 +6,12 @@ import {ThemeProvider as NextThemesProvider} from "next-themes";
 import { StoreProvider } from '../src/app/providers/store-provider';
 
 export function Providers({children}: { children: React.ReactNode }) {
+
   return (
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="dark">
         <StoreProvider>
-          {children}
+            {children}
         </StoreProvider>
       </NextThemesProvider>
     </NextUIProvider>
