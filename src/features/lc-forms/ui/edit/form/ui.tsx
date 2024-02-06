@@ -24,7 +24,6 @@ export const Form: FC<IFormProps> = (props) => {
   const {onSubmit, isSuccess, isAddingClient, isUploadedImage, data} = useEditOnSubmit(id);
   useRedirectSuccess(isSuccess, data, 'edit');
   const {ref, ...inputFiles} = register("files");
-
   return (
     <div className="max-w-7xl w-full mx-auto px-6">
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
@@ -80,7 +79,7 @@ export const Form: FC<IFormProps> = (props) => {
         />
         <Divider className="col-span-2 my-2" />
         <PayInfo sumRegister={sumRegister} />
-        <ChecksInfo refCallback={ref} {...inputFiles}/>
+        <ChecksInfo refCallback={ref} defaultNames={cheques} {...inputFiles}/>
 
         <Button isLoading={isAddingClient || isUploadedImage} type="submit" color="primary" className="col-span-2">
           Отправить
