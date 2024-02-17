@@ -12,4 +12,4 @@ export const ChecksInfo: FC<IChecksInfoProps> = ({refCallback, ...props}) => {
       <UploadInput refCallback={refCallback} {...props} />
     </div>
   )
-}
+} 
