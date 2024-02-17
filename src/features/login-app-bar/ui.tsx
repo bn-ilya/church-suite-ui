@@ -7,7 +7,7 @@ import { FC, Key } from "react"
 import { usePathname, useRouter } from "next/navigation";
 import { getCodePath } from "@/src/shared/lib";
 
-export const LcAppBar: FC = () => {
+export const LoginAppBar: FC = () => {
   const router = useRouter();
   const path = usePathname();
   const codetPath = getCodePath(path);
@@ -31,11 +31,11 @@ export const LcAppBar: FC = () => {
           }
         />
         <Tab
-          key="edit"
+          key="login"
           title={
             <div className="flex items-center space-x-2">
               <UserIcon width={16} />
-              <span>Изменение</span>
+              <span>Войти</span>
             </div>
           }
         />

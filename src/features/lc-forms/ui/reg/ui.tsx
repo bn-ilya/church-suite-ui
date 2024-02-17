@@ -27,30 +27,12 @@ export const LcRegForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
         <Input
           isRequired
-          {...register("name", {required: 'Заполните имя'})}
-          isInvalid={!!errors?.name}
-          errorMessage={errors?.name?.message}
-          type="text"
-          label="Имя Фамилия"
-          placeholder="Петр Петров"
-        />
-        <Input
-          isRequired
           {...register("city", {required: 'Заполните город'})}
           isInvalid={!!errors?.city}
           errorMessage={errors?.city?.message}
           type="text"
           label="Город"
           placeholder="г. Кропоткин"
-        />
-        <Input
-          isRequired
-          {...register("tel", {required: 'Заполните телефон', pattern: /^[\d\+][\d\(\)\ -]{4,14}\d$/})}
-          isInvalid={!!errors?.tel}
-          errorMessage={errors?.tel?.message}
-          type="tel"
-          label="Номер телефона"
-          placeholder="+7 (xxx) xxx-xx-xx"
         />
         <SwitchCountClients defaultSelected={false} setIsShowCount={setIsShowCount}/>
         {isShowCount && (
