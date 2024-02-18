@@ -12,3 +12,13 @@ export interface IMeta {
     total: number
   }
 }
+
+export interface IError {
+  data: null,
+  error: {
+    status: number,
+    name: string,
+    message: string,
+    details: {}
+  }
+}

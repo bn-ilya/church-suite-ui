@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEvent, IEvents } from "./interfaces/events";
 import { IAddLiveChatClientRes, IDeleteLiveChatClientRes, IGetLiveChatClientByCodeRes, IGetLiveChatClientDataRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
 import { IUploadFile } from "./interfaces/upload";
+import { ICreateUserResSuccess, IRegDataUser } from ".";
 
 export const api = createApi({
   reducerPath: 'strapiApi',
@@ -64,7 +65,14 @@ export const api = createApi({
         url: `live-chat-clients/?filters[code][$eq]=${code}&populate[0]=cheques`,
       }),
       transformResponse: (response: IGetLiveChatClientByCodeRes) => response.data?.[0],
-    })
+    }),
+    createUser: build.mutation<ICreateUserResSuccess, IRegDataUser>({
+      query: (regData) => ({
+        url: `/users`,
+        method: 'POST',
+        body: regData     
+      })
+    }),
   }),
 })
 
@@ -77,5 +85,6 @@ export const
   useLazyGetLiveChatClientQuery,
   useLazyGetLiveChatClientByCodeQuery,
   useUpdateLiveChatClientMutation,
-  useDeleteLiveChatClientMutation
+  useDeleteLiveChatClientMutation,
+  useCreateUserMutation
 } = api; 
