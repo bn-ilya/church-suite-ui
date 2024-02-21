@@ -1,9 +1,11 @@
-import { IError, IRegDataUser, useCreateUserMutation } from "@/src/shared/api";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useEffect, useState } from "react";
-import { SubmitHandler } from "react-hook-form";
+import { IError } from "../../api";
 
-export const useCreateOnSubmit = () => {
-  const [createUser, {isLoading, error, data}] = useCreateUserMutation();
+type TError =  FetchBaseQueryError | SerializedError | undefined; 
+
+export const useErrorReq = (error: TError) => {
   const [errorMsg, setErrorMsg] = useState('');
 
   const clearErrorMsg = () => {
@@ -23,10 +25,5 @@ export const useCreateOnSubmit = () => {
     return clearErrorMsg
   }, [error])
 
-  const onSubmit: SubmitHandler<IRegDataUser> = async (userData) => { 
-    
-    await createUser(userData).unwrap();
-  };
-
-  return {onSubmit, isLoading, errorMsg, data}
+  return errorMsg;
 }

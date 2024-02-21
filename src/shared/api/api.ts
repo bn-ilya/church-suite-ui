@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEvent, IEvents } from "./interfaces/events";
 import { IAddLiveChatClientRes, IDeleteLiveChatClientRes, IGetLiveChatClientByCodeRes, IGetLiveChatClientDataRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
 import { IUploadFile } from "./interfaces/upload";
-import { ICreateUserResSuccess, IRegDataUser } from ".";
+import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IRegDataUser } from ".";
 
 export const api = createApi({
   reducerPath: 'strapiApi',
@@ -73,6 +73,13 @@ export const api = createApi({
         body: regData     
       })
     }),
+    confirmLogin: build.mutation<IConfirmLoginResSuccess, IConfirmDataLogin>({
+      query: (confirmData) => ({
+        url: `/users-permissions/verify`,
+        method: 'POST',
+        body: confirmData
+      })
+    })
   }),
 })
 
@@ -86,5 +93,6 @@ export const
   useLazyGetLiveChatClientByCodeQuery,
   useUpdateLiveChatClientMutation,
   useDeleteLiveChatClientMutation,
-  useCreateUserMutation
+  useCreateUserMutation,
+  useConfirmLoginMutation
 } = api; 
