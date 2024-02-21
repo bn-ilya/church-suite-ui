@@ -8,15 +8,19 @@ import { useCreateOnSubmit } from "../../model/hooks/useCreateOnSubmit";
 import { ErrorModal } from "@/src/shared/ui";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useAppDispatch } from "@/src/shared/model";
+import { setPhone } from "@/src/entities/user";
 
 export const UserRegisterForm = () => {
   const {onSubmit, isLoading, errorMsg, data} = useCreateOnSubmit()
   const {register, handleSubmit, formState: {errors}} = useForm<IRegDataUser>({mode: "onBlur"});
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   useEffect(()=>{
     if (data) {
-      router.push(`/livechat/register/2?phone=${data.phone}`);
+      dispatch(setPhone({phone: data.phone}));
+      router.push(`/livechat/register/2`);
     }
   }, [data])
 

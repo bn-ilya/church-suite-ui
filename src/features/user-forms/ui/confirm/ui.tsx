@@ -2,23 +2,29 @@
 
 import { Button } from "@nextui-org/react"
 import { Input } from "../../components/input/ui"
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useConfirmOnSumbit } from "../../model/hooks/useConfirmOnSumbit";
 import { useForm } from "react-hook-form";
 import { IConfirmDataLogin } from "@/src/shared/api";
 import { ErrorModal } from "@/src/shared/ui";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
+import { IUserConfirmForm } from "./ui.props";
+import { useAppDispatch, useAppSelector } from "@/src/shared/model";
+import { setId } from "@/src/entities/user";
 
-export const UserConfirmForm = () => {
-  const params = useSearchParams();
-  const phone = params.get('phone') || '';
+export const UserConfirmForm: FC<IUserConfirmForm> = ({redirectPath}) => {
+  const phone = useAppSelector(store => store.userSlice.phone);
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   
   const {onSubmit, isLoading, errorMsg, data} = useConfirmOnSumbit(phone);
   const {register, handleSubmit, formState: {errors}} = useForm<IConfirmDataLogin>();
 
   useEffect(() => {
     if (data) {
+      dispatch(setId({id: data.user.id.toString()}))
       document.cookie = `Authorization=Bearer ${data.jwt}`;
+      router.push(redirectPath);
     }
   }, [data])
 
