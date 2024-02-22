@@ -16,7 +16,7 @@ import { ChecksInfo } from "../../components/checks-info/ui";
 import { Input } from "../../components/input/ui";
 
 export const Form: FC<IFormProps> = (props) => {
-  const {name, city, tel, count, comment, cheques, id} = props;
+  const {city, count, comment, cheques, id} = props;
   const [isShowCount, setIsShowCount] = useState(Number(count) > 1 ? true : false);
   const [sumRegister, setSumRegister] = useState(costRegister * Number(count));
   const {register, watch, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
@@ -29,16 +29,6 @@ export const Form: FC<IFormProps> = (props) => {
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
         <Input
           isRequired
-          isInvalid={!!errors?.name}
-          errorMessage={errors?.name?.message}
-          type="text"
-          label="Имя Фамилия"
-          placeholder="Петр Петров"
-          defaultValue={name}
-          {...register("name", {required: 'Заполните имя'})}
-        />
-        <Input
-          isRequired
           {...register("city", {required: 'Заполните город'})}
           isInvalid={!!errors?.city}
           errorMessage={errors?.city?.message}
@@ -46,16 +36,6 @@ export const Form: FC<IFormProps> = (props) => {
           label="Город"
           placeholder="г. Кропоткин"
           defaultValue={city}
-        />
-        <Input
-          isRequired
-          {...register("tel", {required: 'Заполните телефон'})}
-          isInvalid={!!errors?.tel}
-          errorMessage={errors?.tel?.message}
-          type="tel"
-          label="Номер телефона"
-          placeholder="+7 (xxx) xxx-xx-xx"
-          defaultValue={String(tel)} //Todo 
         />
         <SwitchCountClients defaultSelected={isShowCount} setIsShowCount={setIsShowCount} />
         {isShowCount && (
