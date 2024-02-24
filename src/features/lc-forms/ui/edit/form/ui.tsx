@@ -17,12 +17,13 @@ import { Input } from "../../components/input/ui";
 
 export const Form: FC<IFormProps> = (props) => {
   const {city, count, comment, cheques, id} = props;
+  console.log(cheques);
   const [isShowCount, setIsShowCount] = useState(Number(count) > 1 ? true : false);
   const [sumRegister, setSumRegister] = useState(costRegister * Number(count));
   const {register, watch, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
   useWatchForm(watch, setSumRegister, costRegister);
   const {onSubmit, isSuccess, isAddingClient, isUploadedImage, data} = useEditOnSubmit(id);
-  useRedirectSuccess(isSuccess, data, 'edit');
+  useRedirectSuccess(isSuccess, 'edit');
   const {ref, ...inputFiles} = register("files");
   return (
     <div className="max-w-7xl w-full mx-auto px-6">
@@ -60,7 +61,6 @@ export const Form: FC<IFormProps> = (props) => {
         <Divider className="col-span-2 my-2" />
         <PayInfo sumRegister={sumRegister} />
         <ChecksInfo refCallback={ref} defaultNames={cheques} {...inputFiles}/>
-
         <Button isLoading={isAddingClient || isUploadedImage} type="submit" color="primary" className="col-span-2">
           Отправить
         </Button>

@@ -1,11 +1,8 @@
-import { IAttributesCommonsRes, IMeta } from "./commons";
-import { IFile } from "./entities/file";
+import { IAttributesCommonsRes, IDataCheque, IMeta } from "./commons";
 import { IUploadFile } from './upload';
 
 export interface ILiveChatClient {
-  name: string,
   city: string,
-  tel: number,
   count: number,
   comment?: string,
   cheques?: Array<IUploadFile['id']>,
@@ -20,20 +17,12 @@ export interface IUpdateClientReq {
   id: number
 }
 
-interface IAttributesRes extends ILiveChatClient, IAttributesCommonsRes {
-  code: number
-}
-
-interface IDataCheque {
-  id: number,
-  attributes: IFile
-}
+interface IAttributesRes extends ILiveChatClient, IAttributesCommonsRes {}
 
 interface IAttributesPopulateRes extends Omit<ILiveChatClient, 'cheques'>, IAttributesCommonsRes {
   cheques: {
     data: Array<IDataCheque> | null
   },
-  code: number
 }
 
 export interface IAddLiveChatClientRes {

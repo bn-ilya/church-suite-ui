@@ -18,8 +18,8 @@ export const LcRegForm = () => {
   const [sumRegister, setSumRegister] = useState(costRegister)
   const {register, watch, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
   useWatchForm(watch, setSumRegister, costRegister);
-  const {onSubmit, isSuccess, isAddingClient, isUploadedImage, data} = useRegOnSubmit();
-  useRedirectSuccess(isSuccess, data, 'register');
+  const {onSubmit, isSuccess, isLoading, data} = useRegOnSubmit();
+  useRedirectSuccess(isSuccess, 'register');
   const {ref, ...inputFiles} = register("files");
 
   return (
@@ -56,7 +56,7 @@ export const LcRegForm = () => {
         <Divider className="col-span-2 my-2" />
         <PayInfo sumRegister={sumRegister} />
         <ChecksInfo refCallback={ref} {...inputFiles}/>
-        <Button isLoading={isAddingClient || isUploadedImage} type="submit" color="primary" className="col-span-2">
+        <Button isLoading={isLoading} type="submit" color="primary" className="col-span-2">
           Отправить
         </Button>
       </form>

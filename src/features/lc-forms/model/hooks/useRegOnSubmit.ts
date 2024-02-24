@@ -1,11 +1,15 @@
 import { SubmitHandler } from "react-hook-form";
 import { FormDataToSend } from "../type";
-import { ILiveChatClient, useAddLiveChatClientMutation, useUploadImageMutation } from "@/src/shared/api";
+import { ILiveChatClient, useAddLiveChatClientMutation, useSetLcFormMutation, useUploadImageMutation } from "@/src/shared/api";
+import { useEffect, useState } from "react";
 
 export const useRegOnSubmit = () => {
   const [uploadImage, {isLoading: isUploadedImage}] = useUploadImageMutation();
-  const [addLiveChatClient, {isLoading: isAddingClient, isSuccess, data}] = useAddLiveChatClientMutation();
-
+  const [addLiveChatClient, {isLoading: isAddingClient, data}] = useAddLiveChatClientMutation();
+  const [setLcForm, {isLoading: isLoadingSetLcForm}] = useSetLcFormMutation()
+  const [isSuccess, setSuccess] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  
   const onSubmit: SubmitHandler<FormDataToSend> = async (formData) => { 
     if (formData.files?.length) {
       const files = await uploadImage(formData.files).unwrap();
@@ -16,11 +20,19 @@ export const useRegOnSubmit = () => {
     if (!formData.count) {
       formData.count = 1;
     } 
-  
 
     const data: ILiveChatClient = formData;
-    await addLiveChatClient(data).unwrap();
+    const response = await addLiveChatClient(data).unwrap();
+    await setLcForm({lcFormId: response.data.id});
+    setSuccess(true)
   };
 
-  return {onSubmit, isSuccess, isAddingClient, isUploadedImage, data};
+  useEffect(()=>{
+    if (isUploadedImage || isAddingClient || isLoadingSetLcForm) {
+      setLoading(true);
+    }
+    setLoading(false);
+  }, [isUploadedImage, isAddingClient, isLoadingSetLcForm])
+
+  return {onSubmit, isSuccess, isLoading, data};
 }

@@ -1,4 +1,5 @@
-import { IError } from ".";
+import { IAttributesCommonsRes, IDataCheque, ILiveChatClient } from ".";
+import { IFile } from "./entities/file";
 
 export interface IUser {
   "id": number,
@@ -15,7 +16,8 @@ export interface IUser {
   "phone": string,
   "code": string,
   "name": string,
-  "role": null | string
+  "role": null | string,
+  "lc_form_id": null | string
 }
 
 export interface IRegDataUser {
@@ -37,4 +39,25 @@ export interface IConfirmDataLogin {
 export interface IConfirmLoginResSuccess {
   jwt: string,
   user: IUser
+}
+
+export interface ISetLcData {
+  lcFormId: number;
+}
+
+export interface ISetLcResSuccess {
+  lcFormId: number;
+}
+
+export interface IGetMeResUser extends  Omit<IUser, 'password' | 'resetPasswordToken' | 'confirmationToken' | 'role'> {
+  "lc_form_id": string,
+};
+
+export interface IGetMeResLcForm extends Omit<ILiveChatClient, 'cheques'>, IAttributesCommonsRes {
+  id: number;
+  cheques: Array<IFile> | null,
+}
+
+export interface IGetMeResSuccess extends IGetMeResUser {
+  "lc_form"?: IGetMeResLcForm
 }

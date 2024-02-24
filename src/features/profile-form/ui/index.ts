@@ -1,0 +1,1 @@
+export {Controller as ProfileForm} from './controller/ui';

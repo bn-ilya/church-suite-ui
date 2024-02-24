@@ -1,3 +1,5 @@
+import { IFile } from "./entities/file"
+
 export interface IAttributesCommonsRes {
   createdAt: string,
   updatedAt: string,
@@ -21,4 +23,9 @@ export interface IError {
     message: string,
     details: {}
   }
+}
+
+export interface IDataCheque {
+  id: number,
+  attributes: IFile
 }

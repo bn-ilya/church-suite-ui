@@ -1,4 +1,5 @@
+import { IGetResLcForm } from "@/src/shared/api";
+
 export interface IControllerProps {
-  id?: number;
-  code?: number;
+  data: IGetResLcForm
 }

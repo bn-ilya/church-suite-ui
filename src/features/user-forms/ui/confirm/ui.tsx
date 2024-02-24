@@ -23,7 +23,7 @@ export const UserConfirmForm: FC<IUserConfirmForm> = ({redirectPath}) => {
   useEffect(() => {
     if (data) {
       dispatch(setId({id: data.user.id.toString()}))
-      document.cookie = `Authorization=Bearer ${data.jwt}`;
+      localStorage.setItem('jwt', data.jwt);
       router.push(redirectPath);
     }
   }, [data])

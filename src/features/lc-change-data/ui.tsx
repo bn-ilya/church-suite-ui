@@ -5,12 +5,10 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { FC, MouseEvent } from "react";
 
 export const LcChangeData: FC = () => {
-  const params = useSearchParams();
-  const id = params.get('id');
   const router = useRouter()
 
   const handleClick = (e: MouseEvent) => {
-    router.push(`/livechat/edit/?id=${id}`);
+    router.push(`/profile`);
   }
 
   return (

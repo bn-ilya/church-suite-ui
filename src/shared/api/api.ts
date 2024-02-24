@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEvent, IEvents } from "./interfaces/events";
 import { IAddLiveChatClientRes, IDeleteLiveChatClientRes, IGetLiveChatClientByCodeRes, IGetLiveChatClientDataRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
 import { IUploadFile } from "./interfaces/upload";
-import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IRegDataUser } from ".";
+import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IGetMeResSuccess, IRegDataUser, ISetLcData, ISetLcResSuccess } from ".";
 
 export const api = createApi({
   reducerPath: 'strapiApi',
@@ -79,7 +79,25 @@ export const api = createApi({
         method: 'POST',
         body: confirmData
       })
-    })
+    }),
+    setLcForm: build.mutation<ISetLcResSuccess, ISetLcData>({
+      query: (lcFormData) => ({
+        url: `/users-permissions/setLcForm`,
+        method: 'POST',
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+        },
+        body: lcFormData
+      })
+    }), 
+    getMe: build.query<IGetMeResSuccess, void>({
+      query: () => ({
+        url: `/users/me`,
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      }),
+    }),
   }),
 })
 
@@ -94,5 +112,7 @@ export const
   useUpdateLiveChatClientMutation,
   useDeleteLiveChatClientMutation,
   useCreateUserMutation,
-  useConfirmLoginMutation
+  useSetLcFormMutation,
+  useConfirmLoginMutation,
+  useGetMeQuery,
 } = api; 
