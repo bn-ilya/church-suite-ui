@@ -33,6 +33,15 @@ export interface IEditUserResSuccess {
   status: "success";
 }
 
+export interface ILoginDataUser {
+  phone: string
+}
+
+export interface ILoginUserResSuccess {
+  status: "success",
+  phone: string
+}
+
 export interface ICreateUserResSuccess {
   name: string,
   username: string,

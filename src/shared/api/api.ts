@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEvent, IEvents } from "./interfaces/events";
 import { IAddLiveChatClientRes, IDeleteLiveChatClientRes, IGetLiveChatClientByCodeRes, IGetLiveChatClientDataRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
 import { IUploadFile } from "./interfaces/upload";
-import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IEditDataUser, IEditUserResSuccess, IGetMeResSuccess, IRegDataUser, ISetLcData, ISetLcResSuccess } from ".";
+import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IEditDataUser, IEditUserResSuccess, IGetMeResSuccess, ILoginDataUser, ILoginUserResSuccess, IRegDataUser, ISetLcData, ISetLcResSuccess } from ".";
 
 export const api = createApi({
   reducerPath: 'strapiApi',
@@ -73,6 +73,13 @@ export const api = createApi({
         body: regData     
       })
     }),
+    loginUser: build.mutation<ILoginUserResSuccess, ILoginDataUser>({
+      query: (loginData) => ({
+        url: `/users-permissions/login`,
+        method: 'POST',
+        body: loginData     
+      })
+    }),
     editUser: build.mutation<IEditUserResSuccess, IEditDataUser>({
       query: (editData) => ({
         url: `/users-permissions/profile`,
@@ -125,5 +132,6 @@ export const
   useSetLcFormMutation,
   useConfirmLoginMutation,
   useGetMeQuery,
-  useEditUserMutation
+  useEditUserMutation,
+  useLoginUserMutation
 } = api; 
