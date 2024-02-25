@@ -3,6 +3,7 @@
 import { IGetMeResUser, IGetMeResLcForm, useGetMeQuery } from "@/src/shared/api";
 import { useEffect, useState } from "react";
 import { LcEditForm } from '@/src/features/lc-forms';
+import { UserEditForm } from "@/src/features/user-forms/ui/edit";
 
 export const Controller = () => {
   const {data} = useGetMeQuery();
@@ -20,6 +21,10 @@ export const Controller = () => {
 
   return (
     <>
+      {  userData && (
+          <UserEditForm name={userData.name} />
+        )
+      }
       {
         lcFormData && (
           <LcEditForm data={lcFormData} />

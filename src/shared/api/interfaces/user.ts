@@ -25,6 +25,14 @@ export interface IRegDataUser {
   phone: string
 }
 
+export interface IEditDataUser {
+  name: string;
+}
+
+export interface IEditUserResSuccess {
+  status: "success";
+}
+
 export interface ICreateUserResSuccess {
   name: string,
   username: string,
