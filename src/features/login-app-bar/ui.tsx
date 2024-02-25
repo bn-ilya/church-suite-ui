@@ -13,7 +13,7 @@ export const LoginAppBar: FC = () => {
   const codetPath = getCodePath(path);
 
   const handleSelect = (key: Key) => {
-    router.push(`/livechat/${key}`)
+    router.push(`/livechat/${key}/1`)
   }
 
   return (

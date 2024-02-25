@@ -1,30 +1,25 @@
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react"
+import { Modal, ModalContent } from "@nextui-org/react"
 import { FC } from "react"
 import { IModalDeleteProps } from "./ui.props"
-import { TrashIcon } from "@heroicons/react/16/solid"
-import { useRouter, useSearchParams } from "next/navigation"
-import { useDeleteLiveChatClientMutation } from "@/src/shared/api"
+import { useRouter } from "next/navigation"
+import { useDeleteUserMutation } from "@/src/shared/api"
 import { ModalFooterQuestion } from "../modal-footer-question/ui"
 import { ModalFooterSuc } from "../modal-footer-suc/ui"
 import { ModalBodyQuestion } from "../modal-body-question/ui"
 import { ModalBodySuc } from "../modal-body-suc/ui"
 
 export const ModalDelete: FC<IModalDeleteProps> = ({isOpen, onOpenChange}) => {
-  const params = useSearchParams();
-  const id = params.get('id');
   const router = useRouter();
 
-  const [deleteData, {isLoading, isSuccess}] = useDeleteLiveChatClientMutation()
+  const [deleteUser, {isLoading, isSuccess}] = useDeleteUserMutation()
 
   const handleDelete = () => {
-    if (id) {
-      deleteData(Number(id));
-    }
+    deleteUser();
   }
 
   const handleCloseSuccess = () => {
     if (isSuccess) {
-      router.push('/livechat/register/');
+      router.push('/livechat/register/1');
     }
   }
 

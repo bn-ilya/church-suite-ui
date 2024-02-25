@@ -2,7 +2,7 @@ import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDi
 import { FC, useEffect } from "react";
 import { IErrorModalProps } from "./ui.props";
 
-export const ErrorModal: FC<IErrorModalProps> = ({error}) => {
+export const ErrorModal: FC<IErrorModalProps> = ({error, textBtn, onCloseCallback}) => {
   const {isOpen, onOpen, onClose} = useDisclosure();
 
   useEffect(()=>{
@@ -11,8 +11,13 @@ export const ErrorModal: FC<IErrorModalProps> = ({error}) => {
     }
   }, [error])
 
+  const onCloseHandler = () => {
+    onCloseCallback && onCloseCallback();
+    onClose();
+  }
+
   return (
-    <Modal size='xs' placement='center' backdrop="blur" isOpen={isOpen} onClose={onClose}>
+    <Modal size='xs' placement='center' backdrop="blur" isOpen={isOpen} onClose={onCloseHandler}>
       <ModalContent>
         {(onClose) => (
           <>
@@ -24,7 +29,7 @@ export const ErrorModal: FC<IErrorModalProps> = ({error}) => {
             </ModalBody>
             <ModalFooter>
               <Button color="primary" onPress={onClose}>
-                Понятненько
+                {textBtn || 'Понятненько'} 
               </Button>
             </ModalFooter>
           </>

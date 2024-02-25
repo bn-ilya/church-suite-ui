@@ -78,3 +78,7 @@ export interface IGetMeResLcForm extends Omit<ILiveChatClient, 'cheques'>, IAttr
 export interface IGetMeResSuccess extends IGetMeResUser {
   "lc_form"?: IGetMeResLcForm
 }
+
+export interface IDeleteUserResSuccess {
+  status: "success"
+}

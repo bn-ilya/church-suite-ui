@@ -1,6 +1,5 @@
 "use client";
 import { LcChangeData } from '@/src/features/lc-change-data';
-import { LcDeleteData } from '@/src/features/lc-delete-data';
 import { FC } from 'react';
 
 export const LcRegSucInfo: FC = () => {
@@ -9,7 +8,6 @@ export const LcRegSucInfo: FC = () => {
       <div className='w-full py-6 flex flex-col gap-4'>
         <div className='w-full flex flex-col gap-2'>
           <LcChangeData />
-          <LcDeleteData />
         </div>
       </div>
     </div>

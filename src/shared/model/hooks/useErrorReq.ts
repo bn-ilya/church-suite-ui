@@ -7,6 +7,7 @@ type TError =  FetchBaseQueryError | SerializedError | undefined;
 
 export const useErrorReq = (error: TError) => {
   const [errorMsg, setErrorMsg] = useState('');
+  const [errorCode, setErrorCode] = useState<number | string>(0);
 
   const clearErrorMsg = () => {
     setErrorMsg('');
@@ -15,15 +16,17 @@ export const useErrorReq = (error: TError) => {
   useEffect(() => {
     if (error) {
       if ('status' in error) {
-        const errMsg = 'error' in error ? error.error : (error.data as IError).error.message;
+        const [errMsg, errCode] = 'error' in error ? [error.error, error.status] : [(error.data as IError).error.message, (error.data as IError).error.status];
         setErrorMsg(errMsg);
+        setErrorCode(errCode);
       } else {
         error.message && setErrorMsg(error.message);
+        error.code && setErrorMsg(error.code);
       }
     }
 
     return clearErrorMsg
   }, [error])
 
-  return errorMsg;
+  return {errorMsg, errorCode};
 }
