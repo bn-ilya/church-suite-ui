@@ -14,11 +14,10 @@ import { setId } from "@/src/entities/user";
 import { RepeatVerify } from "@/src/features/repeat-verify";
 
 export const UserConfirmForm: FC<IUserConfirmForm> = ({redirectPath}) => {
-  const phone = useAppSelector(store => store.userSlice.phone);
   const dispatch = useAppDispatch();
   const router = useRouter();
   
-  const {onSubmit, isLoading, errorInfo, data} = useConfirmOnSumbit(phone);
+  const {onSubmit, isLoading, errorInfo, data} = useConfirmOnSumbit();
   const {register, handleSubmit, formState: {errors}} = useForm<IConfirmDataLogin>();
 
   useEffect(() => {
@@ -32,16 +31,20 @@ export const UserConfirmForm: FC<IUserConfirmForm> = ({redirectPath}) => {
   return (
     <div className="max-w-7xl w-full mx-auto px-6">
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
-        <Input
-          isRequired
-          {...register("code", {required: 'Заполните код'})}
-          isInvalid={!!errors?.code}
-          errorMessage={errors?.code?.message}
-          type="tel"
-          label="Код подтверждения"
-          placeholder="XXXX"
-        />
-        <RepeatVerify />
+        <div className="grid grid-cols-2 gap-1 col-span-2">
+          <Input
+            isRequired
+            {...register("code", {required: 'Заполните код'})}
+            isInvalid={!!errors?.code}
+            errorMessage={errors?.code?.message}
+            type="tel"
+            label="Код подтверждения"
+            placeholder="XXXX"
+          />
+          <div className="col-span-2">
+            <RepeatVerify />
+          </div>
+        </div>
         <Button isLoading={isLoading} type="submit" color="primary" className="col-span-2">
           Продолжить
         </Button>

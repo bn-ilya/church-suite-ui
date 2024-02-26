@@ -13,8 +13,9 @@ export const ModalDelete: FC<IModalDeleteProps> = ({isOpen, onOpenChange}) => {
 
   const [deleteUser, {isLoading, isSuccess}] = useDeleteUserMutation()
 
-  const handleDelete = () => {
-    deleteUser();
+  const handleDelete = async () => {
+    await deleteUser();
+    localStorage.removeItem("jwt");
   }
 
   const handleCloseSuccess = () => {

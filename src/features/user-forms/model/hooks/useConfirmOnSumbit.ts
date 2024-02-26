@@ -2,12 +2,12 @@ import { IConfirmDataLogin, useConfirmLoginMutation } from "@/src/shared/api";
 import { useErrorReq } from "@/src/shared/model";
 import { SubmitHandler } from "react-hook-form";
 
-export const useConfirmOnSumbit = (phone: string) => {
+export const useConfirmOnSumbit = () => {
   const [confirmLogin, {isLoading, error, data}] = useConfirmLoginMutation();
   const errorInfo = useErrorReq(error);
 
   const onSubmit: SubmitHandler<IConfirmDataLogin> = async (confirmData) => { 
-    confirmData.phone = phone;
+    confirmData.id = localStorage.getItem("id") || '';
     await confirmLogin(confirmData).unwrap();
   };
 

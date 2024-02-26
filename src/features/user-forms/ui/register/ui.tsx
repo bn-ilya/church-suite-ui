@@ -19,7 +19,7 @@ export const UserRegisterForm = () => {
 
   useEffect(()=>{
     if (data) {
-      dispatch(setPhone({phone: data.phone}));
+      localStorage.setItem("id", String(data.id));
       router.push(`/livechat/register/2`);
     }
   }, [data])

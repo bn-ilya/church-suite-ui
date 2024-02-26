@@ -9,17 +9,16 @@ import { useEffect } from "react";
 import { useAppDispatch } from "@/src/shared/model";
 import { setPhone } from "@/src/entities/user";
 import { useLoginOnSubmit } from "../../model/hooks/useLoginOnSubmit";
-import { ErrorModal } from "@/src/shared/ui";
+import { ErrorHandler, ErrorModal } from "@/src/shared/ui";
 
 export const UserLoginForm = () => {
-  const {onSubmit, isLoading, errorMsg, data} = useLoginOnSubmit()
+  const {onSubmit, isLoading, errorInfo, data} = useLoginOnSubmit()
   const {register, handleSubmit, formState: {errors}} = useForm<ILoginDataUser>({mode: "onBlur"});
   const router = useRouter();
-  const dispatch = useAppDispatch();
 
   useEffect(()=>{
     if (data) {
-      dispatch(setPhone({phone: data.phone}));
+      localStorage.setItem("id", String(data.id));
       router.push(`/livechat/login/2`);
     }
   }, [data])
@@ -41,7 +40,7 @@ export const UserLoginForm = () => {
         </Button>
       </form>
 
-      <ErrorModal error={errorMsg} />
+      <ErrorHandler message={errorInfo.errorMsg} code={errorInfo.errorCode}/>
     </div>
   ) 
 }

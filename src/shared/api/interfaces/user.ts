@@ -1,4 +1,4 @@
-import { IAttributesCommonsRes, IDataCheque, ILiveChatClient } from ".";
+import { IAttributesCommonsRes, IDataCheque, ILiveChatClient, TApiChannel } from ".";
 import { IFile } from "./entities/file";
 
 export interface IUser {
@@ -34,23 +34,28 @@ export interface IEditUserResSuccess {
 }
 
 export interface ILoginDataUser {
-  phone: string
+  phone?: string
+  id?: string
+}
+
+export interface ILoginDataUserReq extends ILoginDataUser {
+  channel: TApiChannel
 }
 
 export interface ILoginUserResSuccess {
   status: "success",
-  phone: string
+  id: number
 }
 
 export interface ICreateUserResSuccess {
   name: string,
   username: string,
-  phone: string
+  id: number
 }
 
 export interface IConfirmDataLogin {
   code: string,
-  phone: string
+  id: string
 }
 
 export interface IConfirmLoginResSuccess {

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEvent, IEvents } from "./interfaces/events";
 import { IAddLiveChatClientRes, IDeleteLiveChatClientRes, IGetLiveChatClientByCodeRes, IGetLiveChatClientDataRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
 import { IUploadFile } from "./interfaces/upload";
-import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IDeleteUserResSuccess, IEditDataUser, IEditUserResSuccess, IGetMeResSuccess, ILoginDataUser, ILoginUserResSuccess, IRegDataUser, ISetLcData, ISetLcResSuccess } from ".";
+import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IDeleteUserResSuccess, IEditDataUser, IEditUserResSuccess, IGetMeResSuccess, ILoginDataUser, ILoginDataUserReq, ILoginUserResSuccess, IRegDataUser, ISetLcData, ISetLcResSuccess } from ".";
 
 export const api = createApi({
   reducerPath: 'strapiApi',
@@ -71,17 +71,17 @@ export const api = createApi({
         url: `/users`,
         method: 'POST',
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
         body: regData     
       })
     }),
-    loginUser: build.mutation<ILoginUserResSuccess, ILoginDataUser>({
+    loginUser: build.mutation<ILoginUserResSuccess, ILoginDataUserReq>({
       query: (loginData) => ({
         url: `/users-permissions/login`,
         method: 'POST',
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
         body: loginData     
       })
@@ -91,7 +91,7 @@ export const api = createApi({
         url: `/users-permissions/profile`,
         method: 'PUT',
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
         body: editData     
       })
@@ -108,7 +108,7 @@ export const api = createApi({
         url: `/users-permissions/setLcForm`,
         method: 'POST',
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
         body: lcFormData
       })
@@ -117,7 +117,7 @@ export const api = createApi({
       query: () => ({
         url: `/users/me`,
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
       }),
     }),
@@ -126,7 +126,7 @@ export const api = createApi({
         url: `/users-permissions/profile`,
         method: 'DELETE',
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
+          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
       })
     }), 

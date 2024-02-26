@@ -29,3 +29,5 @@ export interface IDataCheque {
   id: number,
   attributes: IFile
 }
+
+export type TApiChannel = "voice" | "sms"; 
