@@ -3,7 +3,7 @@
 import { Button, Divider } from "@nextui-org/react";
 import { FormDataToSend } from "../../../model/type";
 import { FC, useState } from "react";
-import { UploadInput } from "@/src/shared/ui";
+import { ErrorHandler, UploadInput } from "@/src/shared/ui";
 import { IFormProps } from "./ui.props";
 import { costRegister } from "../../../model/data";
 import { useWatchForm } from "../../../model/hooks/useWatchForm";
@@ -17,12 +17,12 @@ import { Input } from "../../components/input/ui";
 
 export const Form: FC<IFormProps> = (props) => {
   const {city, count, comment, cheques, id} = props;
-  console.log(cheques);
+
   const [isShowCount, setIsShowCount] = useState(Number(count) > 1 ? true : false);
   const [sumRegister, setSumRegister] = useState(costRegister * Number(count));
   const {register, watch, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
   useWatchForm(watch, setSumRegister, costRegister);
-  const {onSubmit, isSuccess, isAddingClient, isUploadedImage, data} = useEditOnSubmit(id);
+  const {onSubmit, isSuccess, isAddingClient, errors: errorsSubmit, isUploadedImage, data} = useEditOnSubmit(id);
   useRedirectSuccess(isSuccess, 'edit');
   const {ref, ...inputFiles} = register("files");
   return (
@@ -65,6 +65,10 @@ export const Form: FC<IFormProps> = (props) => {
           Отправить
         </Button>
       </form>
+
+      {errorsSubmit.map((error, index) => {
+        return <ErrorHandler message={error.errorMsg} code={error.errorCode} key={index} />
+      })}
     </div>
   )
 }

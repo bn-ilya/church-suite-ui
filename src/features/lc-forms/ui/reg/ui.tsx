@@ -12,13 +12,14 @@ import { useRedirectSuccess } from "../../model/hooks/useRedirectSuccess";
 import { Input } from "../components/input/ui";
 import { PayInfo } from "../components/pay-info/ui";
 import { ChecksInfo } from "../components/checks-info/ui";
+import { ErrorHandler } from "@/src/shared/ui";
 
 export const LcRegForm = () => {
   const [isShowCount, setIsShowCount] = useState(false);
   const [sumRegister, setSumRegister] = useState(costRegister)
   const {register, watch, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
   useWatchForm(watch, setSumRegister, costRegister);
-  const {onSubmit, isSuccess, isLoading, data} = useRegOnSubmit();
+  const {onSubmit, isSuccess, isLoading, errors: errorsSubmit, data} = useRegOnSubmit();
   useRedirectSuccess(isSuccess, 'register');
   const {ref, ...inputFiles} = register("files");
 
@@ -60,6 +61,10 @@ export const LcRegForm = () => {
           Отправить
         </Button>
       </form>
+
+      {errorsSubmit.map((error, index) => {
+        return <ErrorHandler message={error.errorMsg} code={error.errorCode} key={index} />
+      })}
     </div>
   )
 }

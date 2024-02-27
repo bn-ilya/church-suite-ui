@@ -2,13 +2,17 @@ import { SubmitHandler } from "react-hook-form";
 import { FormDataToSend } from "../type";
 import { ILiveChatClient, useAddLiveChatClientMutation, useSetLcFormMutation, useUploadImageMutation } from "@/src/shared/api";
 import { useEffect, useState } from "react";
+import { useErrorReq } from "@/src/shared/model";
 
 export const useRegOnSubmit = () => {
-  const [uploadImage, {isLoading: isUploadedImage}] = useUploadImageMutation();
-  const [addLiveChatClient, {isLoading: isAddingClient, data}] = useAddLiveChatClientMutation();
-  const [setLcForm, {isLoading: isLoadingSetLcForm}] = useSetLcFormMutation()
+  const [uploadImage, {isLoading: isUploadedImage, error: errorUpload}] = useUploadImageMutation();
+  const [addLiveChatClient, {isLoading: isAddingClient, data, error: errorAddLc}] = useAddLiveChatClientMutation();
+  const [setLcForm, {isLoading: isLoadingSetLcForm, error: errorSetLc}] = useSetLcFormMutation()
   const [isSuccess, setSuccess] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const errorInfoUpload = useErrorReq(errorUpload);
+  const errorInfoAddLc = useErrorReq(errorAddLc);
+  const errorInfoSetLc = useErrorReq(errorSetLc);
   
   const onSubmit: SubmitHandler<FormDataToSend> = async (formData) => { 
     if (formData.files?.length) {
@@ -34,5 +38,5 @@ export const useRegOnSubmit = () => {
     setLoading(false);
   }, [isUploadedImage, isAddingClient, isLoadingSetLcForm])
 
-  return {onSubmit, isSuccess, isLoading, data};
+  return {onSubmit, isSuccess, isLoading, errors: [errorInfoUpload, errorInfoAddLc, errorInfoSetLc], data};
 }
