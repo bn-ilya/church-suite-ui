@@ -6,9 +6,10 @@ import { ErrorModal } from "@/src/shared/ui";
 import { FC } from "react";
 import { IUserEditFormProps } from "./ui.props";
 import { Input } from "../../components/input/ui";
+import { SuccessModal } from "@/src/shared/ui/success-modal";
 
 export const UserEditForm: FC<IUserEditFormProps> = ({name}) => {
-  const {onSubmit, isLoading, errorMsg, data} = useEditOnSubmit()
+  const {onSubmit, isLoading, errorMsg, data, isSuccess} = useEditOnSubmit()
   const {register, handleSubmit, formState: {errors}} = useForm<IEditDataUser>({mode: "onBlur"});
 
   return (
@@ -30,6 +31,7 @@ export const UserEditForm: FC<IUserEditFormProps> = ({name}) => {
       </form>
 
       <ErrorModal error={errorMsg} />
+      <SuccessModal message={isSuccess ? "Данные обновлены" : ''} />
     </div>
   ) 
 }

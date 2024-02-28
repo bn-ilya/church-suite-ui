@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 
 export const useEditOnSubmit = () => {
-  const [editUser, {isLoading, error, data}] = useEditUserMutation();
+  const [editUser, {isLoading, error, data, isSuccess}] = useEditUserMutation();
   const [errorMsg, setErrorMsg] = useState('');
 
   const clearErrorMsg = () => {
@@ -27,5 +27,5 @@ export const useEditOnSubmit = () => {
     await editUser(userData).unwrap();
   };
 
-  return {onSubmit, isLoading, errorMsg, data}
+  return {onSubmit, isLoading, errorMsg, data, isSuccess}
 }

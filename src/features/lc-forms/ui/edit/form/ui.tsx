@@ -3,17 +3,17 @@
 import { Button, Divider } from "@nextui-org/react";
 import { FormDataToSend } from "../../../model/type";
 import { FC, useState } from "react";
-import { ErrorHandler, UploadInput } from "@/src/shared/ui";
+import { ErrorHandler } from "@/src/shared/ui";
 import { IFormProps } from "./ui.props";
 import { costRegister } from "../../../model/data";
 import { useWatchForm } from "../../../model/hooks/useWatchForm";
 import { useEditOnSubmit } from "../../../model/hooks/useEditOnSubmit";
-import { useRedirectSuccess } from "../../../model/hooks/useRedirectSuccess";
 import { useForm } from "react-hook-form";
 import { SwitchCountClients } from "../../components/switch-count-client/ui";
 import { PayInfo } from "../../components/pay-info/ui";
 import { ChecksInfo } from "../../components/checks-info/ui";
 import { Input } from "../../components/input/ui";
+import { SuccessModal } from "@/src/shared/ui/success-modal";
 
 export const Form: FC<IFormProps> = (props) => {
   const {city, count, comment, cheques, id} = props;
@@ -23,7 +23,6 @@ export const Form: FC<IFormProps> = (props) => {
   const {register, watch, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
   useWatchForm(watch, setSumRegister, costRegister);
   const {onSubmit, isSuccess, isAddingClient, errors: errorsSubmit, isUploadedImage, data} = useEditOnSubmit(id);
-  useRedirectSuccess(isSuccess, 'edit');
   const {ref, ...inputFiles} = register("files");
   return (
     <div className="max-w-7xl w-full mx-auto px-6">
@@ -69,6 +68,8 @@ export const Form: FC<IFormProps> = (props) => {
       {errorsSubmit.map((error, index) => {
         return <ErrorHandler message={error.errorMsg} code={error.errorCode} key={index} />
       })}
+
+      <SuccessModal message={isSuccess ? "Данные обновлены" : ''} />
     </div>
   )
 }

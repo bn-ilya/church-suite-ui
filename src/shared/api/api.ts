@@ -47,7 +47,8 @@ export const api = createApi({
         body: {
           data: data.body
         },    
-      })
+      }),
+      invalidatesTags: ["MeData"]
     }),
     deleteLiveChatClient: build.mutation<IDeleteLiveChatClientRes, number>({
       query: (id) => ({
@@ -96,7 +97,8 @@ export const api = createApi({
           "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
         body: editData     
-      })
+      }),
+      invalidatesTags: ["MeData"]
     }),
     confirmLogin: build.mutation<IConfirmLoginResSuccess, IConfirmDataLogin>({
       query: (confirmData) => ({
