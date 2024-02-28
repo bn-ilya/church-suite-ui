@@ -10,7 +10,8 @@ import { useErrorReq } from "@/src/shared/model";
 import { ErrorHandler } from "@/src/shared/ui";
 
 export const Controller = () => {
-  const {data, error} = useGetMeQuery();
+  const [skip, setSkip] = useState(false);
+  const {data, error} = useGetMeQuery(null, {refetchOnMountOrArgChange: true, skip});
   const {errorMsg, errorCode} = useErrorReq(error);
 
   const [userData, setUserData] = useState<IGetMeResUser | null>(null);
@@ -21,9 +22,9 @@ export const Controller = () => {
       const {lc_form, ...user} = data;
       setUserData(user);
       setLcFormData(lc_form || null);
+      lc_form && setSkip(true);
     }
   }, [data])
-
 
   return (
     <>

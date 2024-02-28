@@ -1,3 +1,5 @@
+"use client"
+
 import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
 import { FC, useEffect } from "react";
 import { IErrorModalProps } from "./ui.props";
@@ -9,11 +11,13 @@ export const ErrorModal: FC<IErrorModalProps> = ({error, textBtn, onCloseCallbac
     if (error) {
       onOpen()
     }
+
+    return () => onClose();
   }, [error])
 
   const onCloseHandler = () => {
-    onCloseCallback && onCloseCallback();
     onClose();
+    onCloseCallback && onCloseCallback();
   }
 
   return (
