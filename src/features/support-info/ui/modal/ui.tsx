@@ -33,7 +33,7 @@ export const SupportInfoModal: FC<ISupportInfoModalProps> = ({isOpen: isOpenProp
           <>
             <ModalBody>
               <div className="pt-6 flex flex-col items-center gap-3">
-                <Snippet hideSymbol size="md" className="font-bold">+7 (988) 525-36-05</Snippet>
+                <Snippet hideSymbol size="md" className="font-bold" hideCopyButton>+7 (988) 525-36-05</Snippet>
               </div>
             </ModalBody>
             <ModalFooter>
