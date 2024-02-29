@@ -34,8 +34,9 @@ export const useRegOnSubmit = () => {
   useEffect(()=>{
     if (isUploadedImage || isAddingClient || isLoadingSetLcForm) {
       setLoading(true);
+    } else {
+      setLoading(false);
     }
-    setLoading(false);
   }, [isUploadedImage, isAddingClient, isLoadingSetLcForm])
 
   return {onSubmit, isSuccess, isLoading, errors: [errorInfoUpload, errorInfoAddLc, errorInfoSetLc], data};

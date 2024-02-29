@@ -24,7 +24,7 @@ export const LcRegForm = () => {
   const {ref, ...inputFiles} = register("files");
 
   return (
-    <div className="max-w-xl-full mx-auto px-6">
+    <div className="max-w-xl mx-auto px-6">
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
         <Input
           isRequired
