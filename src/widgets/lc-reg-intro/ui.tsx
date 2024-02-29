@@ -1,6 +1,8 @@
 "use client";
 
 import { LogoLiveChat } from '@/src/shared/ui';
+import { Step, StepIcon, StepIndicator, StepStatus, Stepper } from '@chakra-ui/stepper';
+import { Steps } from 'antd';
 import { motion } from 'framer-motion';
 import { FC } from 'react';
 

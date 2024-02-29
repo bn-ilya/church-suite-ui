@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { NavbarRow, NavbarMobile } from "@/src/features/site-navigation";
 import { ThemeSwitcher } from '@/src/features/theme-switcher';
 import { headerHeight } from "./lib/constants";
-import { LogoChurch } from "@/src/shared/ui";
+import { LogoChurch, LogoLiveChat } from "@/src/shared/ui";
 import { motion } from "framer-motion";
 
 const MotionNavbar = motion(Navbar)
@@ -16,19 +16,16 @@ export const Header: FC = () => {
         <NavbarBrand>
           <LogoChurch className='w-[20px] h-auto text-foreground' />
         </NavbarBrand>
-        <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarRow />
-        </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
             <ThemeSwitcher />
           </NavbarItem>
-          <NavbarMenuToggle
+          {/* <NavbarMenuToggle
             className="sm:hidden"
-          />
+          /> */}
         </NavbarContent>
 
-        <NavbarMobile />
+        {/* <NavbarMobile /> */}
       </MotionNavbar>
   )
 };

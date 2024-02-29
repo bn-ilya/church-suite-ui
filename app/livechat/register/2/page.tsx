@@ -1,5 +1,6 @@
 import { Transition } from "@/app/transition";
 import { AccessDeniedUser } from "@/src/features/access-denied-user";
+import { SupportInfo } from "@/src/features/support-info";
 import { LcRegTwo } from "@/src/views/lc-reg-two";
 
 export default function LcRegTwoPage() {
@@ -9,6 +10,7 @@ export default function LcRegTwoPage() {
         <LcRegTwo />
       </Transition>
       <AccessDeniedUser />
+      <SupportInfo />
     </>
   )
 }

@@ -8,6 +8,8 @@ import { LcRegBtn } from "@/src/features/lc-reg-btn";
 import { LcDeleteData } from '@/src/features/lc-delete-data';
 import { useErrorReq } from "@/src/shared/model";
 import { ErrorHandler } from "@/src/shared/ui";
+import { ProfileUserIntro } from "../components/profile-user-intro/ui";
+import { ProfileLcIntro } from "../components/profile-lc-intro/ui";
 
 export const Controller = () => {
   const [skip, setSkip] = useState(false);
@@ -29,16 +31,26 @@ export const Controller = () => {
   return (
     <>
       {userData && (
-        <UserEditForm name={userData.name} />
+        <>
+          <ProfileUserIntro />
+          <UserEditForm name={userData.name} />
+        </>
       )}
       {
         userData && lcFormData ? (
-          <LcEditForm data={lcFormData} />
+          <>
+            <ProfileLcIntro />
+            <LcEditForm data={lcFormData} />
+          </>
         ) : (
           userData && <LcRegBtn />
         )
       }
-      {userData && <LcDeleteData />} 
+      {userData && (
+        <div className="max-w-7xl w-full px-6 mx-auto pt-4 flex flex-col items-center">
+          <LcDeleteData />
+        </div>
+      )} 
       <ErrorHandler message={errorMsg} code={errorCode}/>
     </>
   )

@@ -13,7 +13,7 @@ import { setPhone } from "@/src/entities/user";
 
 export const UserRegisterForm = () => {
   const {onSubmit, isLoading, errorMsg, data} = useCreateOnSubmit()
-  const {register, handleSubmit, formState: {errors}} = useForm<IRegDataUser>({mode: "onBlur"});
+  const {register, handleSubmit, formState: {errors}} = useForm<IRegDataUser>({mode: "onChange"});
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -37,13 +37,16 @@ export const UserRegisterForm = () => {
             placeholder="Петр Петров"
         />
         <Input
+        startContent={
+          <span className="text-[12px] text-zinc-400">+7</span>
+        }
           isRequired
           {...register("phone", {required: "Заполниие телефон", pattern: {value: /^[0-9+-]+$/, message: "Используются недопустимые символы"}, minLength: {value: 10, message: "Недостаточно символов. Требуется 10"}, maxLength: {value: 10, message: "Лишние символы. Требуется 10"}})}
           isInvalid={!!errors?.phone}
           errorMessage={errors?.phone?.message}
           type="tel"
           label="Номер телефона"
-          placeholder="+7 (xxx) xxx-xx-xx"
+          placeholder="(xxx) xxx-xx-xx"
         />
         <Button isLoading={isLoading} type="submit" color="primary" className="col-span-2">
           Продолжить

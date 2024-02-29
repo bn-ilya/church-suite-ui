@@ -1,10 +1,10 @@
 import { UserConfirmForm } from "@/src/features/user-forms/ui/confirm/ui";
-import { LcLoginIntro } from "@/src/widgets/lc-login-intro";
+import { LcLoginIntroTwo } from "@/src/widgets/lc-login-intro-two";
 
 export const LcLoginTwo = () => {
   return (
     <div className={`mt-[64px]`}>
-      <LcLoginIntro />
+      <LcLoginIntroTwo />
       <UserConfirmForm redirectPath="/profile" />
     </div> 
   )

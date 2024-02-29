@@ -1,3 +1,5 @@
+"use client";
+
 import { FC } from "react";
 import { IPayInfoProps } from "./ui.props";
 import { Accordion, AccordionItem, Divider, Snippet } from "@nextui-org/react";
@@ -18,7 +20,7 @@ export const PayInfo: FC<IPayInfoProps> = ({sumRegister}) => {
           <Divider /> 
           <div className="flex flex-col items-center py-6 gap-2">
             <div className="text-sm text-center max-w-[250px]">Необходимо осуществить перевод на номер или карту:</div>
-            <Snippet hideSymbol	size="md" className="font-bold">+7 (928) 41-31-458</Snippet>
+            <Snippet hideSymbol size="md" className="font-bold">+7 (988) 525-36-05</Snippet>
             <Snippet hideSymbol size="md" className="font-bold">2200 7010 0446 0801</Snippet>
           </div>
         </AccordionItem>
