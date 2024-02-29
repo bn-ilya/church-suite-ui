@@ -7,9 +7,7 @@ import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IDel
 export const api = createApi({
   reducerPath: 'strapiApi',
   tagTypes: ["MeData"],
-  baseQuery: fetchBaseQuery({baseUrl: `http://62.217.183.122:1337/api/`, headers: {
-    'Authorization': 'Bearer be421c96c982379099bb5be3c7a567e25aee6997f2d7d79822be7c5ebfc8d7c8dc8405b0d5156eb1043b977a2d903c414f0dd7ccb1ea9629f9bf593e9189538af40a8ef69d8c9d86cb4a7f680e7e7c2e554b3b2518064fe8947b56df9393942ea752d273e2c98356c82b9d07b3579cc41ff8a77896c6991bc04af2fe5f08eb5b'
-  }}),
+  baseQuery: fetchBaseQuery({baseUrl: `http://62.217.183.122:1337/api/`}),
   endpoints: (build) => ({
     getEvents: build.query<Array<IEvent>, void>({
       query: () => ({
