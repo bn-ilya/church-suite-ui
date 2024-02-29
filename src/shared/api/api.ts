@@ -7,7 +7,7 @@ import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IDel
 export const api = createApi({
   reducerPath: 'strapiApi',
   tagTypes: ["MeData"],
-  baseQuery: fetchBaseQuery({baseUrl: `http://62.217.183.122:1337/api/`}),
+  baseQuery: fetchBaseQuery({baseUrl: `http://localhost:1337/api/`}),
   endpoints: (build) => ({
     getEvents: build.query<Array<IEvent>, void>({
       query: () => ({
@@ -25,7 +25,10 @@ export const api = createApi({
           url: 'upload',
           method: 'POST',
           body: bodyFormData,
-          formData: true
+          formData: true,
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+          },
         }
       }
     }),
@@ -35,7 +38,10 @@ export const api = createApi({
         method: 'POST',
         body: {
           data
-        },    
+        },
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+        },
       }),
     }),
     updateLiveChatClient: build.mutation<IUpdateLiveChatClientRes, IUpdateClientReq>({
@@ -45,14 +51,20 @@ export const api = createApi({
         body: {
           data: data.body
         },    
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+        },
       }),
       invalidatesTags: ["MeData"]
     }),
     deleteLiveChatClient: build.mutation<IDeleteLiveChatClientRes, number>({
       query: (id) => ({
         url: `live-chat-clients/${id}`,
-        method: 'DELETE'  
-      })
+        method: 'DELETE',
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+        }, 
+      }),
     }),
     getLiveChatClient: build.query<IGetLiveChatClientDataRes, number>({
       query: (id) => ({
