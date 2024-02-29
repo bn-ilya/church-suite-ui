@@ -13,7 +13,7 @@ export const SupportInfoButton: FC<ISupportInfoButton> = ({bottomPosition}) => {
     setOpenModal(prev => !prev);
   }
 
-  const bottomClass = bottomPosition ? `bottom-[${bottomPosition}px]` : `bottom-[20px]`
+  const bottomClass = bottomPosition ? `bottom-[50px]` : `bottom-[20px]`
 
   return (
     <>
