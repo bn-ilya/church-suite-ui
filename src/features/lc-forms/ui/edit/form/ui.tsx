@@ -25,7 +25,7 @@ export const Form: FC<IFormProps> = (props) => {
   const {onSubmit, isSuccess, isAddingClient, errors: errorsSubmit, isUploadedImage, data} = useEditOnSubmit(id);
   const {ref, ...inputFiles} = register("files");
   return (
-    <div className="max-w-7xl w-full mx-auto px-6">
+    <div className="max-w-xl w-full mx-auto px-6">
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
         <Input
           isRequired

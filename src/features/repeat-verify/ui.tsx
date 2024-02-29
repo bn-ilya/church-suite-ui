@@ -44,7 +44,7 @@ export const RepeatVerify = () => {
     <div>
       {!isAvailable && attempts > 0 ? (
         <div className="flex gap-2 justify-center text-zinc-400">
-          <div>Отправить повторно через:</div>
+          <div>Отправить SMS код через:</div>
           <div>{timer}</div>
         </div>
       ):(

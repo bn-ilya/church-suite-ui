@@ -13,7 +13,7 @@ export const UserEditForm: FC<IUserEditFormProps> = ({name}) => {
   const {register, handleSubmit, formState: {errors}} = useForm<IEditDataUser>({mode: "onBlur"});
 
   return (
-    <div className="max-w-7xl w-full mx-auto px-6">
+    <div className="max-w-xl w-full mx-auto px-6">
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
         <Input
             isRequired

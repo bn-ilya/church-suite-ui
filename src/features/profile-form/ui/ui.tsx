@@ -47,7 +47,7 @@ export const Controller = () => {
         )
       }
       {userData && (
-        <div className="max-w-7xl w-full px-6 mx-auto pt-4 flex flex-col items-center">
+        <div className="max-w-xl w-full px-6 mx-auto pt-4 flex flex-col items-center">
           <LcDeleteData />
         </div>
       )} 

@@ -14,7 +14,7 @@ export const LcSearchForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-7xl w-full mx-auto px-6 flex justify-center gap-2">
+    <form onSubmit={handleSubmit} className="max-w-xl w-full mx-auto px-6 flex justify-center gap-2">
         <Input
           size="lg"
           isRequired
