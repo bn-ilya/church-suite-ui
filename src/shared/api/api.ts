@@ -7,7 +7,7 @@ import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IDel
 export const api = createApi({
   reducerPath: 'strapiApi',
   tagTypes: ["MeData"],
-  baseQuery: fetchBaseQuery({baseUrl: `http://62.217.183.122:1337/api/`}),
+  baseQuery: fetchBaseQuery({baseUrl: `https://church-krop.ru:1336/api/`}),
   endpoints: (build) => ({
     getEvents: build.query<Array<IEvent>, void>({
       query: () => ({
