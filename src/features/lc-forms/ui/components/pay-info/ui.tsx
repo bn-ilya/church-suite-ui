@@ -7,6 +7,7 @@ import { costRegister } from "../../../model/data";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { CheckIcon} from "@heroicons/react/16/solid";
 import { Square2StackIcon } from "@heroicons/react/24/outline";
+import { LogoSber } from "@/src/shared/ui";
 
 export const PayInfo: FC<IPayInfoProps> = ({sumRegister}) => {
   const [copiedPhone, copyToClipboardPhone] = useCopyToClipboard();
@@ -39,7 +40,12 @@ export const PayInfo: FC<IPayInfoProps> = ({sumRegister}) => {
           <div className="flex flex-col items-center py-6 gap-2">
             <div className="text-sm text-center max-w-[250px]">Необходимо осуществить перевод на карту по номеру карты или телефона:</div>
             <Snippet onCopy={handleCopyPhone} copyIcon={copiedPhone ? <CheckIcon width={14}/> :<Square2StackIcon width={14}/>} hideSymbol size="md" className="font-bold">+7 (988) 525-36-05</Snippet>
-            <Snippet onCopy={handleCopyCard} copyIcon={copiedCard ? <CheckIcon width={14}/> :<Square2StackIcon width={14}/>} hideSymbol size="md" className="font-bold">2200 7010 0446 0801</Snippet>
+            <Snippet onCopy={handleCopyCard} copyIcon={copiedCard ? <CheckIcon width={14}/> :<Square2StackIcon width={14}/>} hideSymbol size="md" className="font-bold">4276 3000 3553 5635</Snippet>
+            <div className="flex flex justify-center gap-1 items-center mt-1">
+              <LogoSber width={14} height={14}/>
+              <div className="text-sm">Сбербанк. Максим Глазачев</div>
+            </div>
+
           </div>
         </AccordionItem>
       </Accordion>

@@ -17,7 +17,7 @@ export const SupportInfoButton: FC<ISupportInfoButton> = ({bottomPosition}) => {
 
   return (
     <>
-      <motion.div initial={{y:100}} animate={{y:0}} className={`fixed w-full h-auto flex p-3 justify-center ${bottomClass}`}>
+      <motion.div initial={{y:100}} animate={{y:0}} className={`fixed w-full h-auto flex p-3 justify-center ${bottomClass} z-50`}>
         <Button onClick={handleClick} radius="full" size="sm" startContent={<LifebuoyIcon width="16" />} color="primary" variant="faded">
           Техподдержка
         </Button>  
