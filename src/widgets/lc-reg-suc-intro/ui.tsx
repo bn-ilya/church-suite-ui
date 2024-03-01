@@ -11,7 +11,7 @@ export const LcRegSucIntro: FC = () => {
         <div className='w-full py-[50px] md:py-[90px] flex flex-col items-center'>
           <div className="flex gap-3 items-center flex-col md:flex-row">
             <CheckCircleIcon width={50} className='dark:text-white text-green-600'/>
-            <h1 className="text-xl md:text-4xl font-bold dark:text-white text-green-600 text-center">Вы зарегистрированны</h1>
+            <h1 className="text-xl md:text-4xl font-bold dark:text-white text-green-600 text-center">Вы зарегистрированы</h1>
           </div>
         </div>
       </div>

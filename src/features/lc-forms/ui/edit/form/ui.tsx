@@ -54,7 +54,7 @@ export const Form: FC<IFormProps> = (props) => {
           isInvalid={!!errors?.comment}
           errorMessage={errors?.comment?.message}
           label="Комментарий"
-          placeholder="Необязательно"
+          placeholder="Не обязательно"
           defaultValue={comment}
         />
         <Divider className="col-span-2 my-2" />

@@ -52,7 +52,7 @@ export const LcRegForm = () => {
           isInvalid={!!errors?.comment}
           errorMessage={errors?.comment?.message}
           label="Комментарий"
-          placeholder="Необязательно"
+          placeholder="Не обязательно"
         />
         <Divider className="col-span-2 my-2" />
         <PayInfo sumRegister={sumRegister} />
