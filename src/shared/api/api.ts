@@ -82,9 +82,6 @@ export const api = createApi({
       query: (regData) => ({
         url: `/users`,
         method: 'POST',
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
-        },
         body: regData     
       }),
     }),
@@ -92,9 +89,6 @@ export const api = createApi({
       query: (loginData) => ({
         url: `/users-permissions/login`,
         method: 'POST',
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
-        },
         body: loginData     
       }),
       invalidatesTags: ["MeData"]
