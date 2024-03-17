@@ -5,14 +5,12 @@ import { Input } from "../../components/input/ui"
 import { useForm } from "react-hook-form";
 import { IRegDataUser } from "@/src/shared/api";
 import { useCreateOnSubmit } from "../../model/hooks/useCreateOnSubmit";
-import { ErrorModal } from "@/src/shared/ui";
+import { ErrorHandler } from "@/src/shared/ui";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useAppDispatch } from "@/src/shared/model";
-import { setPhone } from "@/src/entities/user";
+import { FormEvent, useEffect, useState } from "react";
 
 export const UserRegisterForm = () => {
-  const {onSubmit, isLoading, errorMsg, data} = useCreateOnSubmit()
+  const {onSubmit, isLoading, errorMsg, errorCode, data} = useCreateOnSubmit()
   const {register, handleSubmit, formState: {errors}} = useForm<IRegDataUser>({mode: "onChange"});
   const router = useRouter();
   const [phone, setPhone] = useState('');
@@ -59,7 +57,8 @@ export const UserRegisterForm = () => {
         </Button>
       </form>
 
-      <ErrorModal error={errorMsg} />
+
+      <ErrorHandler message={errorMsg} code={errorCode}/>
     </div>
   ) 
 }

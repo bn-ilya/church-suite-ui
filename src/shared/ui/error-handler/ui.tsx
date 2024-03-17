@@ -14,5 +14,9 @@ export const ErrorHandler: FC<IErrorHandlerProps> = ({message, code}) => {
     return <ErrorModal error="Мы не знаем что это за паранормальная ошибка. Попробуйте прикрпить файл другого формата или воспользоваться не safari браузером. Если результата нет, то обратитесь в техподдержку" />
   }
 
+  if (message === "Регистрация закрыта, количество зарегистрированных достигло лимита. Если вы уже зарегистрировались, то вы можете авторизоваться") {
+    return <ErrorModal error={message} textBtn="Авторизоваться" onCloseCallback={()=>{router.push("/livechat/login/1")}}/>
+  }
+
   return <ErrorModal error={message} />
 } 
