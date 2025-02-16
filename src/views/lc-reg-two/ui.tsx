@@ -7,7 +7,6 @@ export const LcRegTwo = () => {
     <div className={`mt-[64px]`}>
       <LcRegIntroTwo />
       <UserConfirmForm redirectPath="/livechat/register/3" />
-      <CallInfoModal isOpen={true} />
     </div> 
   )
 }
