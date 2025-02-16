@@ -34,10 +34,12 @@ export const UserConfirmForm: FC<IUserConfirmForm> = ({redirectPath}) => {
         <div className="grid grid-cols-2 gap-1 col-span-2">
           <Input
             isRequired
+            autoFocus
             {...register("code", {required: 'Заполните код'})}
             isInvalid={!!errors?.code}
             errorMessage={errors?.code?.message}
-            type="tel"
+            type="text"
+            autoComplete="one-time-code"
             label="Код подтверждения"
             placeholder="XXXX"
           />
