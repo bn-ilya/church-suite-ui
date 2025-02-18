@@ -6,6 +6,7 @@ export interface FormDataReceived {
   count: number,
   comment?: string,
   files?: FileList,
+  senderName?: string,
   cheques?: Array<string> 
 }
 
@@ -14,5 +15,6 @@ export interface FormDataToSend {
   count: number,
   comment?: string,
   files?: FileList,
+  senderName?: string,
   cheques?: Array<IUploadFile['id']>
 }

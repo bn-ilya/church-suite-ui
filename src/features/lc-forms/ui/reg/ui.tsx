@@ -22,7 +22,6 @@ export const LcRegForm = () => {
   const {onSubmit, isSuccess, isLoading, errors: errorsSubmit, data} = useRegOnSubmit();
   useRedirectSuccess(isSuccess, 'register');
   const {ref, ...inputFiles} = register("files");
-
   return (
     <div className="max-w-xl mx-auto px-6">
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
@@ -56,7 +55,7 @@ export const LcRegForm = () => {
         />
         <Divider className="col-span-2 my-2" />
         <PayInfo sumRegister={sumRegister} />
-        <ChecksInfo refCallback={ref} {...inputFiles}/>
+        <ChecksInfo refCallback={ref} registerSenderName={{...register("senderName")}} {...inputFiles}/>
         <Button isLoading={isLoading} type="submit" color="primary" className="col-span-2">
           Отправить
         </Button>

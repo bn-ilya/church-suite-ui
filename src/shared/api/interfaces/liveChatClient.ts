@@ -6,6 +6,7 @@ export interface ILiveChatClient {
   count: number,
   comment?: string,
   cheques?: Array<IUploadFile['id']>,
+  senderName?: string
 }
 
 export interface IAddLiveChatClientReq {

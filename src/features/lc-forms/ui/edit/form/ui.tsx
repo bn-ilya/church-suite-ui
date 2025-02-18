@@ -16,7 +16,7 @@ import { Input } from "../../components/input/ui";
 import { SuccessModal } from "@/src/shared/ui/success-modal";
 
 export const Form: FC<IFormProps> = (props) => {
-  const {city, count, comment, cheques, id} = props;
+  const {city, count, comment, cheques, id, senderName} = props;
 
   const [isShowCount, setIsShowCount] = useState(Number(count) > 1 ? true : false);
   const [sumRegister, setSumRegister] = useState(costRegister * Number(count));
@@ -59,7 +59,7 @@ export const Form: FC<IFormProps> = (props) => {
         />
         <Divider className="col-span-2 my-2" />
         <PayInfo sumRegister={sumRegister} />
-        <ChecksInfo refCallback={ref} defaultNames={cheques} {...inputFiles}/>
+        <ChecksInfo refCallback={ref} defaultNames={cheques} defaultSenderName={senderName} registerSenderName={register("senderName")} {...inputFiles}/>
         <Button isLoading={isAddingClient || isUploadedImage} type="submit" color="primary" className="col-span-2">
           Отправить
         </Button>
