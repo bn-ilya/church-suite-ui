@@ -16,12 +16,14 @@ import { ErrorHandler } from "@/src/shared/ui";
 
 export const LcRegForm = () => {
   const [isShowCount, setIsShowCount] = useState(false);
+  const [countChildrens, setCountChildrens] = useState(1);
   const [sumRegister, setSumRegister] = useState(costRegister)
   const {register, watch, handleSubmit, formState: {errors}} = useForm<FormDataToSend>();
   useWatchForm(watch, setSumRegister, costRegister);
   const {onSubmit, isSuccess, isLoading, errors: errorsSubmit, data} = useRegOnSubmit();
   useRedirectSuccess(isSuccess, 'register');
   const {ref, ...inputFiles} = register("files");
+
   return (
     <div className="max-w-xl mx-auto px-6">
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
@@ -35,17 +37,22 @@ export const LcRegForm = () => {
           placeholder="г. Кропоткин"
         />
         <SwitchCountClients defaultSelected={false} setIsShowCount={setIsShowCount}/>
-        {isShowCount && (
-          <Input
-            {...register("count", {required: 'Заполните количество'})}
+        {isShowCount && 
+        <div className="flex flex-col">
+          {new Array(countChildrens).fill("").map((_, index) => {
+            return <div key={index}><Input
+            {...register(`childrens.${index}`, {required: 'Заполните имя, фамилию'})}
             isInvalid={!!errors?.count}
             errorMessage={errors?.count?.message}
-            type="number"
-            label="Количество человек (с учетом вас)"
-            placeholder="Введите количество "
-            defaultValue="1"
-          />
+            type="text"
+            label="Имя Фамилия"
+            placeholder="Вася Васильев"
+          /><button onClick={() => setCountChildrens((value) => value - 1)}>-</button></div>
+          }
+          
         )}
+        <button onClick={() => setCountChildrens((value) => value + 1)}>+</button>
+        </div>}
         <Input
           {...register("comment")}
           isInvalid={!!errors?.comment}

@@ -13,6 +13,7 @@ export interface FormDataReceived {
 export interface FormDataToSend {
   city: string,
   count: number,
+  childrens?: Array<string>
   comment?: string,
   files?: FileList,
   senderName?: string,
