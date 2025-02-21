@@ -14,28 +14,31 @@ import { ChecksInfo } from "../components/checks-info/ui";
 import { ErrorHandler } from "@/src/shared/ui";
 import { ChildrensList } from "../components/childrens-list/ui";
 import { countUsersByDefault } from "../../model/constatns";
+import { useWatchPaymentProvenForm } from "../../model/hooks/useWatchPaymentProvenForm";
 
 export const LcRegForm = () => {
   const [isShowCount, setIsShowCount] = useState(false);
   const [countChildrens, setCountChildrens] = useState(0);
   const [sumRegister, setSumRegister] = useState(costRegister);
+  const [paymentProven, setPaymenProven] = useState(false);
+
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormDataToSend>();
-
   useEffect(() => {
     setSumRegister((countChildrens + countUsersByDefault) * costRegister);
   }, [countChildrens]);
-
   const {
     onSubmit,
     isSuccess,
     isLoading,
     errors: errorsSubmit,
-    data,
-  } = useRegOnSubmit();
+  } = useRegOnSubmit({ disabled: !paymentProven });
+
+  useWatchPaymentProvenForm(watch, setPaymenProven);
 
   useRedirectSuccess(isSuccess, "register");
   const { ref, ...inputFiles } = register("files");
@@ -90,6 +93,7 @@ export const LcRegForm = () => {
           {...inputFiles}
         />
         <Button
+          isDisabled={!paymentProven}
           isLoading={isLoading}
           type="submit"
           color="primary"

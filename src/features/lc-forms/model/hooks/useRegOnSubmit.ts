@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useErrorReq } from "@/src/shared/model";
 import { countUsersByDefault } from "../constatns";
 
-export const useRegOnSubmit = () => {
+export const useRegOnSubmit = ({ disabled }: { disabled: boolean }) => {
   const [uploadImage, { isLoading: isUploadedImage, error: errorUpload }] =
     useUploadImageMutation();
   const [
@@ -31,6 +31,7 @@ export const useRegOnSubmit = () => {
   const errorInfoSetLc = useErrorReq(errorSetLc);
 
   const onSubmit: SubmitHandler<FormDataToSend> = async (formData) => {
+    if (disabled) return;
     if (!formData.count) {
       formData.count = countUsersByDefault;
       if (formData.childrens?.length) {
