@@ -7,7 +7,6 @@ export const LcLoginTwo = () => {
     <div className={`mt-[64px]`}>
       <LcLoginIntroTwo />
       <UserConfirmForm redirectPath="/profile" />
-      <CallInfoModal isOpen={true} />
-    </div> 
-  )
-}
+    </div>
+  );
+};
