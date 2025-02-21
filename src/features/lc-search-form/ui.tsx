@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from "@heroicons/react/16/solid";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input } from "@heroui/react";
 import { useRouter } from "next/navigation"
 import { FormEvent, useRef } from "react";
 

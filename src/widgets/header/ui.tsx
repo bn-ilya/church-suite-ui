@@ -1,6 +1,6 @@
 'use client';
 
-import {  Navbar,   NavbarBrand,   NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@nextui-org/react";
+import {  Navbar,   NavbarBrand,   NavbarContent, NavbarItem, NavbarMenu, NavbarMenuItem, NavbarMenuToggle } from "@heroui/react";
 import { FC } from 'react';
 import { NavbarRow, NavbarMobile } from "@/src/features/site-navigation";
 import { ThemeSwitcher } from '@/src/features/theme-switcher';

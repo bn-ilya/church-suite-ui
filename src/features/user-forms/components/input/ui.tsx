@@ -1,4 +1,4 @@
-import {Input as InputNext, InputProps} from '@nextui-org/react';
+import {Input as InputNext, InputProps} from "@heroui/react";
 import { forwardRef } from 'react';
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { ErrorHandler } from "@/src/shared/ui";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "@/src/shared/model";
 import { useLoginOnSubmit } from "./model/hooks/useLoginOnSubmit";

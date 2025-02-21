@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { IChecksInfoProps } from "./ui.props"
 import { UploadInput } from "@/src/shared/ui"
-import {Accordion, AccordionItem, Checkbox, Divider} from "@nextui-org/react";
+import {Accordion, AccordionItem, Checkbox, Divider} from "@heroui/react";
 import { Input } from "../input/ui";
 
 export const ChecksInfo: FC<IChecksInfoProps> = ({refCallback, registerSenderName, defaultSenderName, ...props}) => {

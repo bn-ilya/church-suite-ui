@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Divider } from "@nextui-org/react";
+import { Alert, Button, Divider } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { FormDataToSend } from "../../model/type";
@@ -92,6 +92,11 @@ export const LcRegForm = () => {
           registerSenderName={{ ...register("senderName") }}
           {...inputFiles}
         />
+        {!paymentProven && (
+          <Alert className="col-span-2" color="primary">
+            Перед регистрацией необходимо сделать оплату
+          </Alert>
+        )}
         <Button
           isDisabled={!paymentProven}
           isLoading={isLoading}

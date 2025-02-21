@@ -1,4 +1,4 @@
-import { Button, ModalFooter } from "@nextui-org/react"
+import { Button, ModalFooter } from "@heroui/react"
 import { FC } from "react"
 import { IModalFooterSucProps } from "./ui.props"
 

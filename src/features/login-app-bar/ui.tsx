@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { PencilIcon, UserIcon } from "@heroicons/react/16/solid"
-import { Tab, Tabs } from "@nextui-org/react"
+import { Tab, Tabs } from "@heroui/react"
 import { FC, Key } from "react"
 import { usePathname, useRouter } from "next/navigation";
 import { getCodePath } from "@/src/shared/lib";

@@ -2,7 +2,7 @@
 
 import { ChangeEvent, FC, MouseEvent, useRef, useState } from 'react';
 import { IUploadInputProps } from './ui.props';
-import { Button, Chip } from '@nextui-org/react';
+import { Button, Chip } from "@heroui/react";
 import { CheckCircleIcon } from '@heroicons/react/16/solid';
 
 export const UploadInput: FC<IUploadInputProps> = ({refCallback, defaultNames, ...props}) => {

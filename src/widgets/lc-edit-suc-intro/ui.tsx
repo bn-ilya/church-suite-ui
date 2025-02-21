@@ -1,6 +1,6 @@
 "use client";
 import { CheckCircleIcon } from '@heroicons/react/16/solid';
-import { Snippet } from '@nextui-org/react';
+import { Snippet } from "@heroui/react";
 import { useSearchParams } from 'next/navigation';
 import { FC, useState } from 'react';
 

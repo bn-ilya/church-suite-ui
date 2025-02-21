@@ -2,7 +2,7 @@
 
 import { FC } from "react";
 import { IPayInfoProps } from "./ui.props";
-import { Accordion, AccordionItem, Divider, Snippet } from "@nextui-org/react";
+import { Accordion, AccordionItem, Divider, Snippet } from "@heroui/react";
 import { costRegister } from "../../../model/data";
 import { useCopyToClipboard } from "@uidotdev/usehooks";
 import { CheckIcon} from "@heroicons/react/16/solid";

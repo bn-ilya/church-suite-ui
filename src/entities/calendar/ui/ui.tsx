@@ -5,7 +5,7 @@ import { Calendar as CalendarAnt } from 'antd';
 import type { CalendarProps } from 'antd';
 import { useEventsCalendar } from '../model/hooks/useEventsCalendar';
 import { Skeleton } from './skeleton';
-import { Chip } from '@nextui-org/react';
+import { Chip } from "@heroui/react";
 import { getBreakpoints } from '@/src/shared/lib';
 import { useWindowSize } from '@uidotdev/usehooks';
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Divider } from "@nextui-org/react";
+import { Button, Divider } from "@heroui/react";
 import { FormDataToSend } from "../../../model/type";
 import { FC, useState } from "react";
 import { ErrorHandler } from "@/src/shared/ui";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nextui-org/react"
+import { Button } from "@heroui/react"
 import { Input } from "../../components/input/ui"
 import { useRouter } from "next/navigation";
 import { useConfirmOnSumbit } from "../../model/hooks/useConfirmOnSumbit";

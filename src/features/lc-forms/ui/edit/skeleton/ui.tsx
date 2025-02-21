@@ -1,4 +1,4 @@
-import { Input, Skeleton as SkeletonNext } from "@nextui-org/react"
+import { Input, Skeleton as SkeletonNext } from "@heroui/react"
 
 export const Skeleton = () => {
   return (

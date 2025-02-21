@@ -1,6 +1,6 @@
 import { ChangeEvent, FC } from "react";
 import { ISwitchCountClients } from "./ui.props";
-import { Switch } from "@nextui-org/react";
+import { Switch } from "@heroui/react";
 
 export const SwitchCountClients: FC<ISwitchCountClients> = ({
   setIsShowCount,

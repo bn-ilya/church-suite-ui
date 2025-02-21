@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { Input } from "../input/ui";
 import { UseFormRegister } from "react-hook-form";
 import { IChildrensListProps } from "./ui.props";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { PlusIcon } from "@heroicons/react/16/solid";
 import { MinusIcon } from "@heroicons/react/16/solid";
 

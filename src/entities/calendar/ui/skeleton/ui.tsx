@@ -1,6 +1,6 @@
 "use client";
 
-import { Skeleton as SkeletonNextUi } from '@nextui-org/react';
+import { Skeleton as SkeletonNextUi } from "@heroui/react";
 import { FC } from 'react';
 
 export const Skeleton: FC = () => {

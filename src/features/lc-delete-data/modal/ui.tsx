@@ -1,4 +1,4 @@
-import { Modal, ModalContent } from "@nextui-org/react"
+import { Modal, ModalContent } from "@heroui/react"
 import { FC } from "react"
 import { IModalDeleteProps } from "./ui.props"
 import { useRouter } from "next/navigation"
