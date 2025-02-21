@@ -9,6 +9,7 @@ import { MinusIcon } from "@heroicons/react/16/solid";
 export const ChildrensList = ({
   countChildrens,
   setCountChildrens,
+  setIsShowCount,
   register,
 }: IChildrensListProps) => {
   return (
@@ -27,7 +28,10 @@ export const ChildrensList = ({
               isIconOnly
               variant="faded"
               type="button"
-              onClick={() => setCountChildrens((value) => value - 1)}
+              onClick={() => {
+                if (index === 0) setIsShowCount(false);
+                setCountChildrens((value) => value - 1);
+              }}
             >
               <MinusIcon width={16} className="text-primary" />
             </Button>

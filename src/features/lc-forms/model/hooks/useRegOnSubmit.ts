@@ -9,8 +9,7 @@ import {
 } from "@/src/shared/api";
 import { useEffect, useState } from "react";
 import { useErrorReq } from "@/src/shared/model";
-
-const countUsersByDefault = 1;
+import { countUsersByDefault } from "../constatns";
 
 export const useRegOnSubmit = () => {
   const [uploadImage, { isLoading: isUploadedImage, error: errorUpload }] =
@@ -21,11 +20,7 @@ export const useRegOnSubmit = () => {
   ] = useAddLiveChatClientMutation();
   const [
     addLiveChatClientChildrenBulk,
-    {
-      isLoading: isAddingClientChildrens,
-      data: dataChildrens,
-      error: errorAddLcc,
-    },
+    { isLoading: isAddingClientChildrens },
   ] = useAddLiveChatClientChildrenBulkMutation();
   const [setLcForm, { isLoading: isLoadingSetLcForm, error: errorSetLc }] =
     useSetLcFormMutation();
@@ -63,12 +58,22 @@ export const useRegOnSubmit = () => {
   };
 
   useEffect(() => {
-    if (isUploadedImage || isAddingClient || isLoadingSetLcForm) {
+    if (
+      isUploadedImage ||
+      isAddingClient ||
+      isLoadingSetLcForm ||
+      isAddingClientChildrens
+    ) {
       setLoading(true);
     } else {
       setLoading(false);
     }
-  }, [isUploadedImage, isAddingClient, isLoadingSetLcForm]);
+  }, [
+    isUploadedImage,
+    isAddingClient,
+    isLoadingSetLcForm,
+    isAddingClientChildrens,
+  ]);
 
   return {
     onSubmit,

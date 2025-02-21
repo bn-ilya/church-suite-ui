@@ -2,11 +2,10 @@
 
 import { Button, Divider } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormDataToSend } from "../../model/type";
 import { costRegister } from "../../model/data";
 import { SwitchCountClients } from "../components/switch-count-client/ui";
-import { useWatchForm } from "../../model/hooks/useWatchForm";
 import { useRegOnSubmit } from "../../model/hooks/useRegOnSubmit";
 import { useRedirectSuccess } from "../../model/hooks/useRedirectSuccess";
 import { Input } from "../components/input/ui";
@@ -14,18 +13,22 @@ import { PayInfo } from "../components/pay-info/ui";
 import { ChecksInfo } from "../components/checks-info/ui";
 import { ErrorHandler } from "@/src/shared/ui";
 import { ChildrensList } from "../components/childrens-list/ui";
+import { countUsersByDefault } from "../../model/constatns";
 
 export const LcRegForm = () => {
   const [isShowCount, setIsShowCount] = useState(false);
-  const [countChildrens, setCountChildrens] = useState(1);
+  const [countChildrens, setCountChildrens] = useState(0);
   const [sumRegister, setSumRegister] = useState(costRegister);
   const {
     register,
-    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<FormDataToSend>();
-  useWatchForm(watch, setSumRegister, costRegister);
+
+  useEffect(() => {
+    setSumRegister((countChildrens + countUsersByDefault) * costRegister);
+  }, [countChildrens]);
+
   const {
     onSubmit,
     isSuccess,
@@ -33,8 +36,17 @@ export const LcRegForm = () => {
     errors: errorsSubmit,
     data,
   } = useRegOnSubmit();
+
   useRedirectSuccess(isSuccess, "register");
   const { ref, ...inputFiles } = register("files");
+
+  useEffect(() => {
+    if (isShowCount) {
+      setCountChildrens(1);
+    } else {
+      setCountChildrens(0);
+    }
+  }, [isShowCount]);
 
   return (
     <div className="max-w-xl mx-auto px-6">
@@ -52,11 +64,12 @@ export const LcRegForm = () => {
           placeholder="г. Кропоткин"
         />
         <SwitchCountClients
-          defaultSelected={false}
+          isSelected={isShowCount}
           setIsShowCount={setIsShowCount}
         />
         {isShowCount && (
           <ChildrensList
+            setIsShowCount={setIsShowCount}
             countChildrens={countChildrens}
             register={register}
             setCountChildrens={setCountChildrens}
