@@ -6,7 +6,13 @@ import {
 } from "@/src/shared/api";
 import { useErrorReq } from "@/src/shared/model";
 
-export const useEditOnSubmit = ({ id }: { id: number }) => {
+export const useEditOnSubmit = ({
+  id,
+  disabled,
+}: {
+  id: number;
+  disabled: boolean;
+}) => {
   const [uploadImage, { isLoading: isUploadedImage, error: errorUpload }] =
     useUploadImageMutation();
   const [
@@ -17,6 +23,8 @@ export const useEditOnSubmit = ({ id }: { id: number }) => {
   const errorInfoUpdateLc = useErrorReq(errorUpdateLc);
 
   const onSubmit: SubmitHandler<FormDataToSend> = async (formData) => {
+    if (disabled) return;
+
     if (formData.files?.length) {
       const files = await uploadImage(formData.files).unwrap();
       formData.cheques = files.map((file) => file.id);

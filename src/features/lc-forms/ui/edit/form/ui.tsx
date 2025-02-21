@@ -1,20 +1,19 @@
 "use client";
 
-import { Button, Chip, Divider } from "@heroui/react";
-import { FormDataToSend } from "../../../model/type";
-import { FC, useState } from "react";
 import { ErrorHandler } from "@/src/shared/ui";
-import { IFormProps } from "./ui.props";
-import { costRegister } from "../../../model/data";
-import { useWatchForm } from "../../../model/hooks/useWatchForm";
-import { useEditOnSubmit } from "../../../model/hooks/useEditOnSubmit";
+import { SuccessModal } from "@/src/shared/ui/success-modal";
+import { Alert, Button, Chip, Divider } from "@heroui/react";
+import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
-import { SwitchCountClients } from "../../components/switch-count-client/ui";
-import { PayInfo } from "../../components/pay-info/ui";
+import { costRegister } from "../../../model/data";
+import { useEditOnSubmit } from "../../../model/hooks/useEditOnSubmit";
+import { useWatchForm } from "../../../model/hooks/useWatchForm";
+import { useWatchPaymentProvenForm } from "../../../model/hooks/useWatchPaymentProvenForm";
+import { FormDataToSend } from "../../../model/type";
 import { ChecksInfo } from "../../components/checks-info/ui";
 import { Input } from "../../components/input/ui";
-import { SuccessModal } from "@/src/shared/ui/success-modal";
-import { ChildrensList } from "../../components/childrens-list/ui";
+import { PayInfo } from "../../components/pay-info/ui";
+import { IFormProps } from "./ui.props";
 
 export const Form: FC<IFormProps> = (props) => {
   const {
@@ -27,7 +26,11 @@ export const Form: FC<IFormProps> = (props) => {
     live_chat_client_childrens,
   } = props;
 
+  const isPayment = !!cheques?.length || !!senderName;
+
   const [sumRegister, setSumRegister] = useState(costRegister * Number(count));
+  const [paymentProven, setPaymenProven] = useState(isPayment);
+
   const {
     register,
     watch,
@@ -35,13 +38,16 @@ export const Form: FC<IFormProps> = (props) => {
     formState: { errors },
   } = useForm<FormDataToSend>();
   useWatchForm(watch, setSumRegister, costRegister);
+
+  useWatchPaymentProvenForm(watch, setPaymenProven);
+
   const {
     onSubmit,
     isSuccess,
     isAddingClient,
     errors: errorsSubmit,
     isUploadedImage,
-  } = useEditOnSubmit({ id });
+  } = useEditOnSubmit({ id, disabled: !paymentProven });
   const { ref, ...inputFiles } = register("files");
   return (
     <div className="max-w-xl w-full mx-auto px-6">
@@ -91,7 +97,13 @@ export const Form: FC<IFormProps> = (props) => {
           registerSenderName={register("senderName")}
           {...inputFiles}
         />
+        {!paymentProven && (
+          <Alert className="col-span-2" color="primary">
+            Для регистрации необходимо сделать оплату
+          </Alert>
+        )}
         <Button
+          isDisabled={!paymentProven}
           isLoading={isAddingClient || isUploadedImage}
           type="submit"
           color="primary"
