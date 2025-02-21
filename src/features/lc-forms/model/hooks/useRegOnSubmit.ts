@@ -1,15 +1,15 @@
-import { SubmitHandler } from "react-hook-form";
-import { FormDataToSend } from "../type";
 import {
-  ILiveChatClient,
+  ILiveChatClientReq,
   useAddLiveChatClientChildrenBulkMutation,
   useAddLiveChatClientMutation,
   useSetLcFormMutation,
   useUploadImageMutation,
 } from "@/src/shared/api";
-import { useEffect, useState } from "react";
 import { useErrorReq } from "@/src/shared/model";
+import { useEffect, useState } from "react";
+import { SubmitHandler } from "react-hook-form";
 import { countUsersByDefault } from "../constatns";
+import { FormDataToSend } from "../type";
 
 export const useRegOnSubmit = ({ disabled }: { disabled: boolean }) => {
   const [uploadImage, { isLoading: isUploadedImage, error: errorUpload }] =
@@ -40,7 +40,7 @@ export const useRegOnSubmit = ({ disabled }: { disabled: boolean }) => {
     }
 
     const { files, childrens, ...liveChatClientData } = formData;
-    const data: ILiveChatClient = liveChatClientData;
+    const data: ILiveChatClientReq = liveChatClientData;
 
     if (files?.length) {
       const res = await uploadImage(files).unwrap();

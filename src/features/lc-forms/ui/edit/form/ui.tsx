@@ -65,7 +65,7 @@ export const Form: FC<IFormProps> = (props) => {
           placeholder="г. Кропоткин"
           defaultValue={city}
         />
-        {live_chat_client_childrens.length && (
+        {live_chat_client_childrens?.length && (
           <div className="col-span-2 my-2 flex gap-2 flex-wrap">
             <span className="text-sm text-zinc-400 text-nowrap">
               Вы зарегистрировали:

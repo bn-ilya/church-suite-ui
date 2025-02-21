@@ -5,7 +5,7 @@ export interface FormDataReceived {
   id: number;
   city: string;
   count: number;
-  live_chat_client_childrens: ILiveChatClientChildren[];
+  live_chat_client_childrens?: ILiveChatClientChildren[];
   comment?: string;
   files?: FileList;
   senderName?: string;

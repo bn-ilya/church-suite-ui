@@ -1,82 +1,118 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IEvent, IEvents } from "./interfaces/events";
-import { IAddLiveChatClientRes, IDeleteLiveChatClientRes, IGetLiveChatClientByCodeRes, IGetLiveChatClientDataRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
+import {
+  IAddLiveChatClientRes,
+  IDeleteLiveChatClientRes,
+  IGetLiveChatClientByCodeRes,
+  IGetLiveChatClientDataRes,
+  IGetLiveChatClientRes,
+  ILiveChatClient,
+  ILiveChatClientReq,
+  IUpdateClientReq,
+  IUpdateLiveChatClientRes,
+} from "./interfaces/liveChatClient";
 import { IUploadFile } from "./interfaces/upload";
-import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IDeleteUserResSuccess, IEditDataUser, IEditUserResSuccess, IGetMeResSuccess, ILoginDataUser, ILoginDataUserReq, ILoginUserResSuccess, IRegDataUser, ISetLcData, ISetLcResSuccess } from ".";
-import { IAddLiveChatClientChildrenBulkRes, ILiveChatClientChildren } from "./interfaces/liveChatClientChildren";
+import {
+  IConfirmDataLogin,
+  IConfirmLoginResSuccess,
+  ICreateUserResSuccess,
+  IDeleteUserResSuccess,
+  IEditDataUser,
+  IEditUserResSuccess,
+  IGetMeResSuccess,
+  ILoginDataUser,
+  ILoginDataUserReq,
+  ILoginUserResSuccess,
+  IRegDataUser,
+  ISetLcData,
+  ISetLcResSuccess,
+} from ".";
+import {
+  IAddLiveChatClientChildrenBulkRes,
+  ILiveChatClientChildren,
+} from "./interfaces/liveChatClientChildren";
 
 export const api = createApi({
-  reducerPath: 'strapiApi',
+  reducerPath: "strapiApi",
   tagTypes: ["MeData"],
-  baseQuery: fetchBaseQuery({baseUrl: `/api/`}),
+  baseQuery: fetchBaseQuery({ baseUrl: `/api/` }),
   endpoints: (build) => ({
     getEvents: build.query<Array<IEvent>, void>({
       query: () => ({
-        url: 'events'
+        url: "events",
       }),
       transformResponse: (response: IEvents) => response.data,
     }),
     uploadImage: build.mutation<Array<IUploadFile>, FileList>({
       query: (files) => {
         let bodyFormData = new FormData();
-        for(let i = 0; i < files.length; i++) {
-          bodyFormData.append('files', files[i]);
+        for (let i = 0; i < files.length; i++) {
+          bodyFormData.append("files", files[i]);
         }
         return {
-          url: 'upload',
-          method: 'POST',
+          url: "upload",
+          method: "POST",
           body: bodyFormData,
           formData: true,
           headers: {
-            "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+            Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
           },
-        }
-      }
+        };
+      },
     }),
-    addLiveChatClient: build.mutation<IAddLiveChatClientRes, ILiveChatClient>({
+    addLiveChatClient: build.mutation<
+      IAddLiveChatClientRes,
+      ILiveChatClientReq
+    >({
       query: (data) => ({
-        url: 'live-chat-clients',
-        method: 'POST',
+        url: "live-chat-clients",
+        method: "POST",
         body: {
-          data
+          data,
         },
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
       }),
     }),
-    addLiveChatClientChildrenBulk: build.mutation<IAddLiveChatClientChildrenBulkRes, ILiveChatClientChildren[]>({
+    addLiveChatClientChildrenBulk: build.mutation<
+      IAddLiveChatClientChildrenBulkRes,
+      ILiveChatClientChildren[]
+    >({
       query: (data) => ({
-        url: 'live-chat-client-children/bulk',
-        method: 'POST',
+        url: "live-chat-client-children/bulk",
+        method: "POST",
         body: {
-          data
+          data,
         },
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
       }),
     }),
-    updateLiveChatClient: build.mutation<IUpdateLiveChatClientRes, IUpdateClientReq>({
+    updateLiveChatClient: build.mutation<
+      IUpdateLiveChatClientRes,
+      IUpdateClientReq
+    >({
       query: (data) => ({
         url: `live-chat-clients/${data.id}`,
-        method: 'PUT',
+        method: "PUT",
         body: {
-          data: data.body
-        },    
+          data: data.body,
+        },
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
       }),
-      invalidatesTags: ["MeData"]
+      invalidatesTags: ["MeData"],
     }),
     deleteLiveChatClient: build.mutation<IDeleteLiveChatClientRes, number>({
       query: (id) => ({
         url: `live-chat-clients/${id}`,
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
-        }, 
+          Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
+        },
       }),
     }),
     getLiveChatClient: build.query<IGetLiveChatClientDataRes, number>({
@@ -89,80 +125,80 @@ export const api = createApi({
       query: (code) => ({
         url: `live-chat-clients/?filters[code][$eq]=${code}&populate[0]=cheques`,
       }),
-      transformResponse: (response: IGetLiveChatClientByCodeRes) => response.data?.[0],
+      transformResponse: (response: IGetLiveChatClientByCodeRes) =>
+        response.data?.[0],
     }),
     createUser: build.mutation<ICreateUserResSuccess, IRegDataUser>({
       query: (regData) => ({
         url: `/users`,
-        method: 'POST',
-        body: regData     
+        method: "POST",
+        body: regData,
       }),
     }),
     loginUser: build.mutation<ILoginUserResSuccess, ILoginDataUserReq>({
       query: (loginData) => ({
         url: `/users-permissions/login`,
-        method: 'POST',
-        body: loginData     
+        method: "POST",
+        body: loginData,
       }),
-      invalidatesTags: ["MeData"]
+      invalidatesTags: ["MeData"],
     }),
     editUser: build.mutation<IEditUserResSuccess, IEditDataUser>({
       query: (editData) => ({
         url: `/users-permissions/profile`,
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
-        body: editData     
+        body: editData,
       }),
-      invalidatesTags: ["MeData"]
+      invalidatesTags: ["MeData"],
     }),
     confirmLogin: build.mutation<IConfirmLoginResSuccess, IConfirmDataLogin>({
       query: (confirmData) => ({
         url: `/users-permissions/verify`,
-        method: 'POST',
-        body: confirmData
+        method: "POST",
+        body: confirmData,
       }),
-      invalidatesTags: ["MeData"]
+      invalidatesTags: ["MeData"],
     }),
     setLcForm: build.mutation<ISetLcResSuccess, ISetLcData>({
       query: (lcFormData) => ({
         url: `/users-permissions/setLcForm`,
-        method: 'POST',
+        method: "POST",
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
-        body: lcFormData
+        body: lcFormData,
       }),
-      invalidatesTags: ["MeData"]
-    }), 
+      invalidatesTags: ["MeData"],
+    }),
     getMe: build.query<IGetMeResSuccess, any>({
       query: () => ({
         url: `/users/me`,
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
       }),
-      providesTags: ["MeData"]
+      providesTags: ["MeData"],
     }),
     deleteUser: build.mutation<IDeleteUserResSuccess, void>({
       query: () => ({
         url: `/users-permissions/profile`,
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+          Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
         },
       }),
-      invalidatesTags: ["MeData"]
-    }), 
+      invalidatesTags: ["MeData"],
+    }),
   }),
-})
+});
 
-export const 
-{ 
+export const {
   useGetEventsQuery,
-  useAddLiveChatClientMutation, 
-  useAddLiveChatClientChildrenBulkMutation, 
+  useAddLiveChatClientMutation,
+  useAddLiveChatClientChildrenBulkMutation,
   useUploadImageMutation,
   useGetLiveChatClientQuery,
   useLazyGetLiveChatClientQuery,
@@ -176,5 +212,5 @@ export const
   useLazyGetMeQuery,
   useEditUserMutation,
   useLoginUserMutation,
-  useDeleteUserMutation
-} = api; 
+  useDeleteUserMutation,
+} = api;
