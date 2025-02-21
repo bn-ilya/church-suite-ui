@@ -1,1 +1,1 @@
-export const costRegister = 500;
+export const costRegister = 700;

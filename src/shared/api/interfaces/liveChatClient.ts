@@ -4,8 +4,10 @@ import { IUploadFile } from './upload';
 export interface ILiveChatClient {
   city: string,
   count: number,
+  live_chat_client_childrens?: Array<number>
   comment?: string,
   cheques?: Array<IUploadFile['id']>,
+  senderName?: string
 }
 
 export interface IAddLiveChatClientReq {

@@ -1,6 +1,6 @@
 "use client"
 
-import { Button } from "@nextui-org/react"
+import { Button } from "@heroui/react"
 import { Input } from "../../components/input/ui"
 import { useForm } from "react-hook-form";
 import { ILoginDataUser } from "@/src/shared/api";
@@ -28,7 +28,7 @@ export const UserLoginForm = () => {
   }, [data])
 
   return (
-    <div className="max-w-xl w-full mx-auto px-6">
+    (<div className="max-w-xl w-full mx-auto px-6">
       <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
         <Input
           startContent={
@@ -47,8 +47,7 @@ export const UserLoginForm = () => {
           Продолжить
         </Button>
       </form>
-
       <ErrorHandler message={errorInfo.errorMsg} code={errorInfo.errorCode}/>
-    </div>
-  ) 
+    </div>)
+  ); 
 }

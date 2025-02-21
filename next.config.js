@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -39,6 +40,14 @@ const nextConfig = {
         source: '/livechat/login',
         destination: '/livechat/login/1',
         permanent: true,
+      },
+    ]
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: "http://192.168.0.97:1337/api/:path*",
       },
     ]
   },

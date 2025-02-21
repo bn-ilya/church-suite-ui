@@ -1,6 +1,6 @@
 "use client"
 
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@heroui/react";
 import { FC, useEffect } from "react";
 import { ISuccessModalProps } from './ui.props';
 import { CheckIcon } from '@heroicons/react/16/solid';

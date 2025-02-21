@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, useDisclosure } from "@nextui-org/react";
+import { Button, useDisclosure } from "@heroui/react";
 import { FC } from "react";
 import { ModalDelete } from "../modal/ui";
 

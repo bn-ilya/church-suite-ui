@@ -1,5 +1,5 @@
 import { CheckIcon } from "@heroicons/react/16/solid"
-import { ModalBody } from "@nextui-org/react"
+import { ModalBody } from "@heroui/react"
 
 export const ModalBodySuc = () => {
   return (

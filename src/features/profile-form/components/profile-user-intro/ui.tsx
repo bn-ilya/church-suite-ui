@@ -1,5 +1,5 @@
 import { LogoLiveChat } from "@/src/shared/ui"
-import { Divider } from "@nextui-org/react"
+import { Divider } from "@heroui/react"
 
 export const ProfileUserIntro = () => {
   return (

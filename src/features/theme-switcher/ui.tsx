@@ -1,5 +1,5 @@
 "use client"
-import { Button } from '@nextui-org/react';
+import { Button } from "@heroui/react";
 import { FC, useEffect, useState } from 'react';
 import { MoonIcon, SunIcon } from '@heroicons/react/16/solid';
 import { useTheme } from 'next-themes';

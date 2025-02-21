@@ -3,11 +3,12 @@ import { IEvent, IEvents } from "./interfaces/events";
 import { IAddLiveChatClientRes, IDeleteLiveChatClientRes, IGetLiveChatClientByCodeRes, IGetLiveChatClientDataRes, IGetLiveChatClientRes, ILiveChatClient, IUpdateClientReq, IUpdateLiveChatClientRes } from "./interfaces/liveChatClient";
 import { IUploadFile } from "./interfaces/upload";
 import { IConfirmDataLogin, IConfirmLoginResSuccess, ICreateUserResSuccess, IDeleteUserResSuccess, IEditDataUser, IEditUserResSuccess, IGetMeResSuccess, ILoginDataUser, ILoginDataUserReq, ILoginUserResSuccess, IRegDataUser, ISetLcData, ISetLcResSuccess } from ".";
+import { IAddLiveChatClientChildrenBulkRes, ILiveChatClientChildren } from "./interfaces/liveChatClientChildren";
 
 export const api = createApi({
   reducerPath: 'strapiApi',
   tagTypes: ["MeData"],
-  baseQuery: fetchBaseQuery({baseUrl: `https://church-krop.ru:1336/api/`}),
+  baseQuery: fetchBaseQuery({baseUrl: `/api/`}),
   endpoints: (build) => ({
     getEvents: build.query<Array<IEvent>, void>({
       query: () => ({
@@ -35,6 +36,18 @@ export const api = createApi({
     addLiveChatClient: build.mutation<IAddLiveChatClientRes, ILiveChatClient>({
       query: (data) => ({
         url: 'live-chat-clients',
+        method: 'POST',
+        body: {
+          data
+        },
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("jwt") || ""}`,
+        },
+      }),
+    }),
+    addLiveChatClientChildrenBulk: build.mutation<IAddLiveChatClientChildrenBulkRes, ILiveChatClientChildren[]>({
+      query: (data) => ({
+        url: 'live-chat-client-children/bulk',
         method: 'POST',
         body: {
           data
@@ -149,6 +162,7 @@ export const
 { 
   useGetEventsQuery,
   useAddLiveChatClientMutation, 
+  useAddLiveChatClientChildrenBulkMutation, 
   useUploadImageMutation,
   useGetLiveChatClientQuery,
   useLazyGetLiveChatClientQuery,

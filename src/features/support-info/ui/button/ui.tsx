@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@nextui-org/react"
+import { Button } from "@heroui/react"
 import { FC, useState} from "react"
 import { LifebuoyIcon } from "@heroicons/react/16/solid";
 import { ISupportInfoButton } from "./ui.props";

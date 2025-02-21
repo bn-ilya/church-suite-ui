@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { NavbarMenu, NavbarMenuItem, Link } from '@nextui-org/react';
+import { NavbarMenu, NavbarMenuItem, Link } from "@heroui/react";
 import { data } from '../../model';
 
 export const NavbarMobile: FC = () => {

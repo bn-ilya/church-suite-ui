@@ -1,7 +1,7 @@
 import { IEditDataUser } from "@/src/shared/api";
 import { useForm } from "react-hook-form";
 import { useEditOnSubmit } from "../../model/hooks/useEditOnSubmit";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { ErrorModal } from "@/src/shared/ui";
 import { FC } from "react";
 import { IUserEditFormProps } from "./ui.props";

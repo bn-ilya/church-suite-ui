@@ -1,4 +1,4 @@
-import { Button, Card, CardFooter, CardHeader, Image } from '@nextui-org/react';
+import { Button, Card, CardFooter, CardHeader, Image } from "@heroui/react";
 import { Unbounded } from 'next/font/google';
 
 const unbounded = Unbounded({ subsets: ['cyrillic'] });
