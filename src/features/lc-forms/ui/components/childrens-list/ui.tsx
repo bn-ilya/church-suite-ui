@@ -18,6 +18,7 @@ export const ChildrensList = ({
           <div className="flex items-end col-span-2 gap-2" key={index}>
             <Input
               {...register(`childrens.${index}`)}
+              autoFocus={index + 1 === countChildrens}
               type="text"
               label={`Дочерний ${index + 1}`}
               placeholder="Имя Фамилия"
