@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, UseFormUnregister } from "react-hook-form";
 import { FormDataToSend } from "../../../model/type";
 
 export interface IChildrensListProps {
@@ -7,4 +7,5 @@ export interface IChildrensListProps {
   setCountChildrens: Dispatch<SetStateAction<number>>;
   setIsShowCount: Dispatch<SetStateAction<boolean>>;
   register: UseFormRegister<FormDataToSend>;
+  unregister: UseFormUnregister<FormDataToSend>;
 }

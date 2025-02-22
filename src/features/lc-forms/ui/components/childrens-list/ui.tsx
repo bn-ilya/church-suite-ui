@@ -11,6 +11,7 @@ export const ChildrensList = ({
   setCountChildrens,
   setIsShowCount,
   register,
+  unregister,
 }: IChildrensListProps) => {
   return (
     <div className="flex flex-col col-span-2 gap-4">
@@ -30,6 +31,7 @@ export const ChildrensList = ({
               type="button"
               onClick={() => {
                 if (index === 0) setIsShowCount(false);
+                unregister(`childrens.${index}`);
                 setCountChildrens((value) => value - 1);
               }}
             >

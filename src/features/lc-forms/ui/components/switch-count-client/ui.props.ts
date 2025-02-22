@@ -3,5 +3,6 @@ import { FormDataToSend } from "../../../model/type";
 
 export interface ISwitchCountClients {
   setIsShowCount: (isSwitch: boolean) => void;
+  handleSwitch: (isSwitch: boolean) => void;
   isSelected: boolean;
 }

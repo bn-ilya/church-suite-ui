@@ -27,6 +27,7 @@ export const LcRegForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    unregister,
   } = useForm<FormDataToSend>();
   useEffect(() => {
     setSumRegister((countChildrens + countUsersByDefault) * costRegister);
@@ -69,10 +70,14 @@ export const LcRegForm = () => {
         <SwitchCountClients
           isSelected={isShowCount}
           setIsShowCount={setIsShowCount}
+          handleSwitch={(isSwitch: boolean) =>
+            !isSwitch && unregister(`childrens`)
+          }
         />
         {isShowCount && (
           <ChildrensList
             setIsShowCount={setIsShowCount}
+            unregister={unregister}
             countChildrens={countChildrens}
             register={register}
             setCountChildrens={setCountChildrens}

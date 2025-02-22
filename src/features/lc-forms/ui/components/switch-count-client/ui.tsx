@@ -5,9 +5,11 @@ import { Switch } from "@heroui/react";
 export const SwitchCountClients: FC<ISwitchCountClients> = ({
   setIsShowCount,
   isSelected,
+  handleSwitch: handleSwitchExternal,
 }) => {
   const handleSwitch = (e: ChangeEvent<HTMLInputElement>) => {
     setIsShowCount(e.target.checked);
+    handleSwitchExternal(e.target.checked);
   };
 
   return (
