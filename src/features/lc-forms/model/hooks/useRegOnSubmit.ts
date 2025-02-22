@@ -51,7 +51,9 @@ export const useRegOnSubmit = ({ disabled }: { disabled: boolean }) => {
       const dataChildrens = childrens.map((child) => ({ name: child }));
       const res = await addLiveChatClientChildrenBulk(dataChildrens).unwrap();
       data.live_chat_client_childrens = res.data.map((child) => child.id);
+      console.log("debug1", res);
     }
+    console.log("debug 2", data);
 
     const response = await addLiveChatClient(data).unwrap();
     await setLcForm({ lcFormId: response.data.id });
