@@ -71,7 +71,7 @@ export const Form: FC<IFormProps> = (props) => {
               Вы зарегистрировали:
             </span>
 
-            <div className="flex gap-1">
+            <div className="flex gap-1 flex-wrap">
               {live_chat_client_childrens.map((child, index) => (
                 <Chip key={index} size="sm" variant="flat">
                   {child.name}

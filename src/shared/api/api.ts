@@ -64,16 +64,18 @@ export const api = createApi({
       IAddLiveChatClientRes,
       ILiveChatClientReq
     >({
-      query: (data) => ({
-        url: "live-chat-clients",
-        method: "POST",
-        body: {
-          data,
-        },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
-        },
-      }),
+      query: (data) => {
+        return {
+          url: "live-chat-clients",
+          method: "POST",
+          body: {
+            data,
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt") || ""}`,
+          },
+        };
+      },
     }),
     addLiveChatClientChildrenBulk: build.mutation<
       IAddLiveChatClientChildrenBulkRes,
