@@ -5,15 +5,15 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { FC, MouseEvent } from "react";
 
 export const LcChangeData: FC = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const handleClick = (e: MouseEvent) => {
     router.push(`/profile`);
-  }
+  };
 
   return (
-    <Button fullWidth color="primary" onClick={handleClick}>
+    <Button fullWidth color="default" onClick={handleClick}>
       Изменить данные
     </Button>
-  )
-}
+  );
+};
