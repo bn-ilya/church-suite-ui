@@ -17,13 +17,8 @@ export const AccessDeniedUser = () => {
 
   useEffect(() => {
     if (data && !error && skip) {
-      if (data.confirmed && data.lc_form) {
+      if (data.confirmed) {
         setErrorMsg("Вы уже зарегистрированы");
-      }
-      if (data.confirmed && !data.lc_form && pathname === "/register/1") {
-        setErrorMsg(
-          "Вы уже зарегистрировали пользовтеля, но ещё нужно зарегистрироваться на livechat. Сделать это можно в профиле"
-        );
       }
     }
   }, [data, error, skip]);
