@@ -27,7 +27,11 @@ export const LcRegFormFormio = () => {
         onSubmit={(submission) => {
           setLcForm({ formio_form_id: submission["_id"] as string });
         }}
-        src={process.env.NEXT_PUBLIC_FORMIO_BASE_URL + "/formio/archyz"}
+        src={
+          process.env.NEXT_PUBLIC_FORMIO_BASE_URL +
+          "/form/" +
+          process.env.NEXT_PUBLIC_FORMIO_FORM_ID
+        }
       />
     </div>
   );

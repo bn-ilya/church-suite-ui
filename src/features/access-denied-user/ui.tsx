@@ -17,8 +17,17 @@ export const AccessDeniedUser = () => {
 
   useEffect(() => {
     if (data && !error && skip) {
-      if (data.confirmed) {
+      if (data.confirmed && data.formio_form_id) {
         setErrorMsg("Вы уже зарегистрированы");
+      }
+      if (
+        data.confirmed &&
+        !data.formio_form_id &&
+        pathname === "/register/1"
+      ) {
+        setErrorMsg(
+          "Вы уже зарегистрировали пользовтеля, но ещё нужно зарегистрироваться на livechat. Сделать это можно в профиле"
+        );
       }
     }
   }, [data, error, skip]);

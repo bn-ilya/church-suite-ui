@@ -92,6 +92,7 @@ export interface IGetMeResLcForm
 
 export interface IGetMeResSuccess extends IGetMeResUser {
   lc_form?: IGetMeResLcForm;
+  formio_form_id: string | null;
 }
 
 export interface IDeleteUserResSuccess {
