@@ -47,7 +47,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "http://192.168.0.97:1337/api/:path*",
+        destination: `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/api/:path*`,
       },
     ];
   },

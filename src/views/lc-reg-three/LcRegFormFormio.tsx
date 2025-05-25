@@ -1,11 +1,14 @@
 "use client";
 
 import { useSetLcFormMutation } from "@/src/shared/api";
-import { Form, FormioProvider, submission } from "@formio/react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 import styles from "./styles.module.scss";
 
+const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
+  ssr: false,
+});
 export const LcRegFormFormio = () => {
   const router = useRouter();
   const [
@@ -16,7 +19,7 @@ export const LcRegFormFormio = () => {
   useEffect(() => {
     if (!isSuccess) return;
     router.push(`/livechat/register/success`);
-  }, [isSuccess]);
+  }, [isSuccess, router]);
 
   return (
     <div data-bs-theme="dark" className={styles.wrapper}>
@@ -24,7 +27,7 @@ export const LcRegFormFormio = () => {
         onSubmit={(submission) => {
           setLcForm({ formio_form_id: submission["_id"] as string });
         }}
-        src="http://192.168.0.97:3000/formio/archyz"
+        src={process.env.NEXT_PUBLIC_FORMIO_BASE_URL + "/formio/archyz"}
       />
     </div>
   );

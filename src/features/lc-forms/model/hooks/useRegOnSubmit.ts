@@ -48,7 +48,7 @@ export const useRegOnSubmit = ({ disabled }: { disabled: boolean }) => {
       data.live_chat_client_childrens = res.data.map((child) => child.id);
     }
     const response = await addLiveChatClient(data).unwrap();
-    await setLcForm({ lcFormId: response.data.id });
+    // await setLcForm({ formio_form_id: response.data.id });
     setSuccess(true);
   };
   useEffect(() => {
