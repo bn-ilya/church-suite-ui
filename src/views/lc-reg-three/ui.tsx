@@ -1,12 +1,12 @@
-import { LcRegForm } from "@/src/features/lc-forms";
-import { LcRegIntro } from "@/src/widgets/lc-reg-intro";
+`use client`;
 import { LcRegIntroThree } from "@/src/widgets/lc-reg-intro-three";
+import { LcRegFormFormio } from "./LcRegFormFormio";
 
 export const LcRegThree = () => {
   return (
     <div className={`mt-[64px]`}>
       <LcRegIntroThree />
-      <LcRegForm />
-    </div> 
-  )
-}
+      <LcRegFormFormio />
+    </div>
+  );
+};

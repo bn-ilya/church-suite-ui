@@ -47,7 +47,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://admin-lc.church-krop.ru/api/:path*",
+        destination: "http://192.168.0.97:1337/api/:path*",
       },
     ];
   },

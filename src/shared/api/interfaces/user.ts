@@ -1,28 +1,32 @@
-import { IAttributesCommonsRes, IDataCheque, ILiveChatClient, TApiChannel } from ".";
+import {
+  IAttributesCommonsRes,
+  IDataCheque,
+  ILiveChatClient,
+  TApiChannel,
+} from ".";
 import { IFile } from "./entities/file";
 
 export interface IUser {
-  "id": number,
-  "username": string,
-  "email": string,
-  "provider": string,
-  "password": null | string,
-  "resetPasswordToken": null | string,
-  "confirmationToken": null | string,
-  "confirmed": boolean,
-  "blocked": boolean,
-  "createdAt": string,
-  "updatedAt": string,
-  "phone": string,
-  "code": string,
-  "name": string,
-  "role": null | string,
-  "lc_form_id": null | string
+  id: number;
+  username: string;
+  email: string;
+  provider: string;
+  password: null | string;
+  resetPasswordToken: null | string;
+  confirmationToken: null | string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: string;
+  updatedAt: string;
+  phone: string;
+  code: string;
+  name: string;
+  role: null | string;
+  lc_form_id: null | string;
 }
 
 export interface IRegDataUser {
-  name: string;
-  phone: string
+  phone: string;
 }
 
 export interface IEditDataUser {
@@ -34,56 +38,62 @@ export interface IEditUserResSuccess {
 }
 
 export interface ILoginDataUser {
-  phone?: string
-  id?: string
+  phone?: string;
+  id?: string;
 }
 
 export interface ILoginDataUserReq extends ILoginDataUser {
-  channel: TApiChannel
+  channel: TApiChannel;
 }
 
 export interface ILoginUserResSuccess {
-  status: "success",
-  id: number
+  status: "success";
+  id: number;
 }
 
 export interface ICreateUserResSuccess {
-  name: string,
-  username: string,
-  id: number
+  name: string;
+  username: string;
+  id: number;
 }
 
 export interface IConfirmDataLogin {
-  code: string,
-  id: string
+  code: string;
+  id: string;
 }
 
 export interface IConfirmLoginResSuccess {
-  jwt: string,
-  user: IUser
+  jwt: string;
+  user: IUser;
 }
 
 export interface ISetLcData {
-  lcFormId: number;
+  formio_form_id: string;
 }
 
 export interface ISetLcResSuccess {
   lcFormId: number;
 }
 
-export interface IGetMeResUser extends  Omit<IUser, 'password' | 'resetPasswordToken' | 'confirmationToken' | 'role'> {
-  "lc_form_id": string,
-};
+export interface IGetMeResUser
+  extends Omit<
+    IUser,
+    "password" | "resetPasswordToken" | "confirmationToken" | "role"
+  > {
+  lc_form_id: string;
+}
 
-export interface IGetMeResLcForm extends Omit<ILiveChatClient, 'cheques'>, IAttributesCommonsRes {
+export interface IGetMeResLcForm
+  extends Omit<ILiveChatClient, "cheques">,
+    IAttributesCommonsRes {
   id: number;
-  cheques: Array<IFile> | null,
+  cheques: Array<IFile> | null;
 }
 
 export interface IGetMeResSuccess extends IGetMeResUser {
-  "lc_form"?: IGetMeResLcForm
+  lc_form?: IGetMeResLcForm;
 }
 
 export interface IDeleteUserResSuccess {
-  status: "success"
+  status: "success";
 }
