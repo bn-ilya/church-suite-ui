@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from "@heroicons/react/16/solid";
 import { Button, Input } from "@heroui/react";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import { FormEvent, useRef } from "react";
 
 export const LcSearchForm = () => {
@@ -10,23 +10,26 @@ export const LcSearchForm = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const code = refInput.current?.value;
-    router.push(`/livechat/edit/?code=${code}`);
-  }
+    router.push(`/edit/?code=${code}`);
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl w-full mx-auto px-6 flex justify-center gap-2">
-        <Input
-          size="lg"
-          isRequired
-          type="text"
-          placeholder="Код"
-          labelPlacement="outside"
-          className="w-[200px]"
-          ref={refInput}
-        />
-        <Button type="submit" isIconOnly size="lg" color="primary">
-          <ChevronRightIcon />
-        </Button>
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-xl w-full mx-auto px-6 flex justify-center gap-2"
+    >
+      <Input
+        size="lg"
+        isRequired
+        type="text"
+        placeholder="Код"
+        labelPlacement="outside"
+        className="w-[200px]"
+        ref={refInput}
+      />
+      <Button type="submit" isIconOnly size="lg" color="primary">
+        <ChevronRightIcon />
+      </Button>
     </form>
-  )
-}
+  );
+};

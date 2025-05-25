@@ -18,7 +18,7 @@ export const LcRegFormFormio = () => {
 
   useEffect(() => {
     if (!isSuccess) return;
-    router.push(`/livechat/register/success`);
+    router.push(`/register/success`);
   }, [isSuccess, router]);
 
   return (

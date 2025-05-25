@@ -6,7 +6,7 @@ export const LcRegTwo = () => {
   return (
     <div className={`mt-[64px]`}>
       <LcRegIntroTwo />
-      <UserConfirmForm redirectPath="/livechat/register/3" />
-    </div> 
-  )
-}
+      <UserConfirmForm redirectPath="/register/3" />
+    </div>
+  );
+};

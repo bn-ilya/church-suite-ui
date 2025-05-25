@@ -8,37 +8,17 @@ const nextConfig = {
     return [
       {
         source: "/",
-        destination: "/livechat/register/1",
+        destination: "/register/1",
         permanent: true,
       },
       {
-        source: "/events/",
-        destination: "/livechat/register/1",
+        source: "/register",
+        destination: "/register/1",
         permanent: true,
       },
       {
-        source: "/calendar/",
-        destination: "/livechat/register/1",
-        permanent: true,
-      },
-      {
-        source: "/livechat/register/",
-        destination: "/livechat/register/1",
-        permanent: true,
-      },
-      {
-        source: "/livechat/register",
-        destination: "/livechat/register/1",
-        permanent: true,
-      },
-      {
-        source: "/livechat/login/",
-        destination: "/livechat/login/1",
-        permanent: true,
-      },
-      {
-        source: "/livechat/login",
-        destination: "/livechat/login/1",
+        source: "/login",
+        destination: "/login/1",
         permanent: true,
       },
     ];

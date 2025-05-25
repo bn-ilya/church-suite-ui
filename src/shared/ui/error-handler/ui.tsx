@@ -1,22 +1,43 @@
-import { FC } from "react"
-import { IErrorHandlerProps } from "./ui.props"
-import { ErrorModal } from ".."
-import { useRouter } from "next/navigation"
+import { FC } from "react";
+import { IErrorHandlerProps } from "./ui.props";
+import { ErrorModal } from "..";
+import { useRouter } from "next/navigation";
 
-export const ErrorHandler: FC<IErrorHandlerProps> = ({message, code}) => {
-  const router = useRouter()
+export const ErrorHandler: FC<IErrorHandlerProps> = ({ message, code }) => {
+  const router = useRouter();
 
   if (code === 401 || code === 403) {
-    return <ErrorModal error="Доступ запрещен!" textBtn="Войти" onCloseCallback={()=>{router.push("/livechat/login/1")}} />
+    return (
+      <ErrorModal
+        error="Доступ запрещен!"
+        textBtn="Войти"
+        onCloseCallback={() => {
+          router.push("/login/1");
+        }}
+      />
+    );
   }
-  
+
   if (message === "TypeError: Load failed") {
-    return <ErrorModal error="Мы не знаем что это за паранормальная ошибка. Попробуйте прикрпить файл другого формата или воспользоваться не safari браузером. Если результата нет, то обратитесь в техподдержку" />
+    return (
+      <ErrorModal error="Мы не знаем что это за паранормальная ошибка. Попробуйте прикрпить файл другого формата или воспользоваться не safari браузером. Если результата нет, то обратитесь в техподдержку" />
+    );
   }
 
-  if (message === "Регистрация закрыта, количество зарегистрированных достигло лимита. Если вы уже зарегистрировались, то вы можете авторизоваться") {
-    return <ErrorModal error={message} textBtn="Авторизоваться" onCloseCallback={()=>{router.push("/livechat/login/1")}}/>
+  if (
+    message ===
+    "Регистрация закрыта, количество зарегистрированных достигло лимита. Если вы уже зарегистрировались, то вы можете авторизоваться"
+  ) {
+    return (
+      <ErrorModal
+        error={message}
+        textBtn="Авторизоваться"
+        onCloseCallback={() => {
+          router.push("/login/1");
+        }}
+      />
+    );
   }
 
-  return <ErrorModal error={message} />
-} 
+  return <ErrorModal error={message} />;
+};

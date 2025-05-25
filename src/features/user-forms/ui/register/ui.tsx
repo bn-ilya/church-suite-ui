@@ -28,7 +28,7 @@ export const UserRegisterForm = () => {
   useEffect(() => {
     if (data) {
       localStorage.setItem("id", String(data.id));
-      router.push(`/livechat/register/2`);
+      router.push(`/register/2`);
     }
   }, [data]);
 

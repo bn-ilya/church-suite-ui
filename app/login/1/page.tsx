@@ -15,5 +15,5 @@ export default function LcLoginOnePage() {
       <AccessDeniedUser />
       <SupportInfo bottomPosition={50} />
     </>
-  )
+  );
 }
