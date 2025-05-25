@@ -18,7 +18,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <body className={`${montserrat.className} min-h-screen`}>
         <Providers>
           <div className="min-h-screen flex flex-col justify-between">
-            <Header />
             <div className="flex-grow w-full flex flex-col align-center">
               {children}
             </div>

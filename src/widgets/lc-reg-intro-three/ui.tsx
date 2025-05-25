@@ -1,6 +1,6 @@
 "use client";
 
-import { LogoLiveChat } from "@/src/shared/ui";
+import { LogoArkhyz } from "@/src/shared/ui";
 import { motion } from "framer-motion";
 import { FC } from "react";
 
@@ -14,7 +14,7 @@ export const LcRegIntroThree: FC = () => {
           delay: 0.75,
         }}
       >
-        <LogoLiveChat width={150} />
+        <LogoArkhyz width={200} height={100} />
       </motion.div>
       <div className="flex flex-col items-center">
         <motion.h1
