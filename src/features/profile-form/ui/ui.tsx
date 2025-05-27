@@ -52,9 +52,6 @@ export const Controller = () => {
           data?.formio_form_id
         }
       />
-      <p style={{ textAlign: "center" }}>
-        Скоро добавится возможность редактирования регистрации
-      </p>
     </>
   );
 };
