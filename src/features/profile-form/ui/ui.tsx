@@ -7,34 +7,22 @@ const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
 import { useEffect } from "react";
 import { ProfileUserIntro } from "../components/profile-user-intro/ui";
 import dynamic from "next/dynamic";
-
-const getSubmission = async (submissionId: string) => {
-  await fetch(
-    `${process.env.NEXT_PUBLIC_FORMIO_BASE_URL}form/${process.env.NEXT_PUBLIC_FORMIO_FORM_ID}/submission/${submissionId}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-};
+import { ErrorHandler } from "@/src/shared/ui";
+import { useErrorReq } from "@/src/shared/model";
+import { useRouter } from "next/navigation";
 
 export const Controller = () => {
-  const { data, error, isSuccess } = useGetMeQuery(null, {
+  const router = useRouter();
+  const { data, error } = useGetMeQuery(null, {
     refetchOnMountOrArgChange: true,
     skip: false,
   });
+  const { errorCode, errorMsg } = useErrorReq(error);
 
   useEffect(() => {
     if (data) {
-      const getForm = async () => {
-        const { formio_form_id } = data;
-        if (!formio_form_id) return;
-        const result = await getSubmission(formio_form_id);
-      };
-
-      getForm();
+      const { formio_form_id } = data;
+      if (!formio_form_id) return router.push(`/register/3`);
     }
   }, [data]);
 
@@ -52,6 +40,7 @@ export const Controller = () => {
           data?.formio_form_id
         }
       />
+      <ErrorHandler code={errorCode} message={errorMsg} />
     </>
   );
 };
