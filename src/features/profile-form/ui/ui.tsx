@@ -1,42 +1,57 @@
 "use client";
 
-import {
-  IGetMeResUser,
-  IGetMeResLcForm,
-  useGetMeQuery,
-} from "@/src/shared/api";
-import { useEffect, useState } from "react";
-import { LcEditForm } from "@/src/features/lc-forms";
-import { UserEditForm } from "@/src/features/user-forms/ui/edit";
-import { LcRegBtn } from "@/src/features/lc-reg-btn";
-import { LcDeleteData } from "@/src/features/lc-delete-data";
-import { useErrorReq } from "@/src/shared/model";
-import { ErrorHandler } from "@/src/shared/ui";
+import { useGetMeQuery } from "@/src/shared/api";
+const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
+  ssr: false,
+});
+import { useEffect } from "react";
 import { ProfileUserIntro } from "../components/profile-user-intro/ui";
-import { ProfileLcIntro } from "../components/profile-lc-intro/ui";
+import dynamic from "next/dynamic";
+
+const getSubmission = async (submissionId: string) => {
+  await fetch(
+    `${process.env.NEXT_PUBLIC_FORMIO_BASE_URL}form/${process.env.NEXT_PUBLIC_FORMIO_FORM_ID}/submission/${submissionId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
 
 export const Controller = () => {
-  const [skip, setSkip] = useState(false);
   const { data, error, isSuccess } = useGetMeQuery(null, {
     refetchOnMountOrArgChange: true,
-    skip,
+    skip: false,
   });
-  const { errorMsg, errorCode } = useErrorReq(error);
-
-  const [userData, setUserData] = useState<IGetMeResUser | null>(null);
-  const [lcFormData, setLcFormData] = useState<IGetMeResLcForm | null>(null);
 
   useEffect(() => {
     if (data) {
-      const { lc_form, ...user } = data;
-      setUserData(user);
-      setLcFormData(lc_form || null);
-      lc_form && setSkip(true);
+      const getForm = async () => {
+        const { formio_form_id } = data;
+        if (!formio_form_id) return;
+        const result = await getSubmission(formio_form_id);
+      };
+
+      getForm();
     }
   }, [data]);
 
+  if (!data?.formio_form_id) return;
+
   return (
     <>
+      <ProfileUserIntro />
+      <Form
+        src={
+          process.env.NEXT_PUBLIC_FORMIO_BASE_URL +
+          "/form/" +
+          process.env.NEXT_PUBLIC_FORMIO_FORM_ID +
+          "/submission/" +
+          data?.formio_form_id
+        }
+      />
       <p style={{ textAlign: "center" }}>
         Скоро добавится возможность редактирования регистрации
       </p>
