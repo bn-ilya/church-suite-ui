@@ -1,6 +1,5 @@
 "use client";
 
-import { LogoArkhyz } from "@/src/shared/ui";
 import { motion } from "framer-motion";
 import { FC } from "react";
 
@@ -14,7 +13,7 @@ export const LcRegIntroThree: FC = () => {
           delay: 0.75,
         }}
       >
-        <LogoArkhyz width={200} height={100} />
+        <img src="/svg/logo.svg" alt="logo" />
       </motion.div>
       <div className="flex flex-col items-center">
         <motion.h1
