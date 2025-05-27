@@ -1,5 +1,5 @@
 "use client";
-
+import styles from "./styles.module.scss";
 import { useGetMeQuery } from "@/src/shared/api";
 const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
   ssr: false,
@@ -29,7 +29,7 @@ export const Controller = () => {
   if (!data?.formio_form_id) return;
 
   return (
-    <>
+    <div data-bs-theme="dark" className={styles.wrapper}>
       <ProfileUserIntro />
       <Form
         src={
@@ -41,6 +41,6 @@ export const Controller = () => {
         }
       />
       <ErrorHandler code={errorCode} message={errorMsg} />
-    </>
+    </div>
   );
 };
