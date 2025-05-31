@@ -162,10 +162,10 @@ export function analyzeFormComponents(
               label = "Пожелание по расселению";
               break;
             case "car":
-              label = "На своей машине";
+              label = "Нужно место в машине";
               break;
             case "tent":
-              label = "Не нуждаюсь в палатке";
+              label = "Нужно место в палатке";
               break;
             case "independent":
               label = "Самостоятельный участник";
