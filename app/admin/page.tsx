@@ -54,9 +54,9 @@ const AdminPage = () => {
   return (
     <div className="mt-[64px]">
       <div data-bs-theme="dark" className={styles.wrapper}>
-        <div className="flex justify-between items-center mb-4 px-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 px-6 gap-4">
           <h1 className="text-2xl font-bold">Управление подписками</h1>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 w-full md:w-auto">
             <Button
               color="primary"
               size="sm"
@@ -64,29 +64,17 @@ const AdminPage = () => {
             >
               Добавить регистрацию
             </Button>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500">{user?.email}</span>
-              <Button
-                color="danger"
-                variant="light"
-                size="sm"
-                onClick={logout}
-                startContent={<ArrowRightOnRectangleIcon className="w-4 h-4" />}
-              >
-                Выйти
-              </Button>
-            </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-4 mb-4 px-6">
-          <div className="text-lg font-semibold">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 px-6">
+          <div className="text-lg font-semibold text-center md:text-left">
             Общая сумма: {totalSum.toLocaleString("ru-RU")} ₽
           </div>
           <div className="text-lg font-semibold text-center">
             Количество подписок: {subscriptionsCount}
           </div>
-          <div className="text-lg font-semibold text-right">
+          <div className="text-lg font-semibold text-center md:text-right">
             Количество людей: {totalUsers}
           </div>
         </div>
@@ -103,16 +91,17 @@ const AdminPage = () => {
           </div>
         ) : (
           submissionIds.map((submissionId: string) => (
-            <Form
-              key={submissionId}
-              src={
-                process.env.NEXT_PUBLIC_FORMIO_BASE_URL +
-                "form/" +
-                process.env.NEXT_PUBLIC_FORMIO_FORM_ID +
-                "/submission/" +
-                submissionId
-              }
-            />
+            <div key={submissionId} className="mb-12">
+              <Form
+                src={
+                  process.env.NEXT_PUBLIC_FORMIO_BASE_URL +
+                  "form/" +
+                  process.env.NEXT_PUBLIC_FORMIO_FORM_ID +
+                  "/submission/" +
+                  submissionId
+                }
+              />
+            </div>
           ))
         )}
       </div>

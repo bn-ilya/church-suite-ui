@@ -65,7 +65,7 @@ export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
     searchField === "modified";
 
   return (
-    <div className="w-full mx-auto px-6 flex flex-wrap justify-center gap-2 mb-4">
+    <div className="w-full mx-auto flex flex-wrap justify-center gap-2 mb-4">
       {searchField === "data.users.0.volunteer" ? (
         <div className="flex items-center gap-2 min-w-[200px] flex-grow">
           <Switch
@@ -80,7 +80,7 @@ export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
           <Input
             size="lg"
             type={isNumericField ? "number" : "text"}
-            placeholder="Значение для поиска"
+            placeholder="Поиск"
             labelPlacement="outside"
             className="min-w-[200px] flex-grow"
             value={searchValue}
