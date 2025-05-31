@@ -9,12 +9,14 @@ import {
 import { Spinner, Button } from "@heroui/react";
 import { useFormioAuth } from "@/src/shared/hooks/useFormioAuth";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 
 const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
   ssr: false,
 });
 
 const AdminPage = () => {
+  const router = useRouter();
   const {
     isAuthenticated,
     isLoading: authLoading,
@@ -54,17 +56,26 @@ const AdminPage = () => {
       <div data-bs-theme="dark" className={styles.wrapper}>
         <div className="flex justify-between items-center mb-4 px-6">
           <h1 className="text-2xl font-bold">Управление подписками</h1>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-500">{user?.email}</span>
+          <div className="flex items-center gap-4">
             <Button
-              color="danger"
-              variant="light"
+              color="primary"
               size="sm"
-              onClick={logout}
-              startContent={<ArrowRightOnRectangleIcon className="w-4 h-4" />}
+              onClick={() => router.push("/admin/add")}
             >
-              Выйти
+              Добавить регистрацию
             </Button>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-500">{user?.email}</span>
+              <Button
+                color="danger"
+                variant="light"
+                size="sm"
+                onClick={logout}
+                startContent={<ArrowRightOnRectangleIcon className="w-4 h-4" />}
+              >
+                Выйти
+              </Button>
+            </div>
           </div>
         </div>
 
