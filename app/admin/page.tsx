@@ -10,6 +10,7 @@ import { Spinner, Button } from "@heroui/react";
 import { useFormioAuth } from "@/src/shared/hooks/useFormioAuth";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
+import { AdminAppBar } from "@/src/features/admin-app-bar/ui";
 
 const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
   ssr: false,
@@ -54,17 +55,8 @@ const AdminPage = () => {
   return (
     <div className="mt-[64px]">
       <div data-bs-theme="dark" className={styles.wrapper}>
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 px-6 gap-4">
+        <div className="flex flex-col md:flex-row justify-center items-center md:items-center mb-4 px-6 gap-4">
           <h1 className="text-2xl font-bold">Управление подписками</h1>
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-4 w-full md:w-auto">
-            <Button
-              color="primary"
-              size="sm"
-              onClick={() => router.push("/admin/add")}
-            >
-              Добавить регистрацию
-            </Button>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 px-6">
@@ -105,6 +97,7 @@ const AdminPage = () => {
           ))
         )}
       </div>
+      <AdminAppBar />
     </div>
   );
 };

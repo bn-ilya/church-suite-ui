@@ -1,5 +1,6 @@
 "use client";
 import { AdminAddForm } from "@/src/views/admin-add";
+import { AdminAppBar } from "@/src/features/admin-app-bar/ui";
 
 const AdminAddPage = () => {
   return (
@@ -10,6 +11,7 @@ const AdminAddPage = () => {
         </h1>
         <AdminAddForm />
       </div>
+      <AdminAppBar />
     </div>
   );
 };
