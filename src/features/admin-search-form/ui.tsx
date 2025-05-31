@@ -87,6 +87,36 @@ export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
             onChange={(e) => setSearchValue(e.target.value)}
           />
 
+          <Select
+            size="lg"
+            label="Поле для поиска"
+            defaultSelectedKeys={["data.users.0.name"]}
+            placeholder="Выберите поле"
+            className="min-w-[200px]"
+            value={searchField}
+            onChange={(e) => {
+              setSearchField(e.target.value);
+              // Сбрасываем оператор при смене поля
+              if (e.target.value === "data.users.0.age") {
+                setOperator("equals");
+              } else if (e.target.value === "data.users.0.volunteer") {
+                setOperator("equals");
+              } else {
+                setOperator("regex");
+              }
+            }}
+          >
+            <SelectItem key="data.users.0.name">Имя, фамилия</SelectItem>
+            <SelectItem key="data.users.0.age">Возраст</SelectItem>
+            <SelectItem key="data.users.0.volunteer">Волонтер</SelectItem>
+            <SelectItem key="data.users.0.resettlement">
+              Пожелание по расселению
+            </SelectItem>
+            <SelectItem key="created">Дата создания</SelectItem>
+            <SelectItem key="modified">Дата изменения</SelectItem>
+            <SelectItem key="_id">ID подписки</SelectItem>
+          </Select>
+
           {/* Оператор сравнения */}
           <Select
             size="lg"
@@ -120,36 +150,6 @@ export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
           </Select>
         </>
       )}
-
-      <Select
-        size="lg"
-        label="Поле для поиска"
-        defaultSelectedKeys={["data.users.0.name"]}
-        placeholder="Выберите поле"
-        className="min-w-[200px]"
-        value={searchField}
-        onChange={(e) => {
-          setSearchField(e.target.value);
-          // Сбрасываем оператор при смене поля
-          if (e.target.value === "data.users.0.age") {
-            setOperator("equals");
-          } else if (e.target.value === "data.users.0.volunteer") {
-            setOperator("equals");
-          } else {
-            setOperator("regex");
-          }
-        }}
-      >
-        <SelectItem key="data.users.0.name">Имя, фамилия</SelectItem>
-        <SelectItem key="data.users.0.age">Возраст</SelectItem>
-        <SelectItem key="data.users.0.volunteer">Волонтер</SelectItem>
-        <SelectItem key="data.users.0.resettlement">
-          Пожелание по расселению
-        </SelectItem>
-        <SelectItem key="created">Дата создания</SelectItem>
-        <SelectItem key="modified">Дата изменения</SelectItem>
-        <SelectItem key="_id">ID подписки</SelectItem>
-      </Select>
     </div>
   );
 };

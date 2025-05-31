@@ -55,7 +55,7 @@ const AdminPage = () => {
   return (
     <div className="mt-[64px]">
       <div data-bs-theme="dark" className={styles.wrapper}>
-        <div className="flex flex-col md:flex-row justify-between items-center mb-4 px-6 gap-4">
+        <div className="flex flex-col md:flex-row justify-center items-center mb-4 px-6 gap-4">
           <h1 className="text-2xl font-bold text-center">
             Управление подписками
           </h1>
