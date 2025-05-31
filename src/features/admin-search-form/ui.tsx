@@ -88,7 +88,7 @@ export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
           />
 
           <Select
-            size="lg"
+            size="sm"
             label="Поле для поиска"
             defaultSelectedKeys={["data.users.0.name"]}
             placeholder="Выберите поле"
@@ -119,7 +119,7 @@ export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
 
           {/* Оператор сравнения */}
           <Select
-            size="lg"
+            size="sm"
             label="Оператор"
             defaultSelectedKeys={["regex"]}
             placeholder="Выберите оператор"
