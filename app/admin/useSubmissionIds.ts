@@ -15,6 +15,7 @@ export const useSubmissionIds = () => {
   const [totalUsers, setTotalUsers] = useState<number>(0);
   const [searchParams, setSearchParams] = useState<SearchParams | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
 
   const fetchSubmissions = async (params?: SearchParams) => {
     setIsLoading(true);
@@ -116,14 +117,20 @@ export const useSubmissionIds = () => {
     setSearchParams(params);
   };
 
-  // Загружаем подписки при монтировании компонента или изменении параметров поиска
+  // Функция для обновления списка подписок (например, после удаления)
+  const refreshSubscriptions = () => {
+    setRefreshTrigger((prev) => prev + 1);
+  };
+
+  // Загружаем подписки при монтировании компонента, изменении параметров поиска или триггера обновления
   useEffect(() => {
     fetchSubmissions(searchParams || undefined);
-  }, [searchParams]);
+  }, [searchParams, refreshTrigger]);
 
   return {
     submissionIds,
     updateSearchParams,
+    refreshSubscriptions,
     isLoading,
     totalSum,
     totalUsers,

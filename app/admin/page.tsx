@@ -6,7 +6,8 @@ import {
   AdminSearchForm,
   SearchParams,
 } from "@/src/features/admin-search-form";
-import { Spinner, Button } from "@heroui/react";
+import { Spinner, Button, Card, CardBody } from "@heroui/react";
+import { DeleteSubscriptionButton } from "@/src/features/admin-delete-subscription";
 import { useFormioAuth } from "@/src/shared/hooks/useFormioAuth";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
@@ -27,6 +28,7 @@ const AdminPage = () => {
   const {
     submissionIds,
     updateSearchParams,
+    refreshSubscriptions,
     isLoading: dataLoading,
     totalSum,
     totalUsers,
@@ -99,6 +101,10 @@ const AdminPage = () => {
                   "/submission/" +
                   submissionId
                 }
+              />
+              <DeleteSubscriptionButton
+                submissionId={submissionId}
+                onSuccess={refreshSubscriptions}
               />
             </div>
           ))
