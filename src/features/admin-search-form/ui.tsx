@@ -1,5 +1,7 @@
-import { Input, Select, SelectItem, Switch } from "@heroui/react";
-import { useEffect, useState } from "react";
+import { Input, Select, SelectItem, Switch, Spinner } from "@heroui/react";
+import { useEffect, useState, useMemo } from "react";
+import { useFormConfig } from "./hooks/useFormConfig";
+import { FilterField } from "./types";
 
 export interface SearchParams {
   field: string;
@@ -12,144 +14,230 @@ interface AdminSearchFormProps {
 }
 
 export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
-  const [searchField, setSearchField] = useState<string>("data.users.0.name");
+  const { filterConfig, isLoading, error } = useFormConfig();
+  const [searchField, setSearchField] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
-  const [isVolunteer, setIsVolunteer] = useState<boolean>(false);
+  const [isBooleanValue, setIsBooleanValue] = useState<boolean>(false);
   const [operator, setOperator] = useState<string>("regex");
+  const [selectValue, setSelectValue] = useState<string>("");
+
+  // Инициализируем поле поиска при загрузке конфигурации
+  useEffect(() => {
+    if (filterConfig && filterConfig.defaultField) {
+      setSearchField(filterConfig.defaultField);
+    }
+  }, [filterConfig]);
+
+  // Получаем текущее поле из конфигурации
+  const currentField = useMemo(() => {
+    if (!filterConfig || !searchField) return null;
+    return filterConfig.fields.find((field) => field.path === searchField);
+  }, [filterConfig, searchField]);
 
   // Функция для выполнения поиска
   const performSearch = () => {
-    // Особая обработка для поля volunteer (чекбокс)
-    if (searchField === "data.users.0.volunteer") {
-      onSearch({
-        field: searchField,
-        value: isVolunteer ? "true" : "false",
-        operator: "equals", // Для булевых значений используем equals
-      });
-    } else if (searchField === "data.users.0.age") {
-      // Для возраста используем выбранный оператор
-      onSearch({
-        field: searchField,
-        value: searchValue,
-        operator,
-      });
-    } else {
-      // Для текстовых полей по умолчанию используем regex для поиска по части строки
-      onSearch({
-        field: searchField,
-        value: searchValue,
-        operator: operator || "regex",
-      });
+    if (!currentField) return;
+
+    // Особая обработка для разных типов полей
+    switch (currentField.type) {
+      case "boolean":
+        onSearch({
+          field: searchField,
+          value: isBooleanValue ? "true" : "false",
+          operator: "equals", // Для булевых значений используем equals
+        });
+        break;
+      case "select":
+        onSearch({
+          field: searchField,
+          value: selectValue,
+          operator: operator || "equals",
+        });
+        break;
+      case "number":
+        onSearch({
+          field: searchField,
+          value: searchValue,
+          operator: operator || "equals",
+        });
+        break;
+      default:
+        // Для текстовых полей по умолчанию используем regex для поиска по части строки
+        onSearch({
+          field: searchField,
+          value: searchValue,
+          operator: operator || "regex",
+        });
+        break;
     }
   };
 
   // Выполняем поиск при изменении любого поля формы
   useEffect(() => {
+    if (!searchField) return;
+
     // Небольшая задержка для предотвращения слишком частых запросов
     const timer = setTimeout(() => {
       performSearch();
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [searchField, searchValue, isVolunteer, operator]);
+  }, [searchField, searchValue, isBooleanValue, operator, selectValue]);
 
-  // Определяем, является ли текущее поле числовым
-  const isNumericField = searchField === "data.users.0.age";
+  // Обработчик изменения поля поиска
+  const handleFieldChange = (value: string) => {
+    setSearchField(value);
+    setSearchValue("");
+    setSelectValue("");
 
-  // Определяем, является ли текущее поле текстовым
-  const isTextField =
-    searchField === "data.users.0.name" ||
-    searchField === "data.users.0.resettlement" ||
-    searchField === "_id" ||
-    searchField === "created" ||
-    searchField === "modified";
+    // Находим поле в конфигурации
+    const field = filterConfig.fields.find((f) => f.path === value);
+
+    if (field) {
+      // Устанавливаем оператор по умолчанию в зависимости от типа поля
+      switch (field.type) {
+        case "boolean":
+          setOperator("equals");
+          setIsBooleanValue(false);
+          break;
+        case "number":
+          setOperator("equals");
+          break;
+        case "select":
+          setOperator("equals");
+          break;
+        default:
+          setOperator("regex");
+          break;
+      }
+    }
+  };
+
+  // Добавляем отладочную информацию
+  console.log("filterConfig:", filterConfig);
+  console.log("isLoading:", isLoading);
+  console.log("error:", error);
+  console.log("currentField:", currentField);
+
+  // Если конфигурация загружается, показываем спиннер
+  if (isLoading) {
+    return (
+      <div className="w-full flex justify-center py-4">
+        <Spinner size="md" color="primary" />
+      </div>
+    );
+  }
+
+  // Если произошла ошибка, показываем сообщение
+  if (error) {
+    return (
+      <div className="w-full text-center text-danger py-4">
+        Ошибка при загрузке фильтров: {error.message}
+      </div>
+    );
+  }
+
+  // Если нет полей для фильтрации, показываем сообщение
+  if (!filterConfig || filterConfig.fields.length === 0) {
+    return (
+      <div className="w-full text-center py-4">
+        Нет доступных полей для фильтрации
+      </div>
+    );
+  }
 
   return (
     <div className="w-full mx-auto flex flex-wrap justify-center gap-2 mb-4">
-      {searchField === "data.users.0.volunteer" ? (
+      {currentField?.type === "boolean" ? (
         <div className="flex items-center gap-2 min-w-[200px] flex-grow">
           <Switch
-            isSelected={isVolunteer}
-            onValueChange={setIsVolunteer}
+            isSelected={isBooleanValue}
+            onValueChange={setIsBooleanValue}
             size="lg"
           />
-          <span>{isVolunteer ? "Да" : "Нет"}</span>
+          <span>{isBooleanValue ? "Да" : "Нет"}</span>
         </div>
+      ) : currentField?.type === "select" && currentField.values ? (
+        <>
+          <Select
+            size="lg"
+            placeholder="Выберите значение"
+            labelPlacement="outside"
+            className="min-w-[200px] flex-grow"
+            value={selectValue}
+            onChange={(e) => setSelectValue(e.target.value)}
+          >
+            {currentField.values.map((option) => (
+              <SelectItem key={option.value}>{option.label}</SelectItem>
+            ))}
+          </Select>
+        </>
       ) : (
         <>
           <Input
             size="lg"
-            type={isNumericField ? "number" : "text"}
+            type={currentField?.type === "number" ? "number" : "text"}
             placeholder="Поиск"
             labelPlacement="outside"
             className="min-w-[200px] flex-grow"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
-
-          <Select
-            size="sm"
-            label="Поле для поиска"
-            defaultSelectedKeys={["data.users.0.name"]}
-            placeholder="Выберите поле"
-            className="min-w-[200px]"
-            value={searchField}
-            onChange={(e) => {
-              setSearchField(e.target.value);
-              // Сбрасываем оператор при смене поля
-              if (e.target.value === "data.users.0.age") {
-                setOperator("equals");
-              } else if (e.target.value === "data.users.0.volunteer") {
-                setOperator("equals");
-              } else {
-                setOperator("regex");
-              }
-            }}
-          >
-            <SelectItem key="data.users.0.name">Имя, фамилия</SelectItem>
-            <SelectItem key="data.users.0.age">Возраст</SelectItem>
-            <SelectItem key="data.users.0.volunteer">Волонтер</SelectItem>
-            <SelectItem key="data.users.0.resettlement">
-              Пожелание по расселению
-            </SelectItem>
-            <SelectItem key="created">Дата создания</SelectItem>
-            <SelectItem key="modified">Дата изменения</SelectItem>
-            <SelectItem key="_id">ID подписки</SelectItem>
-          </Select>
-
-          {/* Оператор сравнения */}
-          <Select
-            size="sm"
-            label="Оператор"
-            defaultSelectedKeys={["regex"]}
-            placeholder="Выберите оператор"
-            className="min-w-[150px]"
-            value={operator}
-            onChange={(e) => setOperator(e.target.value)}
-          >
-            {isNumericField
-              ? // Операторы для числовых полей
-                [
-                  <SelectItem key="equals">Равно</SelectItem>,
-                  <SelectItem key="ne">Не равно</SelectItem>,
-                  <SelectItem key="gt">Больше</SelectItem>,
-                  <SelectItem key="gte">Больше или равно</SelectItem>,
-                  <SelectItem key="lt">Меньше</SelectItem>,
-                  <SelectItem key="lte">Меньше или равно</SelectItem>,
-                ]
-              : isTextField
-              ? // Операторы для текстовых полей
-                [
-                  <SelectItem key="equals">Точное совпадение</SelectItem>,
-                  <SelectItem key="ne">Не равно</SelectItem>,
-                  <SelectItem key="regex">
-                    Содержит (регистронезависимый)
-                  </SelectItem>,
-                ]
-              : null}
-          </Select>
         </>
+      )}
+
+      <Select
+        size="sm"
+        label="Поле для поиска"
+        placeholder="Выберите поле"
+        className="min-w-[200px]"
+        value={searchField}
+        onChange={(e) => handleFieldChange(e.target.value)}
+        selectedKeys={searchField ? [searchField] : []}
+      >
+        {filterConfig.fields.map((field) => (
+          <SelectItem key={field.path}>{field.label}</SelectItem>
+        ))}
+      </Select>
+
+      {/* Оператор сравнения */}
+      {currentField && currentField.type !== "boolean" && (
+        <Select
+          size="sm"
+          label="Оператор"
+          placeholder="Выберите оператор"
+          className="min-w-[150px]"
+          value={operator}
+          onChange={(e) => setOperator(e.target.value)}
+          selectedKeys={operator ? [operator] : []}
+        >
+          {currentField.operators.map((op) => (
+            <SelectItem key={op}>{getOperatorLabel(op)}</SelectItem>
+          ))}
+        </Select>
       )}
     </div>
   );
 };
+
+// Функция для получения человекочитаемого названия оператора
+function getOperatorLabel(operator: string): string {
+  switch (operator) {
+    case "equals":
+      return "Равно";
+    case "ne":
+      return "Не равно";
+    case "gt":
+      return "Больше";
+    case "gte":
+      return "Больше или равно";
+    case "lt":
+      return "Меньше";
+    case "lte":
+      return "Меньше или равно";
+    case "regex":
+      return "Содержит (регистронезависимый)";
+    default:
+      return operator;
+  }
+}

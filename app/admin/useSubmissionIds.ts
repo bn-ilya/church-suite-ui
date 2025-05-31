@@ -38,10 +38,16 @@ export const useSubmissionIds = () => {
         // Для поиска по полям формы используем правильный синтаксис
         let fieldPath = params.field;
 
-        // Для поиска по полям в массиве users используем специальный синтаксис
+        // Для поиска по полям в массиве (например, datagrid) используем специальный синтаксис
         // Например: data.users.0.name=Иван превращается в data.users.name=Иван
-        if (fieldPath.startsWith("data.users.0")) {
-          fieldPath = fieldPath.replace("data.users.0.", "data.users.");
+        const datagridPattern = /^data\.([^.]+)\.0\.(.+)$/;
+        const match = fieldPath.match(datagridPattern);
+
+        if (match) {
+          console.log(
+            `Преобразование пути для datagrid: ${fieldPath} -> data.${match[1]}.${match[2]}`
+          );
+          fieldPath = `data.${match[1]}.${match[2]}`;
         }
 
         // Добавляем оператор к полю, если он указан
