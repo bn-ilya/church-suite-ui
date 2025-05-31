@@ -45,7 +45,7 @@ export const ModalDeleteSubscription: FC<IModalDeleteSubscriptionProps> = ({
       setIsSuccess(true);
       onSuccess();
     } catch (error) {
-      console.error("Ошибка при удалении подписки:", error);
+      console.error("Ошибка при удалении регистрации:", error);
     } finally {
       setIsLoading(false);
     }

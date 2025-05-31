@@ -8,7 +8,9 @@ export const ModalBodyQuestion = () => {
         <div className="flex justify-center items-center w-[80px] h-[80px] rounded-full bg-red-600 dark:bg-zinc-800">
           <TrashIcon width={40} className="text-white dark:text-red-700" />
         </div>
-        <div className="text-center">Вы точно хотите удалить эту подписку?</div>
+        <div className="text-center">
+          Вы точно хотите удалить эту регистрацию?
+        </div>
       </div>
     </ModalBody>
   );

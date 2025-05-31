@@ -59,7 +59,7 @@ const AdminPage = () => {
       <div data-bs-theme="dark" className={styles.wrapper}>
         <div className="flex flex-col md:flex-row justify-center items-center mb-4 px-6 gap-4">
           <h1 className="text-2xl font-bold text-center">
-            Управление подписками
+            Управление регистрацией
           </h1>
         </div>
 
@@ -71,7 +71,7 @@ const AdminPage = () => {
             </span>
           </div>
           <div className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center">
-            <span className="text-sm text-gray-500 mr-2">Подписки:</span>
+            <span className="text-sm text-gray-500 mr-2">Регистрации:</span>
             <span className="font-semibold">{subscriptionsCount}</span>
           </div>
           <div className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center">
@@ -88,7 +88,7 @@ const AdminPage = () => {
           </div>
         ) : submissionIds.length === 0 ? (
           <div className="text-center my-8">
-            <p>Подписки не найдены</p>
+            <p>Регистрации не найдены</p>
           </div>
         ) : (
           submissionIds.map((submissionId: string) => (

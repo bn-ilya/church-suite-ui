@@ -70,7 +70,7 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div className="mt-[64px] flex justify-center items-center min-h-[calc(100vh-64px)]">
+    <div className="mt-[64px] px-4 flex justify-center items-center min-h-[calc(100vh-64px)]">
       <Card className="w-full max-w-md">
         <CardHeader className="flex flex-col gap-2 items-center">
           <h1 className="text-2xl font-bold">Вход в админ-панель</h1>

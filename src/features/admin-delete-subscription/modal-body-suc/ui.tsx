@@ -8,7 +8,7 @@ export const ModalBodySuc = () => {
         <div className="flex justify-center items-center w-[80px] h-[80px] rounded-full bg-green-600 dark:bg-zinc-800">
           <CheckIcon width={40} className="text-white dark:text-green-700" />
         </div>
-        <div className="text-center">Подписка успешно удалена</div>
+        <div className="text-center">Регистрация успешно удалена</div>
       </div>
     </ModalBody>
   );
