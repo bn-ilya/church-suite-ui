@@ -55,19 +55,26 @@ const AdminPage = () => {
   return (
     <div className="mt-[64px]">
       <div data-bs-theme="dark" className={styles.wrapper}>
-        <div className="flex flex-col md:flex-row justify-center items-center md:items-center mb-4 px-6 gap-4">
-          <h1 className="text-2xl font-bold">Управление подписками</h1>
+        <div className="flex flex-col md:flex-row justify-between items-center mb-4 px-6 gap-4">
+          <h1 className="text-2xl font-bold text-center">
+            Управление подписками
+          </h1>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 px-6">
-          <div className="text-lg font-semibold text-center md:text-left">
-            Общая сумма: {totalSum.toLocaleString("ru-RU")} ₽
+        <div className="flex flex-wrap justify-center gap-4 mb-4 px-6">
+          <div className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center">
+            <span className="text-sm text-gray-500 mr-2">Общая сумма:</span>
+            <span className="font-semibold">
+              {totalSum.toLocaleString("ru-RU")} ₽
+            </span>
           </div>
-          <div className="text-lg font-semibold text-center">
-            Количество подписок: {subscriptionsCount}
+          <div className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center">
+            <span className="text-sm text-gray-500 mr-2">Подписки:</span>
+            <span className="font-semibold">{subscriptionsCount}</span>
           </div>
-          <div className="text-lg font-semibold text-center md:text-right">
-            Количество людей: {totalUsers}
+          <div className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center">
+            <span className="text-sm text-gray-500 mr-2">Люди:</span>
+            <span className="font-semibold">{totalUsers}</span>
           </div>
         </div>
 
