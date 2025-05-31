@@ -1,6 +1,5 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { Button, Input, Select, SelectItem, Switch } from "@heroui/react";
-import { FormEvent, useState } from "react";
+import { Input, Select, SelectItem, Switch } from "@heroui/react";
+import { useEffect, useState } from "react";
 
 export interface SearchParams {
   field: string;
@@ -18,9 +17,8 @@ export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
   const [isVolunteer, setIsVolunteer] = useState<boolean>(false);
   const [operator, setOperator] = useState<string>("regex");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  // Функция для выполнения поиска
+  const performSearch = () => {
     // Особая обработка для поля volunteer (чекбокс)
     if (searchField === "data.users.0.volunteer") {
       onSearch({
@@ -45,6 +43,16 @@ export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
     }
   };
 
+  // Выполняем поиск при изменении любого поля формы
+  useEffect(() => {
+    // Небольшая задержка для предотвращения слишком частых запросов
+    const timer = setTimeout(() => {
+      performSearch();
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchField, searchValue, isVolunteer, operator]);
+
   // Определяем, является ли текущее поле числовым
   const isNumericField = searchField === "data.users.0.age";
 
@@ -57,10 +65,7 @@ export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
     searchField === "modified";
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full mx-auto px-6 flex flex-wrap justify-center gap-2 mb-4"
-    >
+    <div className="w-full mx-auto px-6 flex flex-wrap justify-center gap-2 mb-4">
       {searchField === "data.users.0.volunteer" ? (
         <div className="flex items-center gap-2 min-w-[200px] flex-grow">
           <Switch
@@ -145,15 +150,6 @@ export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
         <SelectItem key="modified">Дата изменения</SelectItem>
         <SelectItem key="_id">ID подписки</SelectItem>
       </Select>
-
-      <Button
-        type="submit"
-        size="lg"
-        color="primary"
-        startContent={<MagnifyingGlassIcon className="w-5 h-5" />}
-      >
-        Поиск
-      </Button>
-    </form>
+    </div>
   );
 };
