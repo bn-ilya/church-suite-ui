@@ -19,6 +19,17 @@ export const useSubmissionIds = () => {
   const fetchSubmissions = async (params?: SearchParams) => {
     setIsLoading(true);
     try {
+      // Получаем токен авторизации из localStorage
+      const token = localStorage.getItem("formioToken");
+
+      // Если токена нет, не выполняем запрос
+      if (!token) {
+        setSubmissionIds([]);
+        setTotalSum(0);
+        setTotalUsers(0);
+        return;
+      }
+
       let url = `${process.env.NEXT_PUBLIC_FORMIO_BASE_URL}form/${process.env.NEXT_PUBLIC_FORMIO_FORM_ID}/submission`;
 
       // Добавляем параметры поиска, если они есть
@@ -51,7 +62,11 @@ export const useSubmissionIds = () => {
         }
       }
 
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          "x-jwt-token": token,
+        },
+      });
       const data: Array<Submission> = await response.json();
 
       // Извлекаем ID подписок
