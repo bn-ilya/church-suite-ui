@@ -1,8 +1,18 @@
 import { useEffect, useState } from "react";
 import { SearchParams } from "@/src/features/admin-search-form";
 
+interface Submission {
+  _id: string;
+  data?: {
+    total?: string | number;
+    users?: Array<any>;
+  };
+}
+
 export const useSubmissionIds = () => {
   const [submissionIds, setSubmissionIds] = useState<string[]>([]);
+  const [totalSum, setTotalSum] = useState<number>(0);
+  const [totalUsers, setTotalUsers] = useState<number>(0);
   const [searchParams, setSearchParams] = useState<SearchParams | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -42,8 +52,36 @@ export const useSubmissionIds = () => {
       }
 
       const response = await fetch(url);
-      const data: Array<{ _id: string }> = await response.json();
+      const data: Array<Submission> = await response.json();
+
+      // Извлекаем ID подписок
       setSubmissionIds(data.map((submission) => submission["_id"]));
+
+      // Рассчитываем общую сумму total и количество пользователей
+      let sum = 0;
+      let usersCount = 0;
+
+      data.forEach((submission) => {
+        // Подсчет общей суммы
+        if (submission.data?.total) {
+          const total =
+            typeof submission.data.total === "string"
+              ? parseFloat(submission.data.total)
+              : submission.data.total;
+
+          if (!isNaN(total)) {
+            sum += total;
+          }
+        }
+
+        // Подсчет общего количества пользователей
+        if (submission.data?.users && Array.isArray(submission.data.users)) {
+          usersCount += submission.data.users.length;
+        }
+      });
+
+      setTotalSum(sum);
+      setTotalUsers(usersCount);
     } catch (error) {
       setSubmissionIds([]);
     } finally {
@@ -61,5 +99,12 @@ export const useSubmissionIds = () => {
     fetchSubmissions(searchParams || undefined);
   }, [searchParams]);
 
-  return { submissionIds, updateSearchParams, isLoading };
+  return {
+    submissionIds,
+    updateSearchParams,
+    isLoading,
+    totalSum,
+    totalUsers,
+    subscriptionsCount: submissionIds.length,
+  };
 };

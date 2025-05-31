@@ -13,7 +13,14 @@ const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
 });
 
 const AdminPage = () => {
-  const { submissionIds, updateSearchParams, isLoading } = useSubmissionIds();
+  const {
+    submissionIds,
+    updateSearchParams,
+    isLoading,
+    totalSum,
+    totalUsers,
+    subscriptionsCount,
+  } = useSubmissionIds();
 
   const handleSearch = (params: SearchParams) => {
     updateSearchParams(params);
@@ -25,6 +32,18 @@ const AdminPage = () => {
         <h1 className="text-2xl font-bold mb-4 text-center">
           Управление подписками
         </h1>
+
+        <div className="grid grid-cols-3 gap-4 mb-4 px-6">
+          <div className="text-lg font-semibold">
+            Общая сумма: {totalSum.toLocaleString("ru-RU")} ₽
+          </div>
+          <div className="text-lg font-semibold text-center">
+            Количество подписок: {subscriptionsCount}
+          </div>
+          <div className="text-lg font-semibold text-right">
+            Количество людей: {totalUsers}
+          </div>
+        </div>
 
         <AdminSearchForm onSearch={handleSearch} />
 
