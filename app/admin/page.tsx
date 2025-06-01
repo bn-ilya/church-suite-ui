@@ -31,6 +31,7 @@ const AdminPage = () => {
     refreshSubscriptions,
     isLoading: dataLoading,
     totalSum,
+    paidAmount,
     totalUsers,
     subscriptionsCount,
   } = useSubmissionIds();
@@ -68,6 +69,12 @@ const AdminPage = () => {
             <span className="text-sm text-gray-500 mr-2">Общая сумма:</span>
             <span className="font-semibold">
               {totalSum.toLocaleString("ru-RU")} ₽
+            </span>
+          </div>
+          <div className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center">
+            <span className="text-sm text-gray-500 mr-2">Сдано денег:</span>
+            <span className="font-semibold">
+              {paidAmount.toLocaleString("ru-RU")} ₽
             </span>
           </div>
           <div className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center">

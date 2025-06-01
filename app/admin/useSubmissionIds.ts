@@ -5,6 +5,7 @@ interface Submission {
   _id: string;
   data?: {
     total?: string | number;
+    paid_amount?: string | number;
     users?: Array<any>;
   };
 }
@@ -12,6 +13,7 @@ interface Submission {
 export const useSubmissionIds = () => {
   const [submissionIds, setSubmissionIds] = useState<string[]>([]);
   const [totalSum, setTotalSum] = useState<number>(0);
+  const [paidAmount, setPaidAmount] = useState<number>(0);
   const [totalUsers, setTotalUsers] = useState<number>(0);
   const [searchParams, setSearchParams] = useState<SearchParams | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -80,8 +82,9 @@ export const useSubmissionIds = () => {
       // Извлекаем ID подписок
       setSubmissionIds(data.map((submission) => submission["_id"]));
 
-      // Рассчитываем общую сумму total и количество пользователей
+      // Рассчитываем общую сумму total, paid_amount и количество пользователей
       let sum = 0;
+      let paid = 0;
       let usersCount = 0;
 
       data.forEach((submission) => {
@@ -97,6 +100,18 @@ export const useSubmissionIds = () => {
           }
         }
 
+        // Подсчет суммы сданных денег
+        if (submission.data?.paid_amount) {
+          const paidAmount =
+            typeof submission.data.paid_amount === "string"
+              ? parseFloat(submission.data.paid_amount)
+              : submission.data.paid_amount;
+
+          if (!isNaN(paidAmount)) {
+            paid += paidAmount;
+          }
+        }
+
         // Подсчет общего количества пользователей
         if (submission.data?.users && Array.isArray(submission.data.users)) {
           usersCount += submission.data.users.length;
@@ -104,6 +119,7 @@ export const useSubmissionIds = () => {
       });
 
       setTotalSum(sum);
+      setPaidAmount(paid);
       setTotalUsers(usersCount);
     } catch (error) {
       setSubmissionIds([]);
@@ -133,6 +149,7 @@ export const useSubmissionIds = () => {
     refreshSubscriptions,
     isLoading,
     totalSum,
+    paidAmount,
     totalUsers,
     subscriptionsCount: submissionIds.length,
   };
