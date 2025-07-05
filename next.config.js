@@ -29,6 +29,10 @@ const nextConfig = {
         source: "/api/:path*",
         destination: `${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}/api/:path*`,
       },
+      {
+        source: "/formio-api/:path*",
+        destination: `https://church-krop.ru/:path*`,
+      },
     ];
   },
 };

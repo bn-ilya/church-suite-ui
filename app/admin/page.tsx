@@ -1,12 +1,19 @@
 "use client";
 import dynamic from "next/dynamic";
 import styles from "./styles.module.scss";
-import { useSubmissionIds } from "./useSubmissionIds";
+import { useSubmissions } from "./useSubmissions";
 import {
   AdminSearchForm,
   SearchParams,
 } from "@/src/features/admin-search-form";
-import { Spinner, Button, Card, CardBody } from "@heroui/react";
+import {
+  Spinner,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  CardFooter,
+} from "@heroui/react";
 import { DeleteSubscriptionButton } from "@/src/features/admin-delete-subscription";
 import { useFormioAuth } from "@/src/shared/hooks/useFormioAuth";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
@@ -26,7 +33,7 @@ const AdminPage = () => {
     user,
   } = useFormioAuth();
   const {
-    submissionIds,
+    submissions,
     updateSearchParams,
     refreshSubscriptions,
     isLoading: dataLoading,
@@ -34,7 +41,7 @@ const AdminPage = () => {
     paidAmount,
     totalUsers,
     subscriptionsCount,
-  } = useSubmissionIds();
+  } = useSubmissions();
 
   const handleSearch = (params: SearchParams) => {
     updateSearchParams(params);
@@ -93,28 +100,59 @@ const AdminPage = () => {
           <div className="flex justify-center my-8">
             <Spinner size="lg" color="primary" />
           </div>
-        ) : submissionIds.length === 0 ? (
+        ) : submissions.length === 0 ? (
           <div className="text-center my-8">
             <p>Регистрации не найдены</p>
           </div>
         ) : (
-          submissionIds.map((submissionId: string) => (
-            <div key={submissionId} className="mb-12">
-              <Form
-                src={
-                  process.env.NEXT_PUBLIC_FORMIO_BASE_URL +
-                  "form/" +
-                  process.env.NEXT_PUBLIC_FORMIO_FORM_ID +
-                  "/submission/" +
-                  submissionId
-                }
-              />
-              <DeleteSubscriptionButton
-                submissionId={submissionId}
-                onSuccess={refreshSubscriptions}
-              />
-            </div>
-          ))
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            {submissions.map((submission) => (
+              <Card key={submission._id} className="bg-default-100/30">
+                <CardBody>
+                  <div className="space-y-3">
+                    {submission.users && submission.users.length > 0 ? (
+                      submission.users.map((user, index) => (
+                        <div
+                          key={index}
+                          className="p-3 bg-default-200/50 rounded-lg"
+                        >
+                          <p className="text-md font-medium">{user.name}</p>
+                          {user.email && (
+                            <p className="text-sm text-gray-500 mt-1">
+                              Email: {user.email}
+                            </p>
+                          )}
+                          {user.phone && (
+                            <p className="text-sm text-gray-500">
+                              Телефон: {user.phone}
+                            </p>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      <div className="p-3 bg-default-200/50 rounded-lg">
+                        <p className="text-md font-medium text-gray-500">
+                          Нет данных о пользователях
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </CardBody>
+                <CardFooter className="flex justify-between">
+                  <Button
+                    fullWidth
+                    color="primary"
+                    variant="faded"
+                    onClick={() =>
+                      router.push(`/admin/submission/${submission._id}`)
+                    }
+                  >
+                    Открыть детали
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         )}
       </div>
       <AdminAppBar />
