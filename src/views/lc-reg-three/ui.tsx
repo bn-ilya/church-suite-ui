@@ -1,4 +1,4 @@
-`use client`;
+"use client";
 import { LcRegIntroThree } from "@/src/widgets/lc-reg-intro-three";
 import { LcRegFormFormio } from "./LcRegFormFormio";
 

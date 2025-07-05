@@ -70,13 +70,15 @@ export const AdminAddForm = () => {
   // Формируем URL с учетом токена авторизации
   const formUrl = `form/${process.env.NEXT_PUBLIC_FORMIO_FORM_ID}`;
 
+  // Определяем baseUrl безопасно, проверяя наличие window
+  const baseUrl =
+    typeof window !== "undefined"
+      ? window.location.origin + process.env.NEXT_PUBLIC_FORMIO_BASE_URL
+      : process.env.NEXT_PUBLIC_FORMIO_BASE_URL; // Фоллбэк для серверного рендеринга
+
   return (
     <div data-bs-theme="dark" className={styles.wrapper}>
-      <FormioProvider
-        baseUrl={
-          window.location.origin + process.env.NEXT_PUBLIC_FORMIO_BASE_URL
-        }
-      >
+      <FormioProvider baseUrl={baseUrl}>
         <Form
           onSubmit={(submission) => {
             // Просто отмечаем успешную отправку формы, без дополнительных действий

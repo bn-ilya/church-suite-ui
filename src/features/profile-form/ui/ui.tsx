@@ -34,14 +34,16 @@ export const Controller = () => {
 
   if (!data?.formio_form_id) return;
 
+  // Определяем baseUrl безопасно, проверяя наличие window
+  const baseUrl =
+    typeof window !== "undefined"
+      ? window.location.origin + process.env.NEXT_PUBLIC_FORMIO_BASE_URL
+      : process.env.NEXT_PUBLIC_FORMIO_BASE_URL; // Фоллбэк для серверного рендеринга
+
   return (
     <div data-bs-theme="dark" className={styles.wrapper}>
       <ProfileUserIntro />
-      <FormioProvider
-        baseUrl={
-          window.location.origin + process.env.NEXT_PUBLIC_FORMIO_BASE_URL
-        }
-      >
+      <FormioProvider baseUrl={baseUrl}>
         <Form
           src={
             "form/" +
