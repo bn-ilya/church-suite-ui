@@ -184,7 +184,7 @@ export const useSubmissions = () => {
 
         // Подсчет суммы сданных денег
         if (submission.paid_amount) {
-          paid += submission.paid_amount;
+          paid += Number(submission.paid_amount);
         }
 
         // Подсчет общего количества пользователей
