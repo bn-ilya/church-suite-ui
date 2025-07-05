@@ -6,11 +6,16 @@ import styles from "./styles.module.scss";
 import { Spinner } from "@heroui/react";
 import { useFormioAuth } from "@/src/shared/hooks/useFormioAuth";
 import { useRouter } from "next/navigation";
-import { FormioProvider } from "@formio/react";
 
 const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
   ssr: false,
 });
+const FormioProvider = dynamic(
+  () => import("@formio/react").then((mod) => mod.FormioProvider),
+  {
+    ssr: false,
+  }
+);
 
 export const AdminAddForm = () => {
   const router = useRouter();

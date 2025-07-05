@@ -1,3 +1,4 @@
+"use client";
 import { Transition } from "@/app/transition";
 import { AccessDeniedUser } from "@/src/features/access-denied-user";
 import { SupportInfo } from "@/src/features/support-info";
@@ -9,9 +10,9 @@ export default function LcRegThreePage() {
       <Transition>
         <LcRegThree />
       </Transition>
-      
+
       <AccessDeniedUser />
       <SupportInfo />
     </>
-  )
+  );
 }

@@ -6,12 +6,16 @@ import { useFormioAuth } from "@/src/shared/hooks/useFormioAuth";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { DeleteSubscriptionButton } from "@/src/features/admin-delete-subscription";
 import { AdminAppBar } from "@/src/features/admin-app-bar/ui";
-import { FormioProvider } from "@formio/react";
 
 const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
   ssr: false,
 });
-
+const FormioProvider = dynamic(
+  () => import("@formio/react").then((mod) => mod.FormioProvider),
+  {
+    ssr: false,
+  }
+);
 const SubmissionPage = () => {
   const params = useParams();
   const router = useRouter();

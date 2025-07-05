@@ -4,13 +4,18 @@ import { useGetMeQuery } from "@/src/shared/api";
 const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
   ssr: false,
 });
+const FormioProvider = dynamic(
+  () => import("@formio/react").then((mod) => mod.FormioProvider),
+  {
+    ssr: false,
+  }
+);
 import { useEffect } from "react";
 import { ProfileUserIntro } from "../components/profile-user-intro/ui";
 import dynamic from "next/dynamic";
 import { ErrorHandler } from "@/src/shared/ui";
 import { useErrorReq } from "@/src/shared/model";
 import { useRouter } from "next/navigation";
-import { FormioProvider } from "@formio/react";
 
 export const Controller = () => {
   const router = useRouter();

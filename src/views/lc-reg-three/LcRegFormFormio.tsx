@@ -5,11 +5,16 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import styles from "./styles.module.scss";
-import { FormioProvider } from "@formio/react";
 
 const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
   ssr: false,
 });
+const FormioProvider = dynamic(
+  () => import("@formio/react").then((mod) => mod.FormioProvider),
+  {
+    ssr: false,
+  }
+);
 export const LcRegFormFormio = () => {
   const router = useRouter();
   const [

@@ -20,10 +20,6 @@ import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { AdminAppBar } from "@/src/features/admin-app-bar/ui";
 
-const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
-  ssr: false,
-});
-
 const AdminPage = () => {
   const router = useRouter();
   const {
