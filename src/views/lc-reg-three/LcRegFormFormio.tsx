@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import styles from "./styles.module.scss";
+import { FormioProvider } from "@formio/react";
 
 const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
   ssr: false,
@@ -23,16 +24,18 @@ export const LcRegFormFormio = () => {
 
   return (
     <div data-bs-theme="dark" className={styles.wrapper}>
-      <Form
-        onSubmit={(submission) => {
-          setLcForm({ formio_form_id: submission["_id"] as string });
-        }}
-        src={
-          process.env.NEXT_PUBLIC_FORMIO_BASE_URL +
-          "/form/" +
-          process.env.NEXT_PUBLIC_FORMIO_FORM_ID
+      <FormioProvider
+        baseUrl={
+          window.location.origin + process.env.NEXT_PUBLIC_FORMIO_BASE_URL
         }
-      />
+      >
+        <Form
+          onSubmit={(submission) => {
+            setLcForm({ formio_form_id: submission["_id"] as string });
+          }}
+          src={"form/" + process.env.NEXT_PUBLIC_FORMIO_FORM_ID}
+        />
+      </FormioProvider>
     </div>
   );
 };

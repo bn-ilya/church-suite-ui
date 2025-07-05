@@ -6,6 +6,7 @@ import styles from "./styles.module.scss";
 import { Spinner } from "@heroui/react";
 import { useFormioAuth } from "@/src/shared/hooks/useFormioAuth";
 import { useRouter } from "next/navigation";
+import { FormioProvider } from "@formio/react";
 
 const Form = dynamic(() => import("@formio/react").then((mod) => mod.Form), {
   ssr: false,
@@ -62,21 +63,27 @@ export const AdminAddForm = () => {
   }
 
   // Формируем URL с учетом токена авторизации
-  const formUrl = `${process.env.NEXT_PUBLIC_FORMIO_BASE_URL}form/${process.env.NEXT_PUBLIC_FORMIO_FORM_ID}`;
+  const formUrl = `form/${process.env.NEXT_PUBLIC_FORMIO_FORM_ID}`;
 
   return (
     <div data-bs-theme="dark" className={styles.wrapper}>
-      <Form
-        onSubmit={(submission) => {
-          // Просто отмечаем успешную отправку формы, без дополнительных действий
-          setIsSuccess(true);
-        }}
-        src={formUrl}
-        options={{
-          noAlerts: true,
-          readOnly: false,
-        }}
-      />
+      <FormioProvider
+        baseUrl={
+          window.location.origin + process.env.NEXT_PUBLIC_FORMIO_BASE_URL
+        }
+      >
+        <Form
+          onSubmit={(submission) => {
+            // Просто отмечаем успешную отправку формы, без дополнительных действий
+            setIsSuccess(true);
+          }}
+          src={formUrl}
+          options={{
+            noAlerts: true,
+            readOnly: false,
+          }}
+        />
+      </FormioProvider>
     </div>
   );
 };

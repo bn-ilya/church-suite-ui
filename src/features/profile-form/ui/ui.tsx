@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import { ErrorHandler } from "@/src/shared/ui";
 import { useErrorReq } from "@/src/shared/model";
 import { useRouter } from "next/navigation";
+import { FormioProvider } from "@formio/react";
 
 export const Controller = () => {
   const router = useRouter();
@@ -31,15 +32,20 @@ export const Controller = () => {
   return (
     <div data-bs-theme="dark" className={styles.wrapper}>
       <ProfileUserIntro />
-      <Form
-        src={
-          process.env.NEXT_PUBLIC_FORMIO_BASE_URL +
-          "/form/" +
-          process.env.NEXT_PUBLIC_FORMIO_FORM_ID +
-          "/submission/" +
-          data?.formio_form_id
+      <FormioProvider
+        baseUrl={
+          window.location.origin + process.env.NEXT_PUBLIC_FORMIO_BASE_URL
         }
-      />
+      >
+        <Form
+          src={
+            "form/" +
+            process.env.NEXT_PUBLIC_FORMIO_FORM_ID +
+            "/submission/" +
+            data?.formio_form_id
+          }
+        />
+      </FormioProvider>
       <ErrorHandler code={errorCode} message={errorMsg} />
     </div>
   );
