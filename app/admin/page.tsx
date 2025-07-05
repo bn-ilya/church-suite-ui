@@ -107,8 +107,13 @@ const AdminPage = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             {submissions.map((submission) => (
-              <Card key={submission._id} className="bg-default-100/30">
-                <CardBody>
+              <Card key={submission._id}>
+                <CardBody
+                  onClick={() => {
+                    router.push(`/admin/submission/${submission._id}`);
+                  }}
+                  as="button"
+                >
                   <div className="space-y-3">
                     {submission.users && submission.users.length > 0 ? (
                       submission.users.map((user, index) => (
@@ -138,18 +143,6 @@ const AdminPage = () => {
                     )}
                   </div>
                 </CardBody>
-                <CardFooter className="flex justify-between">
-                  <Button
-                    fullWidth
-                    color="primary"
-                    variant="faded"
-                    onClick={() =>
-                      router.push(`/admin/submission/${submission._id}`)
-                    }
-                  >
-                    Открыть детали
-                  </Button>
-                </CardFooter>
               </Card>
             ))}
           </div>

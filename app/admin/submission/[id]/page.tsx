@@ -43,7 +43,7 @@ const SubmissionPage = () => {
   return (
     <div className="mt-[64px]">
       <div data-bs-theme="dark" className="container mx-auto px-4 py-6">
-        <div className="flex items-center mb-6">
+        <div className="flex flex-col items-center mb-6">
           <Button
             color="default"
             variant="light"

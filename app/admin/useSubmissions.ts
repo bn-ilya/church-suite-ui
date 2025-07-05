@@ -148,6 +148,13 @@ export const useSubmissions = () => {
           }
         }
 
+        // Создаем объект с данными из submission.data
+        const submissionData = { ...submission.data };
+
+        // Удаляем paid_amount из submissionData, чтобы избежать конфликта
+        delete submissionData.paid_amount;
+
+        // Затем создаем объект с преобразованными числовыми значениями
         return {
           _id: submission._id,
           users: users.map((user: any) => {
@@ -165,7 +172,7 @@ export const useSubmissions = () => {
           }),
           total: parseFloat(submission.data?.total || "0"),
           paid_amount: parseFloat(submission.data?.paid_amount || "0"),
-          ...submission.data,
+          ...submissionData,
         };
       });
 
