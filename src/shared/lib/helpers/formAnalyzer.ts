@@ -66,7 +66,14 @@ export function analyzeFormComponents(
         values = component.values || component.data?.values || [];
         break;
     }
-
+    console.log("Добавляем поле в список:", {
+      key: component.key,
+      label: component.label,
+      type: fieldType,
+      path: fieldPath,
+      operators,
+      values,
+    });
     // Добавляем поле в список
     fields.push({
       key: component.key,
@@ -103,86 +110,17 @@ export function analyzeFormComponents(
 
       // Обрабатываем компоненты внутри datagrid
       if (component.components && component.components.length > 0) {
-        console.log("Компоненты внутри datagrid:", component.components.length);
+        console.log(
+          "Компоненты внутри datagrid:",
+          component.components.length,
+          component.components
+        );
         component.components.forEach((subComponent) => {
-          processComponent(subComponent, datagridPath);
-        });
-      }
-
-      // Если у datagrid есть defaultValue, то можно получить поля из него
-      if (
-        component.defaultValue &&
-        Array.isArray(component.defaultValue) &&
-        component.defaultValue.length > 0
-      ) {
-        console.log("Используем defaultValue для анализа полей datagrid");
-
-        // Получаем первый элемент массива defaultValue
-        const defaultItem = component.defaultValue[0];
-
-        // Обрабатываем все поля из defaultValue
-        Object.entries(defaultItem).forEach(([key, value]) => {
-          // Пропускаем служебные поля
-          if (key.startsWith("_")) return;
-
-          // Определяем тип поля на основе значения
-          let fieldType: "text" | "number" | "boolean" | "select" = "text";
-          let operators: string[] = ["equals", "ne", "regex"];
-
-          if (typeof value === "boolean") {
-            fieldType = "boolean";
-            operators = ["equals"];
-          } else if (typeof value === "number") {
-            fieldType = "number";
-            operators = ["equals", "ne", "gt", "gte", "lt", "lte"];
-          } else if (typeof value === "object" && value !== null) {
-            // Для объектов (например, selectboxes) пропускаем
-            return;
+          if (subComponent.components) {
+            subComponent.components.forEach((component) => {
+              processComponent(component, datagridPath);
+            });
           }
-
-          // Формируем путь к полю
-          const fieldPath = `${datagridPath}.${key}`;
-
-          // Создаем более понятное название для поля
-          let label =
-            key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " "); // Преобразуем snake_case в Title Case
-
-          // Улучшаем названия для некоторых распространенных полей
-          switch (key) {
-            case "name":
-              label = "Имя, фамилия";
-              break;
-            case "age":
-              label = "Возраст";
-              break;
-            case "volunteer":
-              label = "Волонтер";
-              break;
-            case "resettlement":
-              label = "Пожелание по расселению";
-              break;
-            case "car":
-              label = "Нужно место в машине";
-              break;
-            case "tent":
-              label = "Нужно место в палатке";
-              break;
-            case "independent":
-              label = "Самостоятельный участник";
-              break;
-            case "days":
-              label = "Дни участия";
-              break;
-          }
-
-          // Добавляем поле в список
-          fields.push({
-            key,
-            label,
-            type: fieldType,
-            path: fieldPath,
-            operators,
-          });
         });
       }
     } else {
