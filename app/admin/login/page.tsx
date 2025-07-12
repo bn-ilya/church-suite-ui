@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Input, Card, CardBody, CardHeader } from "@heroui/react";
 
@@ -9,6 +9,20 @@ const AdminLoginPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  // Загрузка сохраненных данных из localStorage при монтировании компонента
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("adminEmail");
+    const savedPassword = localStorage.getItem("adminPassword");
+
+    if (savedEmail) {
+      setEmail(savedEmail);
+    }
+
+    if (savedPassword) {
+      setPassword(savedPassword);
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,7 +71,9 @@ const AdminLoginPage = () => {
         throw new Error(data.message || "Ошибка авторизации: токен не получен");
       }
 
-      // Сохраняем токен в localStorage
+      // Сохраняем данные авторизации в localStorage
+      localStorage.setItem("adminEmail", email);
+      localStorage.setItem("adminPassword", password);
       localStorage.setItem("formioToken", token);
 
       // Сразу перенаправляем на страницу админ-панели
