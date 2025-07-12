@@ -19,6 +19,10 @@ import { useFormioAuth } from "@/src/shared/hooks/useFormioAuth";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { AdminAppBar } from "@/src/features/admin-app-bar/ui";
+import { useEffect, useState } from "react";
+
+// Ключ для хранения параметров поиска в localStorage
+const SEARCH_PARAMS_STORAGE_KEY = "admin_search_params";
 
 const AdminPage = () => {
   const router = useRouter();
@@ -39,7 +43,37 @@ const AdminPage = () => {
     subscriptionsCount,
   } = useSubmissions();
 
+  // Состояние для хранения последних параметров поиска
+  const [initialSearchParams, setInitialSearchParams] =
+    useState<SearchParams | null>(null);
+
+  // Загружаем сохраненные параметры поиска при монтировании компонента
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const savedParams = localStorage.getItem(SEARCH_PARAMS_STORAGE_KEY);
+        if (savedParams) {
+          const params = JSON.parse(savedParams) as SearchParams;
+          setInitialSearchParams(params);
+          updateSearchParams(params);
+        }
+      } catch (error) {
+        console.error("Ошибка при загрузке параметров поиска:", error);
+      }
+    }
+  }, []);
+
   const handleSearch = (params: SearchParams) => {
+    // Сохраняем параметры поиска в localStorage
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(SEARCH_PARAMS_STORAGE_KEY, JSON.stringify(params));
+      } catch (error) {
+        console.error("Ошибка при сохранении параметров поиска:", error);
+      }
+    }
+
+    // Обновляем параметры поиска
     updateSearchParams(params);
   };
 
@@ -90,7 +124,10 @@ const AdminPage = () => {
           </div>
         </div>
 
-        <AdminSearchForm onSearch={handleSearch} />
+        <AdminSearchForm
+          onSearch={handleSearch}
+          initialParams={initialSearchParams}
+        />
 
         {dataLoading ? (
           <div className="flex justify-center my-8">

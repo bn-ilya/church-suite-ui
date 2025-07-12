@@ -11,22 +11,36 @@ export interface SearchParams {
 
 interface AdminSearchFormProps {
   onSearch: (params: SearchParams) => void;
+  initialParams?: SearchParams | null;
 }
 
-export const AdminSearchForm = ({ onSearch }: AdminSearchFormProps) => {
+export const AdminSearchForm = ({
+  onSearch,
+  initialParams,
+}: AdminSearchFormProps) => {
   const { filterConfig, isLoading, error } = useFormConfig();
-  const [searchField, setSearchField] = useState<string>("");
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [isBooleanValue, setIsBooleanValue] = useState<boolean>(false);
-  const [operator, setOperator] = useState<string>("regex");
-  const [selectValue, setSelectValue] = useState<string>("");
+  const [searchField, setSearchField] = useState<string>(
+    initialParams?.field || ""
+  );
+  const [searchValue, setSearchValue] = useState<string>(
+    initialParams?.value || ""
+  );
+  const [isBooleanValue, setIsBooleanValue] = useState<boolean>(
+    initialParams?.value === "true"
+  );
+  const [operator, setOperator] = useState<string>(
+    initialParams?.operator || "regex"
+  );
+  const [selectValue, setSelectValue] = useState<string>(
+    initialParams?.value || ""
+  );
 
   // Инициализируем поле поиска при загрузке конфигурации
   useEffect(() => {
-    if (filterConfig && filterConfig.defaultField) {
+    if (filterConfig && filterConfig.defaultField && !searchField) {
       setSearchField(filterConfig.defaultField);
     }
-  }, [filterConfig]);
+  }, [filterConfig, searchField]);
 
   // Получаем текущее поле из конфигурации
   const currentField = useMemo(() => {
