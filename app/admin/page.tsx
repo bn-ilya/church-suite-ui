@@ -106,6 +106,76 @@ const AdminPage = () => {
   const [currentSearchParams, setCurrentSearchParams] =
     useState<SearchParams | null>(null);
 
+  // Состояние для хранения информации о суммируемых полях
+  const [summableFieldsInfo, setSummableFieldsInfo] = useState<{
+    keys: string[];
+    keyToLabel: Record<string, string>;
+  }>({ keys: [], keyToLabel: {} });
+
+  // Получаем информацию о суммируемых полях из структуры формы
+  useEffect(() => {
+    const fetchFormStructure = async () => {
+      try {
+        const token = localStorage.getItem("formioToken");
+        if (!token) return;
+
+        const formId = process.env.NEXT_PUBLIC_FORMIO_FORM_ID;
+        if (!formId) return;
+
+        const url = `${process.env.NEXT_PUBLIC_FORMIO_BASE_URL}form/${formId}`;
+        const response = await fetch(url, {
+          headers: {
+            "x-jwt-token": token,
+          },
+        });
+
+        if (!response.ok) return;
+
+        const formData = await response.json();
+        if (formData.components) {
+          const summableFields: { key: string; label: string }[] = [];
+
+          // Рекурсивная функция для поиска полей с атрибутом data-type="summable"
+          const findSummableFields = (components: any[]) => {
+            components.forEach((component) => {
+              if (
+                component.attributes &&
+                component.attributes["data-type"] === "summable" &&
+                component.key
+              ) {
+                summableFields.push({
+                  key: component.key,
+                  label: component.label,
+                });
+              }
+
+              if (component.components && component.components.length > 0) {
+                findSummableFields(component.components);
+              }
+            });
+          };
+
+          findSummableFields(formData.components);
+
+          // Создаем объект для быстрого поиска метки по ключу
+          const keyToLabel: Record<string, string> = {};
+          summableFields.forEach((field) => {
+            keyToLabel[field.key] = field.label;
+          });
+
+          setSummableFieldsInfo({
+            keys: summableFields.map((field) => field.key),
+            keyToLabel,
+          });
+        }
+      } catch (error) {
+        console.error("Ошибка при получении структуры формы:", error);
+      }
+    };
+
+    fetchFormStructure();
+  }, []);
+
   // Загружаем сохраненные параметры поиска при монтировании компонента
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -265,6 +335,32 @@ const AdminPage = () => {
                         >
                           <p className="text-md font-medium">
                             {user.name || "⚠️ Без имени! ⚠️"}
+                            {/* Проверяем, является ли выбранное поле фильтра суммируемым */}
+                            {currentSearchParams?.field &&
+                              (() => {
+                                // Получаем имя поля пользователя из пути поиска
+                                const fieldMatch =
+                                  currentSearchParams.field.match(
+                                    /data\.users\.\d+\.(.+)$/
+                                  );
+                                if (!fieldMatch) return null;
+
+                                const userField = fieldMatch[1];
+
+                                // Проверяем, является ли поле суммируемым
+                                if (
+                                  summableFieldsInfo.keys.includes(userField) &&
+                                  user[userField] !== undefined
+                                ) {
+                                  return (
+                                    <span className="ml-2 text-sm font-normal bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full">
+                                      {user[userField]}
+                                    </span>
+                                  );
+                                }
+
+                                return null;
+                              })()}
                           </p>
                           {user.email && (
                             <p className="text-sm text-gray-500 mt-1">
