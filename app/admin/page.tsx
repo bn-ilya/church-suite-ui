@@ -94,6 +94,7 @@ const AdminPage = () => {
     totalSum,
     paidAmount,
     totalUsers,
+    summableFieldsStats,
     subscriptionsCount,
   } = useSubmissions();
 
@@ -218,6 +219,18 @@ const AdminPage = () => {
             <span className="text-sm text-gray-500 mr-2">Люди:</span>
             <span className="font-semibold">{totalUsers}</span>
           </div>
+          {/* Отображаем статистику для каждого суммируемого поля */}
+          {Object.entries(summableFieldsStats).map(([label, value]) => (
+            <div
+              key={label}
+              className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center"
+            >
+              <span className="text-sm text-gray-500 mr-2">{label}:</span>
+              <span className="font-semibold">
+                {value.toLocaleString("ru-RU")}
+              </span>
+            </div>
+          ))}
         </div>
 
         <AdminSearchForm
@@ -248,9 +261,11 @@ const AdminPage = () => {
                       submission.users.map((user, index) => (
                         <div
                           key={index}
-                          className="p-3 bg-default-200/50 rounded-lg"
+                          className="p-3 bg-default-200/50 rounded-lg w-full"
                         >
-                          <p className="text-md font-medium">{user.name}</p>
+                          <p className="text-md font-medium">
+                            {user.name || "⚠️ Без имени! ⚠️"}
+                          </p>
                           {user.email && (
                             <p className="text-sm text-gray-500 mt-1">
                               Email: {user.email}

@@ -15,14 +15,114 @@ export interface SubmissionData {
   [key: string]: any;
 }
 
+// Интерфейс для компонента формы с атрибутами
+interface FormComponent {
+  label: string;
+  key: string;
+  attributes?: {
+    "data-type"?: string;
+    [key: string]: any;
+  };
+  components?: FormComponent[];
+  [key: string]: any;
+}
+
 export const useSubmissions = () => {
   const [submissions, setSubmissions] = useState<SubmissionData[]>([]);
   const [totalSum, setTotalSum] = useState<number>(0);
   const [paidAmount, setPaidAmount] = useState<number>(0);
   const [totalUsers, setTotalUsers] = useState<number>(0);
+  const [summableFieldsStats, setSummableFieldsStats] = useState<
+    Record<string, number>
+  >({});
   const [searchParams, setSearchParams] = useState<SearchParams | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
+  const [formComponents, setFormComponents] = useState<FormComponent[]>([]);
+
+  // Функция для получения структуры формы
+  const fetchFormStructure = async () => {
+    try {
+      const token = localStorage.getItem("formioToken");
+      if (!token) return;
+
+      const formId = process.env.NEXT_PUBLIC_FORMIO_FORM_ID;
+      if (!formId) return;
+
+      const url = `${process.env.NEXT_PUBLIC_FORMIO_BASE_URL}form/${formId}`;
+      const response = await fetch(url, {
+        headers: {
+          "x-jwt-token": token,
+        },
+      });
+
+      if (!response.ok) return;
+
+      const formData = await response.json();
+      if (formData.components) {
+        setFormComponents(formData.components);
+      }
+    } catch (error) {
+      console.error("Ошибка при получении структуры формы:", error);
+    }
+  };
+
+  // Функция для поиска полей с атрибутом data-type="summable"
+  const findSummableFields = (
+    components: FormComponent[]
+  ): { key: string; label: string }[] => {
+    const summableFields: { key: string; label: string }[] = [];
+
+    const processComponent = (component: FormComponent) => {
+      if (
+        component.attributes &&
+        component.attributes["data-type"] === "summable" &&
+        component.key
+      ) {
+        summableFields.push({
+          key: component.key,
+          label: component.label,
+        });
+      }
+
+      if (component.components && component.components.length > 0) {
+        component.components.forEach(processComponent);
+      }
+    };
+
+    components.forEach(processComponent);
+    return summableFields;
+  };
+
+  // Функция для подсчета суммы полей с атрибутом data-type="summable"
+  const calculateSummableFieldsStats = (
+    submissions: SubmissionData[],
+    summableFields: { key: string; label: string }[]
+  ): Record<string, number> => {
+    const stats: Record<string, number> = {};
+
+    // Инициализируем статистику для каждого поля
+    summableFields.forEach((field) => {
+      stats[field.label] = 0;
+    });
+
+    submissions.forEach((submission) => {
+      if (submission.users && submission.users.length > 0) {
+        submission.users.forEach((user) => {
+          summableFields.forEach((field) => {
+            if (user[field.key] !== undefined && user[field.key] !== null) {
+              const value = parseFloat(user[field.key]);
+              if (!isNaN(value)) {
+                stats[field.label] += value;
+              }
+            }
+          });
+        });
+      }
+    });
+
+    return stats;
+  };
 
   const fetchSubmissions = async (params?: SearchParams) => {
     setIsLoading(true);
@@ -35,6 +135,7 @@ export const useSubmissions = () => {
         setSubmissions([]);
         setTotalSum(0);
         setTotalUsers(0);
+        setSummableFieldsStats({});
         return;
       }
 
@@ -203,6 +304,16 @@ export const useSubmissions = () => {
       setTotalSum(sum);
       setPaidAmount(paid);
       setTotalUsers(usersCount);
+
+      // Находим поля с атрибутом data-type="summable"
+      const summableFields = findSummableFields(formComponents);
+
+      // Вычисляем статистику для полей с атрибутом data-type="summable"
+      const summableStats = calculateSummableFieldsStats(
+        formattedSubmissions,
+        summableFields
+      );
+      setSummableFieldsStats(summableStats);
     } catch (error) {
       // Обрабатываем ошибку без логирования
       setSubmissions([]);
@@ -221,10 +332,15 @@ export const useSubmissions = () => {
     setRefreshTrigger((prev) => prev + 1);
   };
 
+  // Загружаем структуру формы при монтировании компонента
+  useEffect(() => {
+    fetchFormStructure();
+  }, []);
+
   // Загружаем подписки при монтировании компонента, изменении параметров поиска или триггера обновления
   useEffect(() => {
     fetchSubmissions(searchParams || undefined);
-  }, [searchParams, refreshTrigger]);
+  }, [searchParams, refreshTrigger, formComponents]);
 
   return {
     submissions,
@@ -234,6 +350,7 @@ export const useSubmissions = () => {
     totalSum,
     paidAmount,
     totalUsers,
+    summableFieldsStats,
     subscriptionsCount: submissions.length,
   };
 };

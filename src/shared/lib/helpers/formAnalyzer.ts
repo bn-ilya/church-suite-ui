@@ -74,15 +74,31 @@ export function analyzeFormComponents(
       operators,
       values,
     });
-    // Добавляем поле в список
-    fields.push({
+    // Создаем объект поля
+    const fieldObj: FilterField = {
       key: component.key,
       label: component.label,
       type: fieldType,
       path: fieldPath,
       operators,
       values,
-    });
+    };
+
+    // Если у компонента есть атрибуты, добавляем информацию о них в консоль
+    if (component.attributes) {
+      console.log(
+        `Поле ${component.key} имеет атрибуты:`,
+        component.attributes
+      );
+
+      // Если есть атрибут data-type=summable, добавляем информацию об этом в консоль
+      if (component.attributes["data-type"] === "summable") {
+        console.log(`Поле ${component.key} является суммируемым`);
+      }
+    }
+
+    // Добавляем поле в список
+    fields.push(fieldObj);
 
     // Рекурсивно обрабатываем вложенные компоненты
     if (component.components && component.components.length > 0) {

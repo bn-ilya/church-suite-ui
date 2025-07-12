@@ -19,6 +19,10 @@ export interface FormioComponent {
   hidden?: boolean;
   clearOnHide?: boolean;
   customConditional?: string;
+  attributes?: {
+    "data-type"?: string;
+    [key: string]: any;
+  };
 }
 
 // Тип для формы
