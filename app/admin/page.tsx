@@ -19,10 +19,64 @@ import { useFormioAuth } from "@/src/shared/hooks/useFormioAuth";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { AdminAppBar } from "@/src/features/admin-app-bar/ui";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 // Ключ для хранения параметров поиска в localStorage
 const SEARCH_PARAMS_STORAGE_KEY = "admin_search_params";
+
+// Функция для фильтрации пользователей на основе параметров поиска
+const filterUsersBySearchParams = (
+  users: any[],
+  searchParams: SearchParams
+) => {
+  if (!searchParams || !searchParams.field || !searchParams.value) {
+    return users;
+  }
+
+  // Получаем имя поля пользователя из пути поиска
+  // Например, из 'data.users.0.name' получаем 'name'
+  const fieldMatch = searchParams.field.match(/data\.users\.\d+\.(.+)$/);
+  if (!fieldMatch) {
+    return users; // Если поле не относится к пользователям, возвращаем всех
+  }
+
+  const userField = fieldMatch[1];
+  const searchValue = searchParams.value;
+  const operator = searchParams.operator || "equals";
+
+  return users.filter((user: any) => {
+    const userValue = user[userField];
+
+    // Если значение не определено, считаем, что оно не соответствует фильтру
+    if (userValue === undefined || userValue === null) {
+      return false;
+    }
+
+    // Преобразуем значение в строку для сравнения
+    const userValueStr = String(userValue);
+
+    switch (operator) {
+      case "equals":
+        return userValueStr === searchValue;
+      case "ne":
+        return userValueStr !== searchValue;
+      case "gt":
+        return parseFloat(userValueStr) > parseFloat(searchValue);
+      case "gte":
+        return parseFloat(userValueStr) >= parseFloat(searchValue);
+      case "lt":
+        return parseFloat(userValueStr) < parseFloat(searchValue);
+      case "lte":
+        return parseFloat(userValueStr) <= parseFloat(searchValue);
+      case "regex":
+        // Создаем регулярное выражение для поиска по части строки (регистронезависимый)
+        const regex = new RegExp(searchValue, "i");
+        return regex.test(userValueStr);
+      default:
+        return true;
+    }
+  });
+};
 
 const AdminPage = () => {
   const router = useRouter();
@@ -47,6 +101,10 @@ const AdminPage = () => {
   const [initialSearchParams, setInitialSearchParams] =
     useState<SearchParams | null>(null);
 
+  // Состояние для хранения текущих параметров поиска
+  const [currentSearchParams, setCurrentSearchParams] =
+    useState<SearchParams | null>(null);
+
   // Загружаем сохраненные параметры поиска при монтировании компонента
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -55,6 +113,7 @@ const AdminPage = () => {
         if (savedParams) {
           const params = JSON.parse(savedParams) as SearchParams;
           setInitialSearchParams(params);
+          setCurrentSearchParams(params);
           updateSearchParams(params);
         }
       } catch (error) {
@@ -74,8 +133,45 @@ const AdminPage = () => {
     }
 
     // Обновляем параметры поиска
+    setCurrentSearchParams(params);
     updateSearchParams(params);
   };
+
+  // Фильтруем пользователей в каждой регистрации на основе параметров поиска
+  const filteredSubmissions = useMemo(() => {
+    if (!submissions || submissions.length === 0 || !currentSearchParams) {
+      return submissions;
+    }
+
+    // Проверяем, относится ли поиск к полям пользователя
+    const isUserFieldSearch = currentSearchParams.field?.includes("data.users");
+
+    // Если поиск не по полям пользователя, возвращаем все регистрации без изменений
+    if (!isUserFieldSearch) {
+      return submissions;
+    }
+
+    // Фильтруем пользователей в каждой регистрации
+    return submissions
+      .map((submission) => {
+        if (!submission.users || submission.users.length === 0) {
+          return submission;
+        }
+
+        // Фильтруем пользователей
+        const filteredUsers = filterUsersBySearchParams(
+          submission.users,
+          currentSearchParams
+        );
+
+        // Возвращаем копию регистрации с отфильтрованными пользователями
+        return {
+          ...submission,
+          users: filteredUsers,
+        };
+      })
+      .filter((submission) => submission.users && submission.users.length > 0);
+  }, [submissions, currentSearchParams]);
 
   // Если проверка авторизации еще не завершена, показываем спиннер
   if (authLoading) {
@@ -133,13 +229,13 @@ const AdminPage = () => {
           <div className="flex justify-center my-8">
             <Spinner size="lg" color="primary" />
           </div>
-        ) : submissions.length === 0 ? (
+        ) : filteredSubmissions?.length === 0 ? (
           <div className="text-center my-8">
             <p>Регистрации не найдены</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {submissions.map((submission) => (
+            {filteredSubmissions.map((submission) => (
               <Card key={submission._id}>
                 <CardBody
                   onClick={() => {
