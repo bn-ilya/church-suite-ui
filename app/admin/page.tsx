@@ -19,7 +19,7 @@ import { useFormioAuth } from "@/src/shared/hooks/useFormioAuth";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { AdminAppBar } from "@/src/features/admin-app-bar/ui";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 
 // Ключ для хранения параметров поиска в localStorage
 const SEARCH_PARAMS_STORAGE_KEY = "admin_search_params";
@@ -106,11 +106,24 @@ const AdminPage = () => {
   const [currentSearchParams, setCurrentSearchParams] =
     useState<SearchParams | null>(null);
 
+  // Состояние для фильтра "Оплачено"
+  const [isPaidFilter, setIsPaidFilter] = useState<boolean | null>(null);
+
+  // Ключ для хранения фильтра "Оплачено" в localStorage
+  const PAID_FILTER_STORAGE_KEY = "admin_paid_filter";
+
   // Состояние для хранения информации о суммируемых полях
   const [summableFieldsInfo, setSummableFieldsInfo] = useState<{
     keys: string[];
     keyToLabel: Record<string, string>;
   }>({ keys: [], keyToLabel: {} });
+
+  // Функция для проверки статуса оплаты
+  const isPaid = useCallback((submission: any) => {
+    const total = Number(submission.total || 0);
+    const paidAmount = Number(submission.paid_amount || 0);
+    return total - paidAmount <= 0; // Учитываем возможную погрешность при сравнении чисел с плавающей точкой
+  }, []);
 
   // Получаем информацию о суммируемых полях из структуры формы
   useEffect(() => {
@@ -176,10 +189,11 @@ const AdminPage = () => {
     fetchFormStructure();
   }, []);
 
-  // Загружаем сохраненные параметры поиска при монтировании компонента
+  // Загружаем сохраненные параметры поиска и фильтр "Оплачено" при монтировании компонента
   useEffect(() => {
     if (typeof window !== "undefined") {
       try {
+        // Загружаем параметры поиска
         const savedParams = localStorage.getItem(SEARCH_PARAMS_STORAGE_KEY);
         if (savedParams) {
           const params = JSON.parse(savedParams) as SearchParams;
@@ -187,8 +201,21 @@ const AdminPage = () => {
           setCurrentSearchParams(params);
           updateSearchParams(params);
         }
+
+        // Загружаем фильтр "Оплачено"
+        const savedPaidFilter = localStorage.getItem(PAID_FILTER_STORAGE_KEY);
+        if (savedPaidFilter) {
+          // Преобразуем строку в boolean или null
+          if (savedPaidFilter === "true") {
+            setIsPaidFilter(true);
+          } else if (savedPaidFilter === "false") {
+            setIsPaidFilter(false);
+          } else {
+            setIsPaidFilter(null);
+          }
+        }
       } catch (error) {
-        console.error("Ошибка при загрузке параметров поиска:", error);
+        console.error("Ошибка при загрузке параметров:", error);
       }
     }
   }, []);
@@ -208,10 +235,24 @@ const AdminPage = () => {
     updateSearchParams(params);
   };
 
-  // Фильтруем пользователей в каждой регистрации на основе параметров поиска
+  // Фильтруем пользователей в каждой регистрации на основе параметров поиска и фильтра оплаты
   const filteredSubmissions = useMemo(() => {
-    if (!submissions || submissions.length === 0 || !currentSearchParams) {
+    if (!submissions || submissions.length === 0) {
       return submissions;
+    }
+
+    // Сначала применяем фильтр по оплате, если он установлен
+    let filtered = submissions;
+    if (isPaidFilter !== null) {
+      filtered = submissions.filter((submission) => {
+        const paid = isPaid(submission);
+        return isPaidFilter ? paid : !paid;
+      });
+    }
+
+    // Если нет параметров поиска, возвращаем результат фильтрации по оплате
+    if (!currentSearchParams) {
+      return filtered;
     }
 
     // Проверяем, относится ли поиск к полям пользователя
@@ -219,11 +260,11 @@ const AdminPage = () => {
 
     // Если поиск не по полям пользователя, возвращаем все регистрации без изменений
     if (!isUserFieldSearch) {
-      return submissions;
+      return filtered;
     }
 
     // Фильтруем пользователей в каждой регистрации
-    return submissions
+    return filtered
       .map((submission) => {
         if (!submission.users || submission.users.length === 0) {
           return submission;
@@ -242,7 +283,7 @@ const AdminPage = () => {
         };
       })
       .filter((submission) => submission.users && submission.users.length > 0);
-  }, [submissions, currentSearchParams]);
+  }, [submissions, currentSearchParams, isPaidFilter, isPaid]);
 
   // Если проверка авторизации еще не завершена, показываем спиннер
   if (authLoading) {
@@ -301,6 +342,54 @@ const AdminPage = () => {
               </span>
             </div>
           ))}
+        </div>
+
+        {/* Фильтр "Оплачено" */}
+        <div className="flex justify-center mb-4">
+          <div className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center gap-4">
+            <span className="text-sm font-medium">Оплачено:</span>
+            <div className="flex gap-4">
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="paidFilter"
+                  className="mr-2"
+                  checked={isPaidFilter === true}
+                  onChange={() => {
+                    setIsPaidFilter(true);
+                    localStorage.setItem(PAID_FILTER_STORAGE_KEY, "true");
+                  }}
+                />
+                <span>Да</span>
+              </label>
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="paidFilter"
+                  className="mr-2"
+                  checked={isPaidFilter === false}
+                  onChange={() => {
+                    setIsPaidFilter(false);
+                    localStorage.setItem(PAID_FILTER_STORAGE_KEY, "false");
+                  }}
+                />
+                <span>Нет</span>
+              </label>
+              <label className="flex items-center cursor-pointer">
+                <input
+                  type="radio"
+                  name="paidFilter"
+                  className="mr-2"
+                  checked={isPaidFilter === null}
+                  onChange={() => {
+                    setIsPaidFilter(null);
+                    localStorage.setItem(PAID_FILTER_STORAGE_KEY, "null");
+                  }}
+                />
+                <span>Все</span>
+              </label>
+            </div>
+          </div>
         </div>
 
         <AdminSearchForm
@@ -372,6 +461,8 @@ const AdminPage = () => {
                               Телефон: {user.phone}
                             </p>
                           )}
+
+                          {/* Убираем отображение статуса оплаты у каждого пользователя */}
                         </div>
                       ))
                     ) : (
@@ -382,6 +473,21 @@ const AdminPage = () => {
                       </div>
                     )}
                   </div>
+
+                  {/* Отображаем информацию о статусе оплаты для неоплаченных регистраций под списком пользователей */}
+                  {isPaidFilter === false && (
+                    <div className="mt-3 p-2 bg-default-100/50 rounded-lg">
+                      <p className="text-sm text-gray-500 font-medium text-center">
+                        Оплачено:{" "}
+                        {Number(submission.paid_amount || 0).toLocaleString(
+                          "ru-RU"
+                        )}{" "}
+                        /{" "}
+                        {Number(submission.total || 0).toLocaleString("ru-RU")}{" "}
+                        ₽
+                      </p>
+                    </div>
+                  )}
                 </CardBody>
               </Card>
             ))}
