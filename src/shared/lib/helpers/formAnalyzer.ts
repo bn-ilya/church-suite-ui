@@ -60,9 +60,10 @@ export function analyzeFormComponents(
         break;
       case "select":
       case "selectboxes":
+      case "radio":
         fieldType = "select";
         operators = ["equals", "ne"];
-        // Получаем возможные значения для селекта
+        // Получаем возможные значения для селекта или радиокнопок
         values = component.values || component.data?.values || [];
         break;
     }
