@@ -22,6 +22,7 @@ export const UserRegisterForm = () => {
 
   const handleChangePhone = (e: FormEvent<HTMLInputElement>) => {
     const onlyNumber = e.currentTarget.value.match(/\d+/g)?.join("");
+    window.localStorage.setItem("phone", onlyNumber || "");
     setPhone(onlyNumber || "");
   };
 
