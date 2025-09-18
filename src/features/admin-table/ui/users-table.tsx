@@ -18,6 +18,7 @@ import { UserWithSubmission } from "../types";
 interface UsersTableProps {
   users: UserWithSubmission[];
   localUpdates: Record<string, boolean | undefined>;
+  isPresenceRequestPending: boolean;
   onMarkPresent: (user: UserWithSubmission) => void;
   onMarkAbsent: (user: UserWithSubmission) => void;
   onUpdateAmount: (
@@ -30,6 +31,7 @@ interface UsersTableProps {
 export const UsersTable = ({
   users,
   localUpdates,
+  isPresenceRequestPending,
   onMarkPresent,
   onMarkAbsent,
   onUpdateAmount,
@@ -40,6 +42,7 @@ export const UsersTable = ({
         aria-label="Таблица пользователей"
         classNames={{
           wrapper: "w-full",
+          tr: "hover:bg-default-100 transition-colors",
         }}
       >
         <TableHeader>
@@ -118,6 +121,7 @@ export const UsersTable = ({
                       size="sm"
                       color="success"
                       variant="light"
+                      isDisabled={isPresenceRequestPending}
                       onPress={() => onMarkPresent(user)}
                     >
                       <CheckIcon className="w-4 h-4" />
@@ -128,6 +132,7 @@ export const UsersTable = ({
                       size="sm"
                       color="danger"
                       variant="light"
+                      isDisabled={isPresenceRequestPending}
                       onPress={() => onMarkAbsent(user)}
                     >
                       <XMarkIcon className="w-4 h-4" />

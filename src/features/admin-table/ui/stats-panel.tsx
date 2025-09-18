@@ -3,6 +3,7 @@ interface StatsPanelProps {
   paidAmount: number;
   subscriptionsCount: number;
   totalUsers: number;
+  presentUsers: number;
   summableFieldsStats: Record<string, number>;
 }
 
@@ -11,6 +12,7 @@ export const StatsPanel = ({
   paidAmount,
   subscriptionsCount,
   totalUsers,
+  presentUsers,
   summableFieldsStats,
 }: StatsPanelProps) => {
   return (
@@ -22,6 +24,10 @@ export const StatsPanel = ({
       <div className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center">
         <span className="text-sm text-gray-500 mr-2">Люди:</span>
         <span className="font-semibold">{totalUsers}</span>
+      </div>
+      <div className="bg-default-100/30 rounded-lg px-4 py-2 flex items-center">
+        <span className="text-sm text-gray-500 mr-2">Пришли:</span>
+        <span className="font-semibold">{presentUsers}</span>
       </div>
       {Object.entries(summableFieldsStats).map(([label, value]) => (
         <div

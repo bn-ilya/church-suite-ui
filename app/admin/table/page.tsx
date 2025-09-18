@@ -46,6 +46,8 @@ const AdminTablePage = () => {
   const [localUpdates, setLocalUpdates] = useState<
     Record<string, boolean | undefined>
   >({});
+  const [isPresenceRequestPending, setIsPresenceRequestPending] =
+    useState(false);
 
   const isPaid = useCallback((submission: any) => {
     const total = Number(submission.total || 0);
@@ -209,10 +211,26 @@ const AdminTablePage = () => {
     localUpdates,
   ]);
 
+  const presentUsers = useMemo(() => {
+    return usersWithSubmissions.filter((user) => {
+      const userIsPresent =
+        localUpdates[user._id] !== undefined
+          ? localUpdates[user._id]
+          : user.isPresent;
+      return userIsPresent;
+    }).length;
+  }, [usersWithSubmissions, localUpdates]);
+
   const handleTogglePresence = async (
     user: UserWithSubmission,
     isPresent: boolean
   ) => {
+    if (isPresenceRequestPending) {
+      return;
+    }
+
+    setIsPresenceRequestPending(true);
+
     setLocalUpdates((prev) => ({
       ...prev,
       [user._id]: isPresent,
@@ -246,6 +264,15 @@ const AdminTablePage = () => {
         if (index === userIndex) {
           return { ...u, isPresent };
         }
+
+        // Проверяем, есть ли локальные изменения для других пользователей в этой же подписке
+        const otherUserId = `${submissionId}_${index}`;
+        const hasLocalUpdate = localUpdates[otherUserId] !== undefined;
+
+        if (hasLocalUpdate) {
+          return { ...u, isPresent: localUpdates[otherUserId] };
+        }
+
         return u;
       });
 
@@ -280,6 +307,8 @@ const AdminTablePage = () => {
         delete newUpdates[user._id];
         return newUpdates;
       });
+    } finally {
+      setIsPresenceRequestPending(false);
     }
   };
 
@@ -356,6 +385,7 @@ const AdminTablePage = () => {
           paidAmount={paidAmount}
           subscriptionsCount={subscriptionsCount}
           totalUsers={totalUsers}
+          presentUsers={presentUsers}
           summableFieldsStats={summableFieldsStats}
         />
 
@@ -388,6 +418,7 @@ const AdminTablePage = () => {
           <UsersTable
             users={usersWithSubmissions}
             localUpdates={localUpdates}
+            isPresenceRequestPending={isPresenceRequestPending}
             onMarkPresent={handleMarkPresent}
             onMarkAbsent={handleMarkAbsent}
             onUpdateAmount={handleUpdateAmount}
