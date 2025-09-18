@@ -1,6 +1,10 @@
 "use client";
 
-import { ListBulletIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
+import {
+  ListBulletIcon,
+  PlusCircleIcon,
+  TableCellsIcon,
+} from "@heroicons/react/24/outline";
 import { Tab, Tabs } from "@heroui/react";
 import { motion } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
@@ -11,13 +15,22 @@ export const AdminAppBar: FC = () => {
   const path = usePathname();
   const pathSegments = path.split("/");
   const isAddPage = pathSegments.length > 2 && pathSegments[2] === "add";
+  const isTablePage = pathSegments.length > 2 && pathSegments[2] === "table";
 
   const handleSelect = (key: Key) => {
     if (key === "list") {
       router.push("/admin");
     } else if (key === "add") {
       router.push("/admin/add");
+    } else if (key === "table") {
+      router.push("/admin/table");
     }
+  };
+
+  const getSelectedKey = () => {
+    if (isAddPage) return "add";
+    if (isTablePage) return "table";
+    return "list";
   };
 
   return (
@@ -29,7 +42,7 @@ export const AdminAppBar: FC = () => {
       <div className="w-full mx-auto px-6 max-w-screen-md">
         <Tabs
           keyboardActivation="manual"
-          selectedKey={isAddPage ? "add" : "list"}
+          selectedKey={getSelectedKey()}
           onSelectionChange={handleSelect}
           fullWidth
           classNames={{
@@ -45,6 +58,15 @@ export const AdminAppBar: FC = () => {
               <div className="flex items-center space-x-2">
                 <ListBulletIcon className="w-5 h-5" />
                 <span>Список</span>
+              </div>
+            }
+          />
+          <Tab
+            key="table"
+            title={
+              <div className="flex items-center space-x-2">
+                <TableCellsIcon className="w-5 h-5" />
+                <span>Таблица</span>
               </div>
             }
           />

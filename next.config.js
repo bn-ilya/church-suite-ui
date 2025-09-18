@@ -31,7 +31,7 @@ const nextConfig = {
       },
       {
         source: "/formio-api/:path*",
-        destination: `https://church-krop.ru/:path*`,
+        destination: `https://formio.church-krop.ru/:path*`,
       },
     ];
   },

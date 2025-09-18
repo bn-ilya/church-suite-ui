@@ -152,6 +152,7 @@ export const useSubmissions = () => {
         "data.name",
         "data.surname",
         "created",
+        "data.comment",
         "modified",
       ].join(",");
 
